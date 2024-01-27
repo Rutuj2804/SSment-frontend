@@ -1,0 +1,15 @@
+.incoode__Input-Wrapper {
+    display: flex;
+    flex-direction: column;
+    label {
+        font-size: 12px;
+        font-weight: 500;
+    }
+    .incoode__Input-Input {
+        padding: 7px;
+        font-size: 14px;
+        outline: none;
+        border-radius: 4px;
+        border: 1px solid $black;
+    }
+}

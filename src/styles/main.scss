@@ -1,6 +1,10 @@
 @import "./assets/fonts";
 @import "./assets/variables";
 
+@import "./library/index";
+
+@import "./pages/authentication/index";
+
 * {
     margin: 0%;
     padding: 0%;
