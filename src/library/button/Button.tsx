@@ -5,8 +5,8 @@ interface CustomButtonProps extends ButtonProps {
     children?: React.ReactNode;
 }
 
-const CustomButton = ({ children, ...props }: CustomButtonProps) => {
-    return <Button {...props}>{children}</Button>;
+const CustomButton = ({ children, className, ...props }: CustomButtonProps) => {
+    return <Button className={`customButton ${className}`} {...props}>{children}</Button>;
 };
 
 export default CustomButton;

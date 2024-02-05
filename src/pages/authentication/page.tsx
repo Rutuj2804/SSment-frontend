@@ -5,15 +5,15 @@ import { useNavigate } from "react-router-dom";
 import { PiEyeFill, PiEyeSlashFill } from "react-icons/pi";
 
 const Login = () => {
-    const [formData, setFormData] = useState({
-        username: "",
-        password: "",
-    });
-	const [seePassword, setSeePassword] = useState(false)
+	const [formData, setFormData] = useState({
+		username: "",
+		password: "",
+	});
+	const [seePassword, setSeePassword] = useState(false);
 
-    const { username, password } = formData;
+	const { username, password } = formData;
 
-    const navigate = useNavigate()
+	const navigate = useNavigate();
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -54,8 +54,10 @@ const Login = () => {
 							placeholder={"Pa$$w0rd!"}
 							label={"Password"}
 							required
-							endIcon={seePassword ? <PiEyeFill />:<PiEyeSlashFill />}
-							endIconClick={() => setSeePassword(t=>!t)}
+							endIcon={
+								seePassword ? <PiEyeFill /> : <PiEyeSlashFill />
+							}
+							endIconClick={() => setSeePassword((t) => !t)}
 						/>
 						<div
 							className="login__Dialouge"
@@ -70,10 +72,10 @@ const Login = () => {
 				</div>
 				<div
 					className="login__SecondaryDialouge"
-					onClick={() => navigate("/register")}
+					onClick={() => navigate("/contact-us")}
 				>
 					<p>
-						Don't have a account? <span>Register Now</span>
+						Want to discuss a package? <span>Contact Us</span>
 					</p>
 				</div>
 			</div>

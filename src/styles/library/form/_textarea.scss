@@ -1,0 +1,26 @@
+.textarea__Container {
+	width: 100%;
+	label {
+		font-size: 12px;
+		text-transform: capitalize;
+		font-weight: 500;
+	}
+	.textarea__Wrapper {
+		position: relative;
+		width: 100%;
+		border: 1px solid transparent;
+		border-radius: 4px;
+		margin-bottom: 15px;
+		background-color: $light-background;
+		display: flex;
+		align-items: center;
+		textarea {
+			padding: 7px;
+			border: none;
+			outline: none;
+			background-color: transparent;
+			flex: 1;
+			resize: none;
+		}
+	}
+}

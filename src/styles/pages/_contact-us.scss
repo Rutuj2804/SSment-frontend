@@ -1,18 +1,18 @@
-.login__Wrapper {
+.contactUs__Wrapper {
     width: 100%;
     height: 100vh;
-    .login__Form {
+    .contactUs__Form {
         height: 100%;
         width: 500px;
         background-color: $white;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        .login__SpaceBox {
+        .contactUs__SpaceBox {
             display: flex;
             flex-direction: column;
         }
-        .login__Header {
+        .contactUs__Header {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -31,8 +31,11 @@
             align-self: center;
             justify-content: center;
             margin-top: 50px;
-            width: 350px;
-            .login__Title {
+            width: 400px;
+            .row {
+                width: 100%;
+            }
+            .contactUs__Title {
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
@@ -43,12 +46,11 @@
                     color: $gray;
                 }
             }
-            .login__Dialouge {
+            .contactUs__Dialouge {
                 display: flex;
                 justify-content: flex-start;
                 width: 100%;
                 margin-bottom: 20px;
-                cursor: pointer;
                 p {
                     margin-bottom: 2px;
                     color: $blue;
@@ -66,14 +68,14 @@
                     padding: 7px 20px;
                 }
             }
-            &.register {
+            &.contactUs {
                 margin-top: 0%;
-                .login__Title {
+                .contactUs__Title {
                     margin-bottom: 10px;
                 }
             }
         }
-        .login__SecondaryDialouge {
+        .contactUs__SecondaryDialouge {
             display: flex;
             justify-content: center;
             p {
@@ -85,7 +87,7 @@
             }
         }
     }
-    .login__Images {
+    .contactUs__Images {
         width: calc(100% - 400px);
     }
 }
