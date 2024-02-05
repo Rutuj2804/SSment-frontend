@@ -6,10 +6,7 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
 
 const Input = ({ className, label, ...props }: InputProps) => {
     return (
-        <div className="incoode__Input-Wrapper">
-            <label>{label}</label>
-            <input className={`${className} incoode__Input-Input`} {...props} />
-        </div>
+        <div>Input</div>
     );
 };
 
