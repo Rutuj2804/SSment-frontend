@@ -30,7 +30,7 @@ const Select = ({
 
 	return (
 		<div className="dropdown__Container">
-			{label !== "" ? <label>{label}</label> : null}
+			{label ? <label>{label}</label> : null}
 			<div
 				className={`dropdown__Wrapper`}
 				onClick={() => setIsOpen((i) => !i)}

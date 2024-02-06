@@ -1,8 +1,10 @@
 import { combineReducers } from "@reduxjs/toolkit";
 import layout from "./layout/slice"
 import settings from "./settings/slice"
+import breadcrumps from "./breadcrumps/slice"
 
 export const reducers = combineReducers({
     layout,
-    settings
+    settings,
+    breadcrumps
 });
