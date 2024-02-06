@@ -1,5 +1,9 @@
 @import "./assets/index";
 
+@import "./hocs/index";
+
+@import "./common/index";
+
 @import "./library/index";
 
 @import "./pages/index";
@@ -8,5 +12,9 @@
     margin: 0%;
     padding: 0%;
     box-sizing: border-box;
-    font-family: "Roboto", sans-serif;
+    font-family: 'Poppins', sans-serif
+}
+
+body {
+    background-color: $light-background;
 }

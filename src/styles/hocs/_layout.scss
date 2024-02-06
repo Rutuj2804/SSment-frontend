@@ -1,0 +1,35 @@
+.layout__space-left {
+    position: absolute;
+    top: 0%;
+    left: 300px;
+    width: calc(100% - 300px);
+    min-height: 100vh;
+    transition: all 0.2s linear;
+    
+}
+
+.layout__space-right {
+    position: absolute;
+    top: 0%;
+    right: 300px;
+    width: calc(100% - 300px);
+    min-height: 100vh;
+    // transition: all 0.2s linear;
+}
+
+.layout__expand {
+    position: absolute;
+    top: 0%;
+    left: 0;
+    width: 100%;
+    min-height: 100vh;
+    transition: all 0.2s linear;
+}
+
+@media screen and (max-width: 970px) {
+    .layout__space-left, .layout__space-right {
+        left: 0;
+        right: 0;
+        width: 100%;
+    }
+}
