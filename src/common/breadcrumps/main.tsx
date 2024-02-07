@@ -11,7 +11,7 @@ const Breadcrumps = () => {
     const navigate = useNavigate()
 
     return (
-        <div className="section__Wrapper" style={{ paddingBottom: 0, paddingTop: 10 }}>
+        <div className="breadcrumps__Wrapper" style={{ paddingBottom: 0, paddingTop: 10 }}>
             <header>
                 <div className="left">
                     <h4>{breadcrumps.name[1]}</h4>

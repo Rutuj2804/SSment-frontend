@@ -33,7 +33,7 @@ const columns: GridColDef[] = [
 		align: "center",
 		headerAlign: "center",
 		renderCell: (params) => (
-			<div className="active">Active</div>
+			<div className="activetag">Active</div>
 		)
 	},
 	{

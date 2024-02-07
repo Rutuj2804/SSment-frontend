@@ -1,4 +1,4 @@
-.section__Wrapper {
+.breadcrumps__Wrapper {
     padding: 0px 20px;
     header {
         display: flex;
@@ -31,7 +31,7 @@
 }
 
 // dark settings
-.dark .section__Wrapper {
+.dark .breadcrumps__Wrapper {
     header {
         .left {
             h4 {
