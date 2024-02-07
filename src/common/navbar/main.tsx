@@ -11,6 +11,7 @@ import { setSidebar } from "../../store/layout/slice";
 import { RootState } from "../../store";
 import { Logo } from "../logo";
 import { Select } from "../../library";
+import { BsDiamondFill } from "react-icons/bs";
 
 const terms = [
 	{ name: "2024 Term 1", value: 1 },
@@ -18,7 +19,7 @@ const terms = [
 	{ name: "2023 Term 1", value: 3 },
 	{ name: "2022 Term 2", value: 4 },
 	{ name: "2022 Term 1", value: 5 },
-]
+];
 
 const Navbar = () => {
 	const layout = useSelector((state: RootState) => state.layout);
@@ -33,12 +34,26 @@ const Navbar = () => {
 						<Logo />
 						<div className="vr"></div>
 						<div className="navbar__ChangeUniversity">
-							<Select options={terms} name="name" value="value" selected={1} />
+							<Select
+								options={terms}
+								name="name"
+								value="value"
+								selected={1}
+								startIcon={<BsDiamondFill />}
+							/>
 						</div>
 					</div>
 				)}
 				<div className="navbar__ChangeUniversity">
-					{layout.sidebar &&  <Select options={terms} name="name" value="value" selected={1} />}
+					{layout.sidebar && (
+						<Select
+							options={terms}
+							name="name"
+							value="value"
+							selected={1}
+							startIcon={<BsDiamondFill />}
+						/>
+					)}
 				</div>
 			</div>
 			<div className="right">
@@ -69,9 +84,7 @@ const Navbar = () => {
 							</Badge>
 						</IconButton>
 					</Tooltip>
-					<div className="profile__Menu">
-						{/* <ProfileMenu /> */}
-					</div>
+					<div className="profile__Menu">{/* <ProfileMenu /> */}</div>
 				</div>
 				<div className="settings">
 					<Tooltip title="Settings">

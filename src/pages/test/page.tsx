@@ -3,17 +3,18 @@ import { useDispatch } from "react-redux";
 import { setBreadcrumps } from "../../store/breadcrumps/slice";
 
 const Test = () => {
-    const dispatch = useDispatch();
+	const dispatch = useDispatch();
 
-    useEffect(() => {
-        dispatch(
-            setBreadcrumps({
-                name: ["Test", "Test"],
-                link: "/tests",
-            })
-        );
-    }, [dispatch]);
-    return <div>Test</div>;
+	useEffect(() => {
+		dispatch(
+			setBreadcrumps({
+				name: ["Test", "Test"],
+				link: "/tests",
+			})
+		);
+	}, [dispatch]);
+
+	return <div>Test</div>;
 };
 
 export default Test;

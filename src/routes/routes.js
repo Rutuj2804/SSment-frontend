@@ -4,7 +4,7 @@ import { Dashboard } from "../pages/dashboard";
 import { Batch } from "../pages/batch";
 import { Result } from "../pages/result";
 import { Test } from "../pages/test";
-import { ContactUs, ForgotPassword, Login, Register } from "../pages/authentication";
+import { ContactUs, ForgotPassword, Login } from "../pages/authentication";
 
 export const regularRoutes = [
     { path: "/dashboard", element: <Dashboard /> },
