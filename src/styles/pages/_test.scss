@@ -1,0 +1,36 @@
+.test__Wrapper {
+    .test__GridArea {
+        .test__TabArea {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            .left {
+                display: flex;
+                align-items: center;
+                gap: 7px;
+                .test__Tab {
+                    font-size: 12px!important;
+                    text-transform: capitalize!important;
+                    padding: 7px 20px!important;
+                    color: $light-background!important;
+                    background-color: $blue!important;
+                    &.test__NotActiveTab {
+                        background-color: $light-background!important;
+                        color: $blue!important;
+                    }
+                }
+            }
+            .right {
+                display: flex;
+                gap: 7px;
+                button {
+                    font-size: 12px!important;
+                    text-transform: capitalize!important;
+                    padding: 7px 20px!important;
+                    color: $light-background!important;
+                    background-color: $blue!important;
+                }
+            }
+        }
+    }
+}
