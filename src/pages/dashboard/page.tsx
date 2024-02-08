@@ -26,17 +26,17 @@ const Dashboard = () => {
 		<div className="mt-2">
 			<div className="row">
 				<div className="col-lg-4 col-md-6 col-12">
-					<Paper className="mb-2 p-0">
+					<Paper className="mb-3">
 						<LineChart />
 					</Paper>
 				</div>
 				<div className="col-lg-4 col-md-6 col-12">
-					<Paper className="mb-2 p-0">
+					<Paper className="mb-3">
 						<AreaChart />
 					</Paper>
 				</div>
 				<div className="col-lg-4 col-md-6 col-12">
-					<Paper className="mb-2 p-0">
+					<Paper className="mb-3">
 						<PieChart />
 					</Paper>
 				</div>

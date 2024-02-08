@@ -8,7 +8,12 @@
     transition: all 0.2s linear;
     overflow-y: scroll;
     z-index: 12;
-    background: $white;
+    background: hsla(212, 100%, 97%, 1);
+    background: linear-gradient(
+        135deg,
+        hsla(212, 100%, 97%, 1) 0%,
+        hsla(0, 0%, 100%, 1) 100%
+    );
 
     &::-webkit-scrollbar {
         width: 5px;

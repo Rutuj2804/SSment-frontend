@@ -37,7 +37,11 @@ const Select = ({
 			>
 				<div className="dropdown__Display">
 					{startIcon ? (
+						<>
 						<div className="dropdown__StartIcon">{startIcon}</div>
+						<div className="vr"></div>
+						<span className="mx-1"></span>
+						</>
 					) : null}
 					<div className="dropdown__SelectedOption">
 						{getSelected()}
