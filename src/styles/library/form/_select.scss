@@ -1,8 +1,14 @@
 .dropdown__Container {
     width: 100%;
+    label {
+        font-size: 12px;
+        text-transform: capitalize;
+        font-weight: 500;
+    }
     .dropdown__Wrapper {
         width: 100%;
         position: relative;
+        margin-bottom: 15px;
         .dropdown__Display {
             display: flex;
             align-items: center;
