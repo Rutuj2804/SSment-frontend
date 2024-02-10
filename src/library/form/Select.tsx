@@ -11,6 +11,7 @@ interface SelectProps {
 	bottomOptionText?: string;
 	selected: any;
 	onChange?: (value: any) => void;
+	className?: string
 }
 
 const Select = ({
@@ -22,6 +23,7 @@ const Select = ({
 	selected,
 	onChange,
 	startIcon,
+	className
 }: SelectProps) => {
 	const [isOpen, setIsOpen] = useState(false);
 
@@ -34,7 +36,7 @@ const Select = ({
 	useOutsideClick(dropDownRef, () => setIsOpen(false))
 
 	return (
-		<div className="dropdown__Container">
+		<div className={`dropdown__Container ${className}`}>
 			{label ? <label>{label}</label> : null}
 			<div
 				className={`dropdown__Wrapper`}

@@ -3,7 +3,7 @@ import { Home } from "../pages/home";
 import { Dashboard } from "../pages/dashboard";
 import { Batch } from "../pages/batch";
 import { Result } from "../pages/result";
-import { CreateTest, Test } from "../pages/test";
+import { CreateTest, Test, TestDetail } from "../pages/test";
 import { ContactUs, ForgotPassword, Login } from "../pages/authentication";
 import { CreateRole, Assignments, Roles } from "../pages/role";
 import { CreateTerm, Term } from "../pages/term";
@@ -24,6 +24,7 @@ export const regularRoutes = [
 
     { path: "/tests", element: <Test /> },
     { path: "/tests/create", element: <CreateTest /> },
+    { path: "/test/:id", element: <TestDetail /> },
     
     { path: "/", element: <Navigate to="/dashboard" /> },
 ];

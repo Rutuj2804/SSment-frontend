@@ -12,6 +12,8 @@ import { RootState } from "../../store";
 import { Logo } from "../logo";
 import { Select } from "../../library";
 import { BsDiamondFill } from "react-icons/bs";
+import Profile from "./Profile";
+import Notification from "./Notification";
 
 const terms = [
 	{ name: "2024 Term 1", value: 1 },
@@ -40,6 +42,7 @@ const Navbar = () => {
 								value="value"
 								selected={1}
 								startIcon={<BsDiamondFill />}
+								className="p-0 m-0"
 							/>
 						</div>
 					</div>
@@ -52,6 +55,7 @@ const Navbar = () => {
 							value="value"
 							selected={1}
 							startIcon={<BsDiamondFill />}
+							className="p-0 m-0"
 						/>
 					)}
 				</div>
@@ -65,26 +69,10 @@ const Navbar = () => {
 					</Tooltip>
 				</div>
 				<div className="notifications">
-					<Tooltip title="Notifications">
-						<IconButton>
-							<Badge variant="dot" color="primary">
-								<NotificationsRounded />
-							</Badge>
-						</IconButton>
-					</Tooltip>
-					<div className="profile__Menu">
-						{/* <NotificationMenu /> */}
-					</div>
+					<Notification />
 				</div>
 				<div className="profile">
-					<Tooltip title="Profile">
-						<IconButton>
-							<Badge variant="dot" color="primary">
-								<PersonRounded />
-							</Badge>
-						</IconButton>
-					</Tooltip>
-					<div className="profile__Menu">{/* <ProfileMenu /> */}</div>
+					<Profile />
 				</div>
 				<div className="settings">
 					<Tooltip title="Settings">
