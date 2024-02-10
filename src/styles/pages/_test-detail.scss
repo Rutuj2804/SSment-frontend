@@ -1,0 +1,37 @@
+.testDetail__Wrapper {
+    .testDetail__Header {
+        .left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            .details p{
+                overflow: hidden;
+                display: -webkit-box;
+                -webkit-line-clamp: 3;
+                -webkit-box-orient: vertical;
+            }
+        }
+        .actions {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 10px;
+            padding: 15px;
+            border-radius: 5px;
+            h4 {
+                margin-bottom: 0%;
+            }
+            .testDetails__Actions {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                flex: 1;
+                justify-content: flex-end;
+                .testDetails__Status {
+                    max-width: 200px;
+                }
+            }
+        }
+    }
+}

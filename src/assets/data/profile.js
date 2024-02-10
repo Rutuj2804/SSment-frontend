@@ -12,6 +12,6 @@ export const data = [
         name: "Edit Profile",
         path: "/edit/:username",
     },
-    { icon: <BsKeyFill />, name: "Reset Password", path: "/change-password" },
+    { icon: <BsKeyFill />, name: "Reset Password", path: "/reset-password" },
     { icon: <BiLogOut />, name: "Logout", path: "/logout" },
 ];
