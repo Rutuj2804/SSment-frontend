@@ -6,6 +6,7 @@ import { Button } from "../../library";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { IconButton } from "@mui/material";
 import { DeleteRounded, EditRounded } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 
 enum Tabs {
 	"ONGOING" = 1,
@@ -98,10 +99,12 @@ const Test = () => {
 
 	const dispatch = useDispatch();
 
+	const navigate = useNavigate()
+
 	useEffect(() => {
 		dispatch(
 			setBreadcrumps({
-				name: ["Test", "Test"],
+				name: ["General", "Test"],
 				link: "/tests",
 			})
 		);
@@ -148,7 +151,7 @@ const Test = () => {
 							</Button>
 						</div>
 						<div className="right">
-							<Button>Add +</Button>
+							<Button onClick={()=>navigate('/tests/create')}>Add +</Button>
 							<Button>Download</Button>
 						</div>
 					</div>

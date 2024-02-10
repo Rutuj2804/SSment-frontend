@@ -1,0 +1,48 @@
+.batchCard__Wrapper {
+    padding: 10px;
+    cursor: pointer;
+    .batchCard__Header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        h5 {
+            margin-bottom: 0%;
+        }
+    }
+    .batchCard__Description {
+        margin: 10px 0;
+        p{
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            font-size: 14px;
+        }
+        span {
+            font-size: 14px;
+            font-style: italic;
+            font-weight: bold;
+        }
+    }
+    .batchCard__Footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        p{
+            font-size: 14px;
+            font-weight: 600;
+            color: $green;
+            span {
+                font-size: 20px;
+            }
+        }
+        .batchCard__Button {
+            font-size: 12px!important;
+            background-color: $white!important;
+            border: 1px solid $blue!important;
+            color: $blue!important;
+            padding: 4px 10px!important;
+            font-weight: 600!important;
+        }
+    }
+}

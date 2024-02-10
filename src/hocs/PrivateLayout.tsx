@@ -7,6 +7,7 @@ import { sidebarLayout } from "../store/settings/types";
 import { RootState } from "../store";
 import { Breadcrumps } from "../common/breadcrumps";
 import { Section } from "../common/section";
+import { Message } from "../common/message";
 
 interface PrivateLayoutProps {
     children: React.ReactNode;
@@ -25,6 +26,7 @@ const PrivateLayout = ({ children }: PrivateLayoutProps) => {
                 <Section>
                     {children}
                 </Section>
+                <Message />
                 <Footer />
             </div>
         </div>
