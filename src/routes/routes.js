@@ -5,7 +5,7 @@ import { Batch } from "../pages/batch";
 import { Result } from "../pages/result";
 import { CreateTest, Test } from "../pages/test";
 import { ContactUs, ForgotPassword, Login } from "../pages/authentication";
-import { Assignments, Roles } from "../pages/role";
+import { CreateRole, Assignments, Roles } from "../pages/role";
 import { CreateTerm, Term } from "../pages/term";
 
 export const regularRoutes = [
@@ -19,6 +19,7 @@ export const regularRoutes = [
     { path: "/terms/create", element: <CreateTerm /> },
 
     { path: "/roles", element: <Roles /> },
+    { path: "/roles/create", element: <CreateRole /> },
     { path: "/assignments", element: <Assignments /> },
 
     { path: "/tests", element: <Test /> },

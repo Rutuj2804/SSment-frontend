@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { BsFillCaretDownFill, BsFillCaretUpFill } from "react-icons/bs";
+import { useOutsideClick } from "../../utils/hooks";
 
 interface SelectProps {
 	options: any[];
@@ -24,9 +25,13 @@ const Select = ({
 }: SelectProps) => {
 	const [isOpen, setIsOpen] = useState(false);
 
+	const dropDownRef = useRef<HTMLDivElement>(null)
+
 	const getSelected = () => {
 		return options.filter((o) => o[value] === selected)[0][name];
 	};
+
+	useOutsideClick(dropDownRef, () => setIsOpen(false))
 
 	return (
 		<div className="dropdown__Container">
@@ -34,6 +39,7 @@ const Select = ({
 			<div
 				className={`dropdown__Wrapper`}
 				onClick={() => setIsOpen((i) => !i)}
+				ref={dropDownRef}
 			>
 				<div className="dropdown__Display">
 					{startIcon ? (

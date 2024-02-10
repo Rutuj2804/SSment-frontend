@@ -5,7 +5,7 @@ interface SectionProps {
 }
 
 const Section = ({ children }: SectionProps) => {
-	return <div className="section__Wrapper">{children}</div>;
+	return <div className="section__Wrapper mt-2">{children}</div>;
 };
 
 export default Section;

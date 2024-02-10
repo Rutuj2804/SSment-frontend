@@ -16,7 +16,7 @@ const Batch = () => {
 	}, [dispatch]);
 
 	return (
-		<div className="mt-2">
+		<div className="">
 			<div className="row">
 				<div className="col-lg-4 col-md-6 col-12">
 					<BatchCard />
