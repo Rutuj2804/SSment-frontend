@@ -11,15 +11,8 @@ import { DeleteRounded, EditRounded } from "@mui/icons-material";
 const columns: GridColDef[] = [
 	{
 		field: "testName",
-		headerName: "Title",
+		headerName: "Name",
 		flex: 1,
-	},
-	{
-		field: "batches",
-		headerName: "Batches",
-		width: 150,
-		align: "center",
-		headerAlign: "center",
 	},
 	{
 		field: "status",
@@ -31,21 +24,15 @@ const columns: GridColDef[] = [
 	},
 	{
 		field: "students",
-		headerName: "Students",
+		headerName: "Created By",
 		headerAlign: "center",
-		width: 110,
+		width: 200,
 		align: "center",
+		renderCell: () => <div>Rutuj Jeevan Bokade</div>
 	},
 	{
 		field: "date",
-		headerName: "Date",
-		headerAlign: "center",
-		width: 110,
-		align: "center",
-	},
-	{
-		field: "time",
-		headerName: "Time",
+		headerName: "Created On",
 		headerAlign: "center",
 		width: 110,
 		align: "center",
