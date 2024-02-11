@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { setBreadcrumps } from "../../store/breadcrumps/slice";
 import { Paper } from "../../components/paper";
 import { Button, Checkbox, Input, Select, Textarea } from "../../library";
+import { useNavigate } from "react-router-dom";
 
 const options = [
 	{ name: "Single Pager", value: 1 },
@@ -11,6 +12,8 @@ const options = [
 
 const CreateTest = () => {
 	const dispatch = useDispatch();
+
+	const navigate = useNavigate()
 
 	useEffect(() => {
 		dispatch(
@@ -21,13 +24,18 @@ const CreateTest = () => {
 		);
 	}, [dispatch]);
 
+	const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault()
+		navigate("/test/123")
+	}
+
 	return (
 		<div className="createTest__Wrapper">
 			<Paper className="p-3">
 				<div className="createTest__Header">
 					<h4>Create Test</h4>
 				</div>
-				<form className="mt-3">
+				<form className="mt-3" onSubmit={onSubmit}>
 					<div className="row">
 						<div className="col-12">
 							<Input

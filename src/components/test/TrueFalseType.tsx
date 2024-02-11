@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Checkbox, Input, OutlineButton, Select } from "../../library";
 import { DeleteRounded, DoneRounded } from "@mui/icons-material";
 
@@ -8,6 +8,9 @@ const options = [
 ]
 
 const TrueFalseType = () => {
+	
+	const [referenceImage, setReferenceImage] = useState(false)
+
 	return (
 		<div className="shortAnswer__Wrapper">
 			<div className="header">
@@ -52,15 +55,16 @@ const TrueFalseType = () => {
 					id="add-reference-image"
 					label="Add Reference Image"
 					description="Displays a reference image for the question while attempting the test."
+					onChange={e=>setReferenceImage(e.target.checked)}
+					checked={referenceImage}
 				/>
-				<Input
+				{referenceImage && <Input
 					type="file"
 					name="points"
 					placeholder="Reference Image"
 					label="Reference Image"
 					required
-					min={0}
-				/>
+				/>}
 			</div>
 		</div>
 	);

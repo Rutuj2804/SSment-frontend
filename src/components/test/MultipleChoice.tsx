@@ -10,6 +10,8 @@ type Option = {
 
 const MultipleChoice = () => {
 	const [options, setOptions] = useState<Option[]>([]);
+	
+	const [referenceImage, setReferenceImage] = useState(false)
 
 	const onAddOption = () => {
 		setOptions((v) => [...v, { name: "A", title: "", isCorrect: false }]);
@@ -46,15 +48,16 @@ const MultipleChoice = () => {
 					id="add-reference-image"
 					label="Add Reference Image"
 					description="Displays a reference image for the question while attempting the test."
+					onChange={e=>setReferenceImage(e.target.checked)}
+					checked={referenceImage}
 				/>
-				<Input
+				{referenceImage && <Input
 					type="file"
 					name="points"
 					placeholder="Reference Image"
 					label="Reference Image"
 					required
-					min={0}
-				/>
+				/>}
 				<div
 					className="multipleChoice__AddOption"
 					onClick={onAddOption}
