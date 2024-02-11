@@ -1,7 +1,7 @@
 import { Navigate } from "react-router-dom";
 import { Home } from "../pages/home";
 import { Dashboard } from "../pages/dashboard";
-import { Batch, BatchDetail } from "../pages/batch";
+import { Batch, BatchDetail, CreateBatch } from "../pages/batch";
 import { Result } from "../pages/result";
 import { AddQuestion, CreateTest, Test, TestDetail } from "../pages/test";
 import { ContactUs, ForgotPassword, Login } from "../pages/authentication";
@@ -13,6 +13,7 @@ export const regularRoutes = [
     { path: "/dashboard", element: <Dashboard /> },
 
     { path: "/batches", element: <Batch /> },
+    { path: "/batches/create", element: <CreateBatch /> },
     { path: "/batch/:id", element: <BatchDetail /> },
 
     { path: "/results", element: <Result /> },

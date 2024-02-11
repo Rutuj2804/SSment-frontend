@@ -14,7 +14,7 @@ const Batch = () => {
 		<Paper className="mb-3 batchCard__Wrapper">
 			<div className="batchCard__Header">
 				<h5>Estelle Frye</h5>
-				<IconButton>
+				<IconButton onClick={() => navigate("/batches/create")}>
 					<EditRounded />
 				</IconButton>
 			</div>

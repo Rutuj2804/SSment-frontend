@@ -49,7 +49,7 @@ const BatchDetail = () => {
 					<h6>Actions :</h6>
 					<div className="batchDetail__ActionButton">
 						<OutlineButton>Delete</OutlineButton>
-						<Button onClick={() => navigate("/batch/create")}>
+						<Button onClick={() => navigate("/batches/create")}>
 							Edit Test
 						</Button>
 					</div>
