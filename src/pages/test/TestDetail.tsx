@@ -5,31 +5,12 @@ import { useNavigate } from "react-router-dom";
 import { Paper } from "../../components/paper";
 import { Avatar, Tab, Tabs } from "@mui/material";
 import { Button, Select, OutlineButton } from "../../library";
+import { BatchRibbon, StudentRibbon } from "../../components/ribbon";
 
 const options = [
 	{ name: "Draft", value: 1 },
 	{ name: "Published", value: 1 },
 ];
-
-const Student = () => {
-	return (
-		<div className="student__Wrapper">
-			<div className="left">
-				<Avatar />
-				<div className="userdetails">
-					<h6>Rutuj Jeevan Bokade</h6>
-					<p>bokaderutuj36@gmail.com</p>
-				</div>
-			</div>
-			<div className="right">
-				<OutlineButton>View Profile</OutlineButton>
-				<Button>View Responses</Button>
-				<span></span>
-				<h4 className="pass">64%</h4>
-			</div>
-		</div>
-	)
-}
 
 const TestDetail = () => {
 	const [value, setValue] = useState(0);
@@ -108,13 +89,20 @@ const TestDetail = () => {
 							<Tab label="Batches (3)" />
 						</Tabs>
 
-						<div className="testDetail__Tab1Students">
-							<Student />
-							<Student />
-							<Student />
-							<Student />
-							<Student />
-						</div>
+						{value === 0 &&<div className="testDetail__Tab1Students">
+							<StudentRibbon />
+							<StudentRibbon />
+							<StudentRibbon />
+							<StudentRibbon />
+							<StudentRibbon />
+						</div>}
+						{value === 1 && <div className="testDetail__Tab2Batches">
+							<BatchRibbon />
+							<BatchRibbon />
+							<BatchRibbon />
+							<BatchRibbon />
+							<BatchRibbon />
+						</div>}
 					</div>
 				</div>
 			</Paper>
