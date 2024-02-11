@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Paper } from "../../components/paper";
 import { Avatar } from "@mui/material";
-import { ImageChoice, LongAnswer, MultipleChoice, SelectQuestion, ShortAnswer, TrueFalseType, YesNoType } from "../../components/test";
+import { CodingType, ImageChoice, LongAnswer, MultipleChoice, OpinionCase, SelectQuestion, ShortAnswer, TrueFalseType, YesNoType } from "../../components/test";
 import { AddRounded } from "@mui/icons-material";
 import { questionTypeData } from "../../assets/data/question-type";
 import { setBreadcrumps } from "../../store/breadcrumps/slice";
@@ -32,7 +32,9 @@ enum QuestionType {
 	"LONGANSWER"= 4,
 	"YESNOTYPE"= 5,
 	"TRUEFALSETYPE"= 6,
-	"SELECTQUESTION"= 7,
+	"OPINIONCASE"= 7,
+	"CODINGTYPE"= 8,
+	"SELECTQUESTION"= 9,
 }
 
 const AddQuestion = () => {
@@ -76,6 +78,8 @@ const AddQuestion = () => {
 						{activeState === QuestionType.LONGANSWER && <LongAnswer/>}
 						{activeState === QuestionType.YESNOTYPE && <YesNoType/>}
 						{activeState === QuestionType.TRUEFALSETYPE && <TrueFalseType/>}
+						{activeState === QuestionType.OPINIONCASE && <OpinionCase/>}
+						{activeState === QuestionType.CODINGTYPE && <CodingType/>}
 					</Paper>
 				</div>
 			</div>

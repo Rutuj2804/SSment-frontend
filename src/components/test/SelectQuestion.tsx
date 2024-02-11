@@ -22,6 +22,8 @@ enum QuestionTypeEnum {
 	"LONGANSWER"= 4,
 	"YESNOTYPE"= 5,
 	"TRUEFALSETYPE"= 6,
+	"OPINIONCASE"= 7,
+	"CODINGTYPE"= 8,
 }
 
 interface SelectQuestionProps {
@@ -49,6 +51,12 @@ const SelectQuestion = ({ onChange }: SelectQuestionProps) => {
                 </div>
 				<div className="col-lg-4 col-md-6 col-12" onClick={() => onChange(QuestionTypeEnum.TRUEFALSETYPE)}>
                     <QuestionType type={6} />
+                </div>
+				<div className="col-lg-4 col-md-6 col-12" onClick={() => onChange(QuestionTypeEnum.OPINIONCASE)}>
+                    <QuestionType type={7} />
+                </div>
+				<div className="col-lg-4 col-md-6 col-12" onClick={() => onChange(QuestionTypeEnum.CODINGTYPE)}>
+                    <QuestionType type={8} />
                 </div>
 			</div>
 		</div>

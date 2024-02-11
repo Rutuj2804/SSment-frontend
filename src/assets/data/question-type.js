@@ -23,4 +23,12 @@ export const questionTypeData = [
         name: "True/False Type Question",
         image: "",
     },
+    {
+        name: "Opinion Type Question",
+        image: "",
+    },
+    {
+        name: "Coding Type Question",
+        image: "",
+    },
 ]
