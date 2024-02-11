@@ -1,18 +1,43 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setBreadcrumps } from "../../store/breadcrumps/slice";
 import { useNavigate } from "react-router-dom";
 import { Paper } from "../../components/paper";
-import { Avatar } from "@mui/material";
-import { Button, Select } from "../../library";
-import OutlineButton from "../../library/button/OutlineButton";
+import { Avatar, Tab, Tabs } from "@mui/material";
+import { Button, Select, OutlineButton } from "../../library";
 
 const options = [
 	{ name: "Draft", value: 1 },
 	{ name: "Published", value: 1 },
 ];
 
+const Student = () => {
+	return (
+		<div className="student__Wrapper">
+			<div className="left">
+				<Avatar />
+				<div className="userdetails">
+					<h6>Rutuj Jeevan Bokade</h6>
+					<p>bokaderutuj36@gmail.com</p>
+				</div>
+			</div>
+			<div className="right">
+				<OutlineButton>View Profile</OutlineButton>
+				<Button>View Responses</Button>
+				<span></span>
+				<h4 className="pass">64%</h4>
+			</div>
+		</div>
+	)
+}
+
 const TestDetail = () => {
+	const [value, setValue] = useState(0);
+
+	const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+		setValue(newValue);
+	};
+
 	const dispatch = useDispatch();
 
 	const navigate = useNavigate();
@@ -64,8 +89,31 @@ const TestDetail = () => {
 								className="testDetails__Status"
 							/>
 							<div className="vr"></div>
-							<OutlineButton onClick={() => navigate("/test/questions/:id")}>Questions</OutlineButton>
-							<Button onClick={() => navigate("/tests/create")}>Edit Test</Button>
+							<OutlineButton
+								onClick={() => navigate("/test/questions/:id")}
+							>
+								Questions
+							</OutlineButton>
+							<Button onClick={() => navigate("/tests/create")}>
+								Edit Test
+							</Button>
+						</div>
+					</div>
+					<div className="body">
+						<Tabs
+							value={value}
+							onChange={handleChange}
+						>
+							<Tab label="Students (202)" />
+							<Tab label="Batches (3)" />
+						</Tabs>
+
+						<div className="testDetail__Tab1Students">
+							<Student />
+							<Student />
+							<Student />
+							<Student />
+							<Student />
 						</div>
 					</div>
 				</div>

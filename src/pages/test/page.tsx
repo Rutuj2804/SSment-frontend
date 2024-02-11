@@ -14,65 +14,6 @@ enum Tabs {
 	"COMPLETED" = 3,
 }
 
-const columns: GridColDef[] = [
-	{
-		field: "testName",
-		headerName: "Title",
-		flex: 1,
-	},
-	{
-		field: "batches",
-		headerName: "Batches",
-		width: 150,
-		align: "center",
-		headerAlign: "center",
-	},
-	{
-		field: "status",
-		headerName: "Status",
-		width: 110,
-		align: "center",
-		headerAlign: "center",
-		renderCell: (params) => (
-			<div className="activetag">Active</div>
-		)
-	},
-	{
-		field: "students",
-		headerName: "Students",
-		headerAlign: "center",
-		width: 110,
-		align: "center",
-	},
-	{
-		field: "date",
-		headerName: "Date",
-		headerAlign: "center",
-		width: 110,
-		align: "center",
-	},
-	{
-		field: "time",
-		headerName: "Time",
-		headerAlign: "center",
-		width: 110,
-		align: "center",
-	},
-	{
-		field: "actions",
-		headerName: "Actions",
-		headerAlign: "center",
-		width: 180,
-		align: "center",
-		renderCell: (params) => (
-			<div className="d-flex gap-2">
-				<IconButton size="small"><EditRounded /></IconButton>
-				<IconButton size="small"><DeleteRounded /></IconButton>
-			</div>
-		)
-	},
-];
-
 const rows = [
 	{ id: 1, students: 300, date: "21 Jan, 2024", time: "11:00 PM", testName: "Jon", batches: 4 },
 	{ id: 2, students: 100, date: "2 Feb, 2024", time: "12:00 PM", testName: "Cersei", batches: 3 },
@@ -109,6 +50,66 @@ const Test = () => {
 			})
 		);
 	}, [dispatch]);
+
+	const columns: GridColDef[] = [
+		{
+			field: "testName",
+			headerName: "Title",
+			flex: 1,
+			renderCell: (params) => <div onClick={() => navigate(`/test/123`)}>{params.row.testName}</div>
+		},
+		{
+			field: "batches",
+			headerName: "Batches",
+			width: 150,
+			align: "center",
+			headerAlign: "center",
+		},
+		{
+			field: "status",
+			headerName: "Status",
+			width: 110,
+			align: "center",
+			headerAlign: "center",
+			renderCell: (params) => (
+				<div className="activetag">Active</div>
+			)
+		},
+		{
+			field: "students",
+			headerName: "Students",
+			headerAlign: "center",
+			width: 110,
+			align: "center",
+		},
+		{
+			field: "date",
+			headerName: "Date",
+			headerAlign: "center",
+			width: 110,
+			align: "center",
+		},
+		{
+			field: "time",
+			headerName: "Time",
+			headerAlign: "center",
+			width: 110,
+			align: "center",
+		},
+		{
+			field: "actions",
+			headerName: "Actions",
+			headerAlign: "center",
+			width: 180,
+			align: "center",
+			renderCell: (params) => (
+				<div className="d-flex gap-2">
+					<IconButton size="small"><EditRounded /></IconButton>
+					<IconButton size="small"><DeleteRounded /></IconButton>
+				</div>
+			)
+		},
+	];
 
 	return (
 		<div className="test__Wrapper">

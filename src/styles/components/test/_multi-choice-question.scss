@@ -1,0 +1,45 @@
+.multipleChoice__Wrapper {
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        h5 {
+            margin-bottom: 0%;
+        }
+        .right {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+    }
+    .body {
+        .multipleChoice__AddOption {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px dashed $blue;
+            padding: 7px;
+            border-radius: 5px;
+            color: $blue;
+            cursor: pointer;
+            h5 {
+                margin-bottom: 0%;
+            }
+        }
+    }
+    .options {
+        margin-top: 20px;
+        .options__Wrapper {
+            // border: 1px solid $gray;
+            padding: 10px 20px;
+            box-shadow: $shadow-light;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            .options__Header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+        }
+    }
+}

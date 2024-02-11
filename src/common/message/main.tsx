@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { sidebarLayout } from "../../store/settings/types";
+import { removeMessage } from "../../store/messages/slice";
 
 interface CMessageUnit {
     text: string;
@@ -16,7 +17,7 @@ const MessageUnit = ({ text, id, type }: CMessageUnit) => {
     const dispatch = useDispatch()
 
     useEffect(()=>{
-        // setTimeout(()=>dispatch(removeMessage(id)), 10000)
+        setTimeout(()=>dispatch(removeMessage(id)), 10000)
     }, [dispatch, id])
 
     return (
@@ -27,7 +28,7 @@ const MessageUnit = ({ text, id, type }: CMessageUnit) => {
         >
             <div className="text">{text}</div>
             <div className="close">
-                <IconButton size="small">
+                <IconButton size="small" onClick={()=>dispatch(removeMessage(id))}>
                     <CloseRounded />
                 </IconButton>
             </div>
@@ -39,11 +40,7 @@ const Messages = () => {
 
     const sidebar = useSelector((state:RootState)=> state.settings.sidebar)
 
-    const messages = [{
-        _id: "1",
-        text: "Successfully started the application",
-        type: "SUCCESS"
-    }]
+    const messages = useSelector((state: RootState) => state.messages.messages)
 
     return (
         <div className={`messages__Wrapper ${sidebar === sidebarLayout[0] ? "left" : "right"}`}>

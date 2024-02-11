@@ -1,0 +1,15 @@
+.shortAnswer__Wrapper {
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        h5 {
+            margin-bottom: 0%;
+        }
+        .right {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+    }
+}
