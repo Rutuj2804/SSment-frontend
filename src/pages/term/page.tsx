@@ -267,7 +267,7 @@ const Term = () => {
 								}
 								onClick={() => setActiveTab(Tabs.DELETED)}
 							>
-								Deleted
+								Completed
 							</Button>
 						</div>
 						<div className="right">
