@@ -46,7 +46,7 @@ const AddQuestion = () => {
 	useEffect(() => {
 		dispatch(
 			setBreadcrumps({
-				name: ["General", "Test", "Add Questions"],
+				name: ["General", "Test", "Test Awesome", "Add Questions"],
 				link: "/test/questions/:id",
 			})
 		);

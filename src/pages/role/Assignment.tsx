@@ -220,7 +220,7 @@ const Assignments = () => {
 	useEffect(() => {
 		dispatch(
 			setBreadcrumps({
-				name: ["Roles", "Role Assignment"],
+				name: ["Responsibilities", "Role Assignment"],
 				link: "/assignments",
 			})
 		);

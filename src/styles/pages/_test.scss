@@ -1,4 +1,14 @@
 .test__Wrapper {
+    .test__Header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .right {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+    }
     .test__GridArea {
         .test__TabArea {
             display: flex;

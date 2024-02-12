@@ -213,7 +213,7 @@ const Roles = () => {
 	useEffect(() => {
 		dispatch(
 			setBreadcrumps({
-				name: ["Roles", "Role Definition"],
+				name: ["Responsibilities", "Role Definition"],
 				link: "/roles",
 			})
 		);
