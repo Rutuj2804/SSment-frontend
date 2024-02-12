@@ -4,7 +4,12 @@ import { setBreadcrumps } from "../../store/breadcrumps/slice";
 import { Paper } from "../../components/paper";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { IconButton } from "@mui/material";
-import { CloudDownload, DeleteRounded, EditRounded, FilterListRounded } from "@mui/icons-material";
+import {
+	CloudDownload,
+	DeleteRounded,
+	EditRounded,
+	FilterListRounded,
+} from "@mui/icons-material";
 import { Button, OutlineButton, Select } from "../../library";
 import { useNavigate } from "react-router-dom";
 
@@ -147,21 +152,33 @@ const columns: GridColDef[] = [
 ];
 
 const options = [
-    { name: "Test Awesome", value: "1" },
-    { name: "General Coding", value: "2" }
-]
+	{ name: "Test Awesome", value: "1" },
+	{ name: "General Coding", value: "2" },
+];
 
 const batchOptions = [
-    { name: "All Batches", value: "0" },
-    { name: "Batch Awesome", value: "1" },
-    { name: "Batch Coding", value: "2" }
-]
+	{ name: "All Batches", value: "0" },
+	{ name: "Batch Awesome", value: "1" },
+	{ name: "Batch Coding", value: "2" },
+];
 
 const resultOptions = [
-    { name: "All", value: "0" },
-    { name: "Passed", value: "1" },
-    { name: "Failed", value: "2" }
-]
+	{ name: "All", value: "0" },
+	{ name: "Passed", value: "1" },
+	{ name: "Failed", value: "2" },
+];
+
+const malpracticeOptions = [
+	{ name: "All", value: "0" },
+	{ name: "No Detection", value: "1" },
+	{ name: "Detected", value: "2" },
+];
+
+const statusOptions = [
+	{ name: "All", value: "0" },
+	{ name: "Not Completed", value: "1" },
+	{ name: "Complted", value: "2" },
+];
 
 const Result = () => {
 	const [filter, setFilter] = useState(false);
@@ -183,43 +200,69 @@ const Result = () => {
 				<div className="test__Header">
 					<h4>My Results</h4>
 					<div className="right">
-						<OutlineButton startIcon={<FilterListRounded />} onClick={() => setFilter((v) => !v)}>
+						<OutlineButton
+							startIcon={<FilterListRounded />}
+							onClick={() => setFilter((v) => !v)}
+						>
 							Filters (2)
 						</OutlineButton>
 						<Button startIcon={<CloudDownload />}>Download</Button>
 					</div>
 				</div>
-				{filter && <div className="test__Filters">
-                    <div className="row">
-                        <div className="col-lg-4 col-md-4 col-12">
-                            <Select
-                                options={options}
-                                name="name"
-                                value="value"
-                                selected={"1"}
-                                label="Test"
-                            />
-                        </div>
-                        <div className="col-lg-4 col-md-4 col-12">
-                            <Select
-                                options={batchOptions}
-                                name="name"
-                                value="value"
-                                selected={"0"}
-                                label="Batch"
-                            />
-                        </div>
-                        <div className="col-lg-4 col-md-4 col-12">
-                            <Select
-                                options={resultOptions}
-                                name="name"
-                                value="value"
-                                selected={"1"}
-                                label="Result Type"
-                            />
-                        </div>
-                    </div>
-                    </div>}
+				{filter && (
+					<div className="test__Filters my-2">
+						<div className="row">
+							<div className="col-lg-4 col-md-4 col-12 mb-2">
+								<Select
+									options={options}
+									name="name"
+									value="value"
+									selected={"1"}
+									label="Test"
+								/>
+							</div>
+							<div className="col-lg-4 col-md-4 col-12 mb-2">
+								<Select
+									options={batchOptions}
+									name="name"
+									value="value"
+									selected={"0"}
+									label="Batch"
+								/>
+							</div>
+							<div className="col-lg-4 col-md-4 col-12 mb-2">
+								<Select
+									options={resultOptions}
+									name="name"
+									value="value"
+									selected={"1"}
+									label="Result Type"
+								/>
+							</div>
+							<div className="col-lg-4 col-md-4 col-12 mb-2">
+								<Select
+									options={malpracticeOptions}
+									name="name"
+									value="value"
+									selected={"1"}
+									label="Malpractice Type"
+								/>
+							</div>
+							<div className="col-lg-4 col-md-4 col-12 mb-2">
+								<Select
+									options={statusOptions}
+									name="name"
+									value="value"
+									selected={"1"}
+									label="Status Type"
+								/>
+							</div>
+						</div>
+						<div className="d-flex justify-content-end">
+							<Button onClick={() => setFilter(false)}>Apply Filters</Button>
+						</div>
+					</div>
+				)}
 				<div className="test__GridArea mt-3">
 					<div className="test__Grid mt-3">
 						<DataGrid
