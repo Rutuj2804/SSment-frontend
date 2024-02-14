@@ -8,6 +8,7 @@ import { ContactUs, ForgotPassword, Login } from "../pages/authentication";
 import { CreateRole, Assignments, Roles } from "../pages/role";
 import { CreateTerm, Term } from "../pages/term";
 import { EditProfile, Logout, Profile, ResetPassword } from "../pages/profile";
+import { AttemptTest, EndTest, StartTest, TermsAndCondition } from "../pages/attempt";
 
 export const regularRoutes = [
     { path: "/dashboard", element: <Dashboard /> },
@@ -45,4 +46,9 @@ export const authRoutes = [
     // { path: "/register", element: <Register /> },
     { path: "/contact-us", element: <ContactUs /> },
     { path: "/forgot-password", element: <ForgotPassword /> },
+
+    { path: "/attempt-test/:id", element: <AttemptTest /> },
+    { path: "/start-test/:id", element: <StartTest /> },
+    { path: "/terms-and-conditions/:id", element: <TermsAndCondition /> },
+    { path: "/end-test/:id", element: <EndTest /> },
 ]
