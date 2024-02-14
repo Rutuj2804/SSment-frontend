@@ -1,5 +1,5 @@
 import React from "react";
-import { Checkbox, Input, Textarea } from "../../library";
+import { Checkbox, Input, RichTextEditor, Textarea } from "../../library";
 import { CreateTestFormDataInterface } from "../../pages/test";
 
 interface TermsAndConditionProps {
@@ -11,12 +11,15 @@ interface TermsAndConditionProps {
 		e: React.ChangeEvent<HTMLInputElement>,
 		c: boolean
 	) => void;
+	setDescription: any;
+	description: string;
 }
 
 const TermsAndCondition = ({
 	formData,
 	onChange,
 	onCheckboxChange,
+	description, setDescription
 }: TermsAndConditionProps) => {
 	return (
 		<div className="row">
@@ -52,13 +55,13 @@ const TermsAndCondition = ({
 						/>
 					</div>
 					<div className="col-12">
-						<Textarea
+						<RichTextEditor
 							name="termsAndConditionsDescription"
 							label="Terms & Conditions Description *"
 							placeholder="Description"
-							rows={6}
-							value={formData.termsAndConditionsDescription}
-							onChange={onChange}
+							// rows={6}
+							value={description}
+							onChange={setDescription}
 						/>
 					</div>
 					<div className="col-lg-6 col-md-6 col-12">

@@ -25,12 +25,8 @@ export interface CreateBatchFormData {
 }
 
 const CreateBatch = () => {
-	const [formData, setFormData] = useState({
-		title: "",
-		description: "",
-	});
-
-	const { title, description } = formData;
+	const [title, setTitle] = useState("");
+	const [description, setDescription] = useState("");
 
 	const navigate = useNavigate();
 
@@ -40,10 +36,6 @@ const CreateBatch = () => {
 		e.preventDefault();
 		navigate("/batch/123");
 	};
-
-	const onChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-		setFormData(v=>({ ...v, [e.target.name]: e.target.value }))
-	}
 
 	useEffect(() => {
 		dispatch(
@@ -84,7 +76,13 @@ const CreateBatch = () => {
 					submitButtonText="Proceed to Payment"
 					controller={controller}
 					components={[
-						<BasicInformation key={1} formData={formData} onChange={onChange} />,
+						<BasicInformation
+							key={1}
+							title={title}
+							description={description}
+							setDescription={setDescription}
+							setTitle={setTitle}
+						/>,
 						<AddParticipants key={2} />,
 						<SelectPlan key={3} />,
 						<PaymentAndConfirmation key={4} />,

@@ -6,7 +6,7 @@ import { Button } from "../../library";
 import { Paper } from "../../components/paper";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { IconButton } from "@mui/material";
-import { DeleteRounded, EditRounded } from "@mui/icons-material";
+import { AddRounded, CloudDownloadRounded, DeleteRounded, EditRounded } from "@mui/icons-material";
 
 const columns: GridColDef[] = [
 	{
@@ -233,10 +233,10 @@ const Roles = () => {
 							</Button>
 						</div>
 						<div className="right">
-							<Button onClick={() => navigate("/roles/create")}>
-								Add +
+							<Button startIcon={<AddRounded />} onClick={() => navigate("/roles/create")}>
+								Add
 							</Button>
-							<Button>Download</Button>
+							<Button startIcon={<CloudDownloadRounded />}>Download</Button>
 						</div>
 					</div>
 					<div className="test__Grid mt-3">

@@ -1,12 +1,14 @@
-import { Input, Textarea } from "../../library";
+import { Input, RichTextEditor, Textarea } from "../../library";
 import { CreateTestFormDataInterface } from "../../pages/test";
 
 interface BasicInformationProps {
     formData: CreateTestFormDataInterface,
     onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+	setDescription: any;
+	description: string;
 }
 
-const BasicInformation = ({ formData, onChange }: BasicInformationProps) => {
+const BasicInformation = ({ formData, onChange, description, setDescription }: BasicInformationProps) => {
 	return (
 		<>
 			<div className="col-12">
@@ -21,14 +23,12 @@ const BasicInformation = ({ formData, onChange }: BasicInformationProps) => {
 				/>
 			</div>
 			<div className="col-12">
-				<Textarea
-					name="description"
+				<RichTextEditor
 					label="Description *"
 					placeholder="Description"
-					rows={7}
-					required
-					value={formData.description}
-					onChange={onChange}
+					// rows={7}
+					value={description}
+					onChange={setDescription}
 				/>
 			</div>
 		</>

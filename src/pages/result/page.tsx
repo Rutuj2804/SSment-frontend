@@ -257,7 +257,8 @@ const Result = () => {
 								/>
 							</div>
 						</div>
-						<div className="d-flex justify-content-end">
+						<div className="d-flex justify-content-end gap-2">
+							<OutlineButton onClick={() => setFilter(false)}>Clear Filters</OutlineButton>
 							<Button onClick={() => setFilter(false)}>Apply Filters</Button>
 						</div>
 					</div>

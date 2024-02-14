@@ -23,7 +23,6 @@ const steps = [
 
 export interface CreateTestFormDataInterface {
 	title: string;
-	description: string;
 	timeLimit: number;
 	bufferTime: number;
 	autoScore: boolean;
@@ -33,7 +32,6 @@ export interface CreateTestFormDataInterface {
 	useCustomTermsAndConditions: boolean;
 	useDefaultTermsAndConditions: boolean;
 	termsAndConditionsLabel: string;
-	termsAndConditionsDescription: string;
 	termsAndConditionsCheckboxLabel: string;
 	startTestButton: string;
 	passFail: boolean;
@@ -45,7 +43,6 @@ export interface CreateTestFormDataInterface {
 const CreateTest = () => {
 	const [formData, setFormData] = useState<CreateTestFormDataInterface>({
 		title: "",
-		description: "",
 		timeLimit: 0,
 		bufferTime: 0,
 		autoScore: false,
@@ -55,7 +52,6 @@ const CreateTest = () => {
 		useCustomTermsAndConditions: true,
 		useDefaultTermsAndConditions: false,
 		termsAndConditionsLabel: "Terms & Conditions",
-		termsAndConditionsDescription: "",
 		termsAndConditionsCheckboxLabel: "I agree to terms & conditions",
 		startTestButton: "Start Test",
 		passFail: true,
@@ -64,13 +60,14 @@ const CreateTest = () => {
 		failingMessage: "",
 	});
 
+	const [description, setDescription] = useState("")
+	const [termsAndConditionsDescription, setTermsAndConditionsDescription] = useState("")
+
 	const {
 		title,
-		description,
 		timeLimit,
 		bufferTime,
 		termsAndConditionsLabel,
-		termsAndConditionsDescription,
 		termsAndConditionsCheckboxLabel,
 		startTestButton,
 		passingPoints,
@@ -178,6 +175,8 @@ const CreateTest = () => {
 							key={1}
 							formData={formData}
 							onChange={onChange}
+							setDescription={setDescription}
+							description={description}
 						/>,
 						<Configuration
 							key={2}
@@ -190,6 +189,8 @@ const CreateTest = () => {
 							formData={formData}
 							onChange={onChange}
 							onCheckboxChange={onCheckboxChange}
+							setDescription={setTermsAndConditionsDescription}
+							description={termsAndConditionsDescription}
 						/>,
 						<EndScreen
 							key={4}

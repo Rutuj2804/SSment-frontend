@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { setBreadcrumps } from "../../store/breadcrumps/slice";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { IconButton } from "@mui/material";
-import { DeleteRounded, EditRounded } from "@mui/icons-material";
+import { AddRounded, CloudDownloadRounded, DeleteRounded, EditRounded } from "@mui/icons-material";
 
 enum Tabs {
 	"ACTIVE" = 1,
@@ -271,10 +271,10 @@ const Term = () => {
 							</Button>
 						</div>
 						<div className="right">
-							<Button onClick={() => navigate("/terms/create")}>
-								Add +
+							<Button startIcon={<AddRounded />} onClick={() => navigate("/terms/create")}>
+								Add
 							</Button>
-							<Button>Download</Button>
+							<Button startIcon={<CloudDownloadRounded />}>Download</Button>
 						</div>
 					</div>
 					<div className="test__Grid mt-3">

@@ -5,7 +5,7 @@ import { Paper } from "../../components/paper";
 import { Button } from "../../library";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { IconButton } from "@mui/material";
-import { DeleteRounded, EditRounded } from "@mui/icons-material";
+import { AddRounded, CloudDownloadRounded, DeleteRounded, EditRounded } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 
 enum Tabs {
@@ -152,8 +152,8 @@ const Test = () => {
 							</Button>
 						</div>
 						<div className="right">
-							<Button onClick={()=>navigate('/tests/create')}>Add +</Button>
-							<Button>Download</Button>
+							<Button startIcon={<AddRounded />} onClick={()=>navigate('/tests/create')}>Add</Button>
+							<Button startIcon={<CloudDownloadRounded />} >Download</Button>
 						</div>
 					</div>
 					<div className="test__Grid mt-3">
