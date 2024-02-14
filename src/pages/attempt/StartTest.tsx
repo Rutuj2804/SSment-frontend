@@ -67,11 +67,11 @@ const StartTest = () => {
 						</div>
 					</div>
 				</div>
-				<div className="testDetails__Message testDetails__Warning">
+				<div className="layoutMessage__Message layoutMessage__Warning">
 					<WarningRounded />
 					<p>Contact the Administrator if you are not able to see correct the test.</p>
 				</div>
-				<div className="testDetails__Message testDetails__Danger">
+				<div className="layoutMessage__Message layoutMessage__Danger">
 					<DangerousRounded />
 					<p>You are not authorized to attempt this test. Please contact the Administrator for more information.</p>
 				</div>

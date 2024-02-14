@@ -25,7 +25,7 @@ const CustomStepper = ({ steps, onSubmit, components, submitButtonText, controll
 
     const navigation = (jumpType: JumpType) => {
         if(jumpType === JumpType.NEXT) {
-            const proceedConfirmation = controller ? controller(activeStep) : null;
+            const proceedConfirmation = controller ? controller(activeStep) : true;
     
             if(!proceedConfirmation) return; 
 
@@ -44,7 +44,7 @@ const CustomStepper = ({ steps, onSubmit, components, submitButtonText, controll
 				))}
 			</Stepper>
 
-			<div className="createTest__Form">
+			<div className="stepper__Form">
 				{components?.map((c, i) => activeStep === i && c)}
 			</div>
 

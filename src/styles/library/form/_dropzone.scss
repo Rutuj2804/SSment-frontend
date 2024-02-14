@@ -1,0 +1,10 @@
+.dropzone__Wrapper {
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px dashed $gray;
+    padding: 40px;
+    border-radius: 4px;
+}

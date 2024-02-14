@@ -39,3 +39,19 @@ p {
     border-radius: 4px;
     padding: 4px;
 }
+
+.layoutMessage__Message {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 7px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    &.layoutMessage__Warning {
+        background-color: $yellow;
+    }
+    &.layoutMessage__Danger {
+        background-color: $red;
+        color: $white;
+    }
+}
