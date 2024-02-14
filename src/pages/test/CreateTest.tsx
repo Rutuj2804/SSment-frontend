@@ -1,19 +1,96 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setBreadcrumps } from "../../store/breadcrumps/slice";
 import { Paper } from "../../components/paper";
-import { Button, Checkbox, Input, Select, Textarea } from "../../library";
 import { useNavigate } from "react-router-dom";
+import { Stepper } from "../../components/stepper";
+import { setMessage } from "../../store/messages/slice";
+import {
+	BasicInformation,
+	Configuration,
+	Confirmation,
+	EndScreen,
+	TermsAndCondition,
+} from "../../components/test";
 
-const options = [
-	{ name: "Single Pager", value: 1 },
-	{ name: "Multi Pager", value: 2 }
-]
+const steps = [
+	"Basic Information",
+	"Configurations",
+	"Terms & Conditions",
+	"End Screen",
+	"Confirmation",
+];
+
+export interface CreateTestFormDataInterface {
+	title: string;
+	description: string;
+	timeLimit: number;
+	bufferTime: number;
+	autoScore: boolean;
+	randomizeQuestions: boolean;
+	showResultOnceCompleted: boolean;
+	testStyle: number;
+	useCustomTermsAndConditions: boolean;
+	useDefaultTermsAndConditions: boolean;
+	termsAndConditionsLabel: string;
+	termsAndConditionsDescription: string;
+	termsAndConditionsCheckboxLabel: string;
+	startTestButton: string;
+	passFail: boolean;
+	passingPoints: number;
+	passingMessage: string;
+	failingMessage: string;
+}
 
 const CreateTest = () => {
+	const [formData, setFormData] = useState<CreateTestFormDataInterface>({
+		title: "",
+		description: "",
+		timeLimit: 0,
+		bufferTime: 0,
+		autoScore: false,
+		randomizeQuestions: false,
+		showResultOnceCompleted: false,
+		testStyle: 2,
+		useCustomTermsAndConditions: true,
+		useDefaultTermsAndConditions: false,
+		termsAndConditionsLabel: "Terms & Conditions",
+		termsAndConditionsDescription: "",
+		termsAndConditionsCheckboxLabel: "I agree to terms & conditions",
+		startTestButton: "Start Test",
+		passFail: true,
+		passingPoints: 30,
+		passingMessage: "",
+		failingMessage: "",
+	});
+
+	const {
+		title,
+		description,
+		timeLimit,
+		bufferTime,
+		termsAndConditionsLabel,
+		termsAndConditionsDescription,
+		termsAndConditionsCheckboxLabel,
+		startTestButton,
+		passingPoints,
+		passingMessage,
+		failingMessage,
+	} = formData;
+
+	const onChange = (
+		e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+	) => {
+		setFormData({ ...formData, [e.target.name]: e.target.value });
+	};
+
+	const onCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>, c: boolean) => {
+		setFormData({ ...formData, [e.target.name]: c });
+	}
+
 	const dispatch = useDispatch();
 
-	const navigate = useNavigate()
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		dispatch(
@@ -25,118 +102,106 @@ const CreateTest = () => {
 	}, [dispatch]);
 
 	const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-		e.preventDefault()
-		navigate("/test/123")
-	}
+		e.preventDefault();
+		navigate("/test/123");
+	};
+
+	const controller = (i: number) => {
+		var proceedAllowed = true;
+		if (i === 0) {
+			if (title === "" || description === "") {
+				dispatch(
+					setMessage({
+						_id: Date.now().toString(),
+						text: "Please fill out the important fields.",
+						type: "ERROR",
+					})
+				);
+				proceedAllowed = false;
+			}
+		} else if (i === 1) {
+			if (timeLimit <= 0 || bufferTime <= 0) {
+				dispatch(
+					setMessage({
+						_id: Date.now().toString(),
+						text: "Please fill out the important fields.",
+						type: "ERROR",
+					})
+				);
+				proceedAllowed = false;
+			}
+		} else if (i === 2) {
+			if (
+				termsAndConditionsLabel === "" ||
+				termsAndConditionsDescription === "" ||
+				termsAndConditionsCheckboxLabel === "" ||
+				startTestButton === ""
+			) {
+				dispatch(
+					setMessage({
+						_id: Date.now().toString(),
+						text: "Please fill out the important fields.",
+						type: "ERROR",
+					})
+				);
+				proceedAllowed = false;
+			}
+		} else if (i === 3) {
+			if (
+				passingPoints <= 0 ||
+				passingMessage === "" ||
+				failingMessage === ""
+			) {
+				dispatch(
+					setMessage({
+						_id: Date.now().toString(),
+						text: "Please fill out the important fields.",
+						type: "ERROR",
+					})
+				);
+				proceedAllowed = false;
+			}
+		}
+
+		if (!proceedAllowed) return false;
+		return true;
+	};
 
 	return (
 		<div className="createTest__Wrapper">
 			<Paper className="p-3">
-				<div className="createTest__Header">
-					<h4>Create Test</h4>
-				</div>
-				<form className="mt-3" onSubmit={onSubmit}>
-					<div className="row">
-						<div className="col-12">
-							<Input
-								name="title"
-								label="Title"
-								placeholder="Title"
-								required
-								autoFocus
-							/>
-						</div>
-						<div className="col-12">
-							<Textarea
-								name="Description"
-								label="Description"
-								placeholder="Description"
-								rows={5}
-								required
-							/>
-						</div>
-						<div className="col-lg-6 col-md-6 col-12">
-							<Input
-								name="Time Limit"
-								label="Time Limit (in mins)"
-								placeholder="Time Limit"
-								required
-							/>
-						</div>
-						<div className="col-lg-6 col-md-6 col-12">
-							<Input
-								name="Buffer Time"
-								label="Buffer Time (in mins)"
-								placeholder="Buffer Time"
-								required
-							/>
-						</div>
-						<div className="col-lg-6 col-md-6 col-12">
-							<Input
-								name="Passing Message"
-								label="Passing Message"
-								placeholder="Passing Message"
-								required
-							/>
-						</div>
-						<div className="col-lg-6 col-md-6 col-12">
-							<Input
-								name="Failing Message"
-								label="Failing Message"
-								placeholder="Failing Message"
-								required
-							/>
-						</div>
-						<div className="col-lg-6 col-md-6 col-12">
-							<Checkbox
-								name="Failing Message"
-								label="Pass & Fail"
-								description="Allows to automatically classify students based on Pass and Fail."
-							/>
-						</div>
-						<div className="col-lg-6 col-md-6 col-12">
-							<Input
-								name="Passing Points"
-								label="Passing Points"
-								placeholder="Passing Points"
-								required
-							/>
-						</div>
-						<div className="col-lg-6 col-md-6 col-12">
-							<Checkbox
-								name="Failing Message"
-								label="Auto Score"
-								description="Checking this will automatically calculate the score and generate the result."
-							/>
-						</div>
-						<div className="col-lg-6 col-md-6 col-12">
-							<Checkbox
-								name="Failing Message"
-								label="Show results once completed"
-								description="Displays results immediately after completing the test."
-							/>
-						</div>
-						<div className="col-lg-6 col-md-6 col-12">
-							<Checkbox
-								name="Failing Message"
-								label="Randomize Questions"
-								description="Presensts question randomly while attempting test."
-							/>
-						</div>
-						<div className="col-lg-6 col-md-6 col-12">
-							<Select
-								options={options}
-								name="name"
-								value="value"
-								selected={2}
-								label="Test Style"
-							/>
-						</div>
-						<div className="mt-3 d-flex justify-content-end">
-							<Button type="submit">Create Test</Button>
-						</div>
-					</div>
-				</form>
+				<Stepper
+					steps={steps}
+					onSubmit={onSubmit}
+					components={[
+						<BasicInformation
+							key={1}
+							formData={formData}
+							onChange={onChange}
+						/>,
+						<Configuration
+							key={2}
+							formData={formData}
+							onChange={onChange}
+							onCheckboxChange={onCheckboxChange}
+						/>,
+						<TermsAndCondition
+							key={3}
+							formData={formData}
+							onChange={onChange}
+							onCheckboxChange={onCheckboxChange}
+						/>,
+						<EndScreen
+							key={4}
+							formData={formData}
+							onChange={onChange}
+							onCheckboxChange={onCheckboxChange}
+						/>,
+						<Confirmation key={5} />,
+					]}
+					submitButtonText="Create Test"
+					controller={controller}
+				/>
 			</Paper>
 		</div>
 	);
