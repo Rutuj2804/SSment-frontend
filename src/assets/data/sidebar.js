@@ -54,7 +54,7 @@ export const sideBarData = [
             },
             {
                 name: "Batches",
-                link: "/batches",
+                link: "/admin/batches",
                 icon: <BsPersonCheck />,
                 notifications: 0,
                 matches: ["/faculties"],
