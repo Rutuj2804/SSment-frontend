@@ -11,7 +11,7 @@ import { setSidebar } from "../../store/layout/slice";
 import { RootState } from "../../store";
 import { Logo } from "../logo";
 import { Select } from "../../library";
-import { BsDiamondFill } from "react-icons/bs";
+import { BsBox } from "react-icons/bs";
 import Profile from "./Profile";
 import Notification from "./Notification";
 
@@ -41,7 +41,7 @@ const Navbar = () => {
 								name="name"
 								value="value"
 								selected={1}
-								startIcon={<BsDiamondFill />}
+								startIcon={<BsBox />}
 								className="p-0 m-0"
 							/>
 						</div>
@@ -54,7 +54,7 @@ const Navbar = () => {
 							name="name"
 							value="value"
 							selected={1}
-							startIcon={<BsDiamondFill />}
+							startIcon={<BsBox />}
 							className="p-0 m-0"
 						/>
 					)}

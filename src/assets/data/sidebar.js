@@ -1,11 +1,11 @@
 import {
-	BsGrid,
+	BsColumnsGap,
 	BsCollection,
 	BsBarChartLine,
 	BsAward,
-	BsPerson,
-	BsPersonCheck,
+	BsBook,
 	BsXDiamond,
+	BsBox,
 } from "react-icons/bs";
 
 export const sideBarData = [
@@ -15,7 +15,7 @@ export const sideBarData = [
 			{
 				name: "Dashboard",
 				link: "/dashboard",
-				icon: <BsGrid />,
+				icon: <BsColumnsGap />,
 				notifications: 0,
 				matches: ["/dashboard", "/profile"],
 			},
@@ -46,23 +46,23 @@ export const sideBarData = [
         title: "ADMINISTRATION",
         links: [
             {
-                name: "Institute",
+                name: "Institutes",
                 link: "/institutes",
-                icon: <BsPerson />,
+                icon: <BsBook />,
                 notifications: 0,
                 matches: ["/students"],
             },
             {
                 name: "Terms",
                 link: "/terms",
-                icon: <BsPerson />,
+                icon: <BsBox />,
                 notifications: 0,
                 matches: ["/students"],
             },
             {
                 name: "Batches",
                 link: "/admin/batches",
-                icon: <BsPersonCheck />,
+                icon: <BsCollection />,
                 notifications: 0,
                 matches: ["/faculties"],
             },
