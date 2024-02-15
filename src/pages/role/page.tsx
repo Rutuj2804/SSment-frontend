@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setBreadcrumps } from "../../store/breadcrumps/slice";
@@ -204,7 +204,6 @@ const rows = [
 ];
 
 const Roles = () => {
-	const [activeTab, setActiveTab] = useState();
 
 	const dispatch = useDispatch();
 

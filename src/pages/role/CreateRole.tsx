@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { setBreadcrumps } from "../../store/breadcrumps/slice";
 import { Button, Input, Select } from "../../library";
 import { Paper } from "../../components/paper";
@@ -16,8 +15,6 @@ const CreateRole = () => {
 	const [name, setName] = useState("");
 
 	const dispatch = useDispatch();
-
-	const navigate = useNavigate();
 
 	useEffect(() => {
 		dispatch(

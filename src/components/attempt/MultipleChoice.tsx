@@ -11,7 +11,7 @@ const MultipleChoice = () => {
                     Who will cook meth for me?
                 </h6>
 
-                <img src="https://positivechoices.org.au/pic/iLtr5JK8R7/4/methamphetamine" />
+                <img alt="reference-img" src="https://positivechoices.org.au/pic/iLtr5JK8R7/4/methamphetamine" />
 
                 <div className="multipleChoiceQuestion__OptionArea">
                     <div className="multipleChoiceQuestion__Option">

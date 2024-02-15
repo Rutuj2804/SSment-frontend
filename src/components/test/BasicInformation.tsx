@@ -1,4 +1,4 @@
-import { Input, RichTextEditor, Textarea } from "../../library";
+import { Input, RichTextEditor } from "../../library";
 import { CreateTestFormDataInterface } from "../../pages/test";
 
 interface BasicInformationProps {

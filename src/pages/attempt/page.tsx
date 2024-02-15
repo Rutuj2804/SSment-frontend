@@ -1,6 +1,5 @@
 import React from "react";
 import { Logo } from "../../common/logo";
-import { Avatar } from "@mui/material";
 import { MultipleChoice } from "../../components/attempt";
 import { Paper } from "../../components/paper";
 import { Button, OutlineButton } from "../../library";

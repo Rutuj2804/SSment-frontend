@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Button, Input, Select } from "../../library";
-import { AddRounded, CloseRounded } from "@mui/icons-material";
-import { Avatar } from "@mui/material";
+import { AddRounded } from "@mui/icons-material";
 import { UserCardSmall } from "../card";
 
 const options = [

@@ -1,6 +1,5 @@
 import React from "react";
-import { Input, RichTextEditor, Textarea } from "../../library";
-import { CreateBatchFormData } from "../../pages/batch";
+import { Input, RichTextEditor } from "../../library";
 
 interface BasicInformationProps {
 	title: string;

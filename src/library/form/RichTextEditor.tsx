@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import ReactQuill, { ReactQuillProps } from "react-quill";
 import "react-quill/dist/quill.snow.css";
 

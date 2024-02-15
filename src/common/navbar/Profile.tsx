@@ -1,4 +1,4 @@
-import { Avatar, Badge, IconButton, Tooltip } from "@mui/material";
+import { Avatar, IconButton, Tooltip } from "@mui/material";
 import { useRef } from "react";
 import { data } from "../../assets/data/profile";
 import { useDispatch, useSelector } from "react-redux";

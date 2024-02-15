@@ -4,7 +4,6 @@ import { useDispatch } from "react-redux";
 import { setBreadcrumps } from "../../store/breadcrumps/slice";
 import { Button, Input } from "../../library";
 import { PiEyeFill, PiEyeSlashFill } from "react-icons/pi";
-import { LockRounded } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 
 const ResetPassword = () => {

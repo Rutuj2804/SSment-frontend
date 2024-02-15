@@ -1,11 +1,9 @@
 import {
 	MenuRounded,
-	NotificationsRounded,
-	PersonRounded,
 	SearchRounded,
 	SettingsRounded,
 } from "@mui/icons-material";
-import { Badge, IconButton, Tooltip } from "@mui/material";
+import { IconButton, Tooltip } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { setSearch, setSidebar } from "../../store/layout/slice";
 import { RootState } from "../../store";

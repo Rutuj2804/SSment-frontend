@@ -1,5 +1,5 @@
 import React from "react";
-import { Checkbox, Input, RichTextEditor, Textarea } from "../../library";
+import { Checkbox, Input, RichTextEditor } from "../../library";
 import { CreateTestFormDataInterface } from "../../pages/test";
 
 interface TermsAndConditionProps {
