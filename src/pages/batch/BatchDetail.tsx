@@ -48,6 +48,7 @@ const BatchDetail = () => {
 				<div className="batchDetail__Actions">
 					<h6>Actions :</h6>
 					<div className="batchDetail__ActionButton">
+						<OutlineButton onClick={() => navigate("/batch/renew/123")}>Renew Batch</OutlineButton>
 						<OutlineButton>Delete</OutlineButton>
 						<Button onClick={() => navigate("/batch/edit/123")}>
 							Edit Batch
