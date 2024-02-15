@@ -220,7 +220,7 @@ const Assignments = () => {
 	useEffect(() => {
 		dispatch(
 			setBreadcrumps({
-				name: ["Responsibilities", "Role Assignment"],
+				name: ["Responsibilities", "Role Assigned"],
 				link: "/assignments",
 			})
 		);
@@ -240,7 +240,7 @@ const Assignments = () => {
 							</Button>
 						</div>
 						<div className="right">
-							<Button startIcon={<AddRounded />} onClick={() => navigate("/roles/create")}>
+							<Button startIcon={<AddRounded />} onClick={() => navigate("/assignments/create")}>
 								Add
 							</Button>
 							<Button startIcon={<CloudDownloadRounded />}>Download</Button>
