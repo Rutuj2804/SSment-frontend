@@ -46,6 +46,13 @@ export const sideBarData = [
         title: "ADMINISTRATION",
         links: [
             {
+                name: "Institute",
+                link: "/institutes",
+                icon: <BsPerson />,
+                notifications: 0,
+                matches: ["/students"],
+            },
+            {
                 name: "Terms",
                 link: "/terms",
                 icon: <BsPerson />,

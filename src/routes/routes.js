@@ -9,9 +9,13 @@ import { CreateRole, Assignments, Roles } from "../pages/role";
 import { CreateTerm, Term } from "../pages/term";
 import { EditProfile, Logout, Profile, ResetPassword } from "../pages/profile";
 import { AttemptTest, EndTest, StartTest, TermsAndCondition } from "../pages/attempt";
+import { CreateInstitute, Institute } from "../pages/institute";
 
 export const regularRoutes = [
     { path: "/dashboard", element: <Dashboard /> },
+
+    { path: "/institutes", element: <Institute /> },
+    { path: "/institutes/create", element: <CreateInstitute /> },
 
     { path: "/batches", element: <Batch /> },
     { path: "/admin/batches", element: <AdminBatch /> },

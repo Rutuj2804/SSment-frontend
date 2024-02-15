@@ -10,7 +10,7 @@ const Dropzone = ({ title, onChange } : DropzoneCP) => {
 
     const onDrop = useCallback((acceptedFiles: File[]) => {
         // Do something with the files
-        onChange ? onChange(acceptedFiles) : null
+        if(onChange) onChange(acceptedFiles)
     }, []);
 
     const { getRootProps, getInputProps, isDragActive } = useDropzone({

@@ -42,6 +42,7 @@ const CreateTerm = () => {
 					<div className="col-lg-6 col-md-6 col-12">
 						<Input
 							name="name"
+							label="Name"
 							placeholder="Name"
 							title="Name"
 							required
@@ -50,6 +51,7 @@ const CreateTerm = () => {
 					<div className="col-lg-6 col-md-6 col-12">
 						<Select 
 							options={options}
+							label="Institute"
 							name="name"
 							value="id"
 							selected={1}

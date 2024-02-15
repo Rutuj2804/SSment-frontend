@@ -1,0 +1,26 @@
+.userCardSmall__Wrapper{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid $gray;
+    padding: 7px;
+    border-radius: 4px;
+    margin-bottom: 7px;
+    .userCardSmall__AvatarDiv {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        .details {
+            p {
+                margin-bottom: 0%;
+                font-size: 12px;
+                color: $gray;
+            }
+            h6 {
+                margin-bottom: 0%;
+                @include single-line();
+                font-size: 14px;
+            }
+        }
+    }
+}
