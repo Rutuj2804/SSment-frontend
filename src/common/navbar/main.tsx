@@ -7,7 +7,7 @@ import {
 } from "@mui/icons-material";
 import { Badge, IconButton, Tooltip } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { setSidebar } from "../../store/layout/slice";
+import { setSearch, setSidebar } from "../../store/layout/slice";
 import { RootState } from "../../store";
 import { Logo } from "../logo";
 import { Select } from "../../library";
@@ -63,7 +63,7 @@ const Navbar = () => {
 			<div className="right">
 				<div className="search">
 					<Tooltip title="Search">
-						<IconButton>
+						<IconButton onClick={() => dispatch(setSearch(!layout.search))}>
 							<SearchRounded />
 						</IconButton>
 					</Tooltip>
