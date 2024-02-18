@@ -1,5 +1,5 @@
-.multipleChoiceQuestion__Wrapper {
-    .multipleChoiceQuestion__Left {
+.imageChoiceQuestion__Wrapper {
+    .imageChoiceQuestion__Left {
         img {
             height: 300px;
             width: auto;
@@ -10,14 +10,18 @@
             margin: 10px 0;
         }
     }
-    .multipleChoiceQuestion__Right {
+    .imageChoiceQuestion__Right {
         // border-left: 1px solid $gray;
-        .multipleChoiceQuestion__Option {
+        .imageChoiceQuestion__Option {
             padding: 7px;
             border: 1px solid $gray;
             border-radius: 4px;
             margin-bottom: 7px;
             font-size: 14px;
+            img {
+                height: 200px;
+                width: auto;
+            }
         }
     }
 }

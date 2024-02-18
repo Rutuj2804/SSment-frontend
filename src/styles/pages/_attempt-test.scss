@@ -1,54 +1,116 @@
 .attemptTest__Wrapper {
     .attemptTest__Body {
-        .attemptTest__Left {
+        position: fixed;
+        top: 0%;
+        left: 0%;
+        height: 100vh;
+        width: 100%;
+        .attemptTest__MainArea {
             position: absolute;
-            top: inherit;
-            left: 0%;
+            top: 0;
+            left: 0;
+            width: calc(100% - 300px);
             height: 100vh;
-            width: 300px;
-            background-color: $white;
-            overflow-y: auto;
-
-            @include scroll-bar();
-
-            .attemptTest__Logo {
+            .top {
                 display: flex;
-                justify-content: center;
+                justify-content: space-between;
                 align-items: center;
-                margin: 10px 0;
+                padding: 5px 10px;
+                .timer {
+                    display: flex;
+                    align-items: center;
+                    gap: 7px;
+                    span {
+                        font-weight: 500;
+                    }
+                    .timertab {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        height: 35px;
+                        width: 35px;
+                        border-radius: 4px;
+                        padding: 7px;
+                        border: 1px solid $gray;
+                        font-weight: 500;
+                        font-size: 14px;
+                        margin: 0%;
+                    }
+                }
             }
-
-            .attemptTest__Timer {
+            hr {
+                margin-top: 0%;
+                margin-bottom: 0px;
+                border-top: $light-blue solid;
+            }
+            .body {
+                padding: 20px;
+                height: calc(100vh - 115px);
+                overflow-y: auto;
+                @include scroll-bar();
+            }
+            .footer {
+                position: fixed;
+                bottom: 0%;
+                left: 0;
+                height: 60px;
+                width: calc(100% - 300px);
+                display: flex;
+                justify-content: flex-end;
+                align-items: center;
+                gap: 10px;
+                padding-right: 10px;
+            }
+        }
+        .attemptTest__Navigation {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 300px;
+            height: 100vh;
+            border-left: 1px solid $light-blue;
+            .top {
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                margin: 20px 0;
                 gap: 10px;
+                padding: 7px 0;
+                border-bottom: 1px solid $light-blue;
+                .details {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: flex-start;
+                }
                 h6 {
-                    text-transform: uppercase;
                     margin-bottom: 0%;
-                    font-weight: 400;
                 }
                 p {
                     margin-bottom: 0%;
-                    font-weight: 600;
+                    font-size: 12px;
+                    color: $gray;
                 }
             }
-            .attemptTest__QuestionPallete {
+            .middle {
+                height: calc(100vh - 250px);
+                overflow-y: auto;
+                @include scroll-bar();
+                padding: 20px 20px;
                 display: flex;
+                align-content: flex-start;
+                justify-content: center;
                 align-items: center;
                 flex-wrap: wrap;
-                gap: 10px;
-                margin: 0 20px;
-                .attemptTest__Question {
-                    height: 40px;
-                    width: 40px;
-                    border: 1px solid $gray;
+                gap: 7px;
+                border-bottom: 1px solid $light-blue;
+                .question {
+                    height: 35px;
+                    width: 35px;
+                    border-radius: 4px;
                     display: flex;
                     justify-content: center;
                     align-items: center;
-                    border-radius: 5px;
-                    font-weight: 600;
+                    border: 1px solid $gray;
+                    font-weight: 500;
                     cursor: pointer;
                     &.completed {
                         background-color: $green;
@@ -60,85 +122,52 @@
                         color: $white;
                         border: 1px solid $purple;
                     }
-                    &.completedmarked {
+                    &.markedcompleted {
                         background-color: $cyan;
-                        color: $white;
                         border: 1px solid $cyan;
+                        color: $white;
                     }
                 }
             }
-        }
-        .attemptTest__QuestionArea {
-            position: absolute;
-            top: 0;
-            left: 310px;
-            width: calc(100% - 620px);
-            padding: 10px;
-            .attemptTest__LayoutBox {
-                height: calc(100vh - 30px);
-                .attemptTest__Question {
-                    height: calc(100vh - 110px);
-                    overflow-y: auto;
-                    @include scroll-bar()
-                }
-            }
-            .attemptTest__Footer {
-                position: absolute;
-                bottom: 0px;
-                left: 10px;
+            .bottom {
+                padding: 10px 20px;
                 display: flex;
-                justify-content: flex-end;
-                width: calc(100% - 40px);
-                gap: 10px;
-                margin-bottom: 20px;
-            }
-        }
-        .attemptTest__Right {
-            position: absolute;
-            top: 0;
-            right: 0%;
-            width: 300px;
-            height: 100vh;
-            background-color: $white;
-            .attemptTest__Conventions {
-                margin: 10px 20px;
-                .convention {
+                flex-direction: column;
+                gap: 7px;
+                .unit {
                     display: flex;
                     align-items: center;
-                    gap: 10px;
-                    margin-bottom: 7px;
-                    div {
-                        height: 40px;
-                        width: 40px;
-                        border: 1px solid $gray;
-                        border-radius: 5px;
-                        font-weight: 600;
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                        &.completed {
-                            background-color: $green;
-                            color: $white;
-                            border: 1px solid $green;
-                        }
-                        &.marked {
-                            background-color: $purple;
-                            color: $white;
-                            border: 1px solid $purple;
-                        }
-                        &.completedmarked {
-                            background-color: $cyan;
-                            color: $white;
-                            border: 1px solid $cyan;
-                        }
+                    gap: 7px;
+                    span {
+                        font-size: 12px;
                     }
-                    p {
-                        font-size: 14px;
-                        margin: 0%;
+                }
+                .question {
+                    height: 35px;
+                    width: 35px;
+                    border-radius: 4px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    border: 1px solid $gray;
+                    font-weight: 500;
+                    &.completed {
+                        background-color: $green;
+                        color: $white;
+                        border: 1px solid $green;
+                    }
+                    &.marked {
+                        background-color: $purple;
+                        color: $white;
+                        border: 1px solid $purple;
+                    }
+                    &.markedcompleted {
+                        background-color: $cyan;
+                        border: 1px solid $cyan;
+                        color: $white;
                     }
                 }
             }
         }
     }
-    
 }

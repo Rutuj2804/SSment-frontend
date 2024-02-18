@@ -10,7 +10,8 @@ const initialState: LayoutState = {
     notifications: false,
     backdrop: false,
     popup: false,
-    search: false
+    search: false,
+    question: false
 };
 
 export const layoutSlice = createSlice({
@@ -30,6 +31,11 @@ export const layoutSlice = createSlice({
             state.backdrop = action.payload;
             state.popup = action.payload;
             state.search = action.payload;
+        },
+        setQuestion: (state, action: PayloadAction<boolean>) => {
+            state.backdrop = action.payload;
+            state.popup = action.payload;
+            state.question = action.payload;
         }
     },
 });
@@ -39,6 +45,7 @@ export const {
     setProfile,
     setNotifications,
     setSearch,
+    setQuestion,
 } = layoutSlice.actions;
 
 export default layoutSlice.reducer;

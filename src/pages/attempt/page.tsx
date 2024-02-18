@@ -1,175 +1,85 @@
 import React from "react";
-import { Logo } from "../../common/logo";
-import { MultipleChoice } from "../../components/attempt";
 import { Paper } from "../../components/paper";
+import { Logo } from "../../common/logo";
+import { Avatar } from "@mui/material";
+import { ImageChoice, MultipleChoice } from "../../components/attempt";
 import { Button, OutlineButton } from "../../library";
-import {
-	BookmarkBorderRounded,
-	ChevronLeftRounded,
-	ChevronRightRounded,
-} from "@mui/icons-material";
+import { BookmarkBorderRounded, ChevronLeftRounded, ChevronRightRounded, DoneRounded } from "@mui/icons-material";
 
 const AttemptTest = () => {
 	return (
 		<div className="attemptTest__Wrapper">
-			<div className="attemptTest__Body">
-				<div className="attemptTest__Left">
-					<div className="attemptTest__Logo">
+			<Paper className="attemptTest__Body">
+				<div className="attemptTest__MainArea">
+					<div className="top">
 						<Logo />
-					</div>
-					<div className="attemptTest__Timer">
-						<h6>Time Remaining:</h6>
-						<p>96:22 mins</p>
+						<div className="timer">
+							<div className="hours timertab">01</div>
+							<span>:</span>
+							<div className="mins timertab">20</div>
+							<span>:</span>
+							<div className="seconds timertab">36</div>
+							<span>hours</span>
+						</div>
 					</div>
 					<hr />
-					<div className="attemptTest__QuestionPallete">
-						<div className="attemptTest__Question completed">1</div>
-						<div className="attemptTest__Question marked">2</div>
-						<div className="attemptTest__Question completedmarked">
-							3
+					<div className="body">
+						<MultipleChoice />
+					</div>
+					<div className="footer">
+						<Button startIcon={<ChevronLeftRounded />}>Prev</Button>
+						<Button startIcon={<DoneRounded />}>Submit</Button>
+						<OutlineButton startIcon={<BookmarkBorderRounded />}>Mark for Review</OutlineButton>
+						<Button startIcon={<ChevronRightRounded />}>Next</Button>
+					</div>
+				</div>
+				<div className="attemptTest__Navigation">
+					<div className="top">
+						<Avatar />
+						<div className="details">
+							<h6>Rutuj Jeevan Bokade</h6>
+							<p>bokaderutuj36@gmail.com</p>
 						</div>
-						<div className="attemptTest__Question">4</div>
-						<div className="attemptTest__Question">5</div>
-						<div className="attemptTest__Question completed">6</div>
-						<div className="attemptTest__Question">7</div>
-						<div className="attemptTest__Question completed">8</div>
-						<div className="attemptTest__Question">9</div>
-						<div className="attemptTest__Question marked">10</div>
-						<div className="attemptTest__Question">11</div>
-						<div className="attemptTest__Question completedmarked">
-							12
+					</div>
+					<div className="middle">
+						<div className="question">1</div>
+						<div className="question marked">2</div>
+						<div className="question markedcompleted">3</div>
+						<div className="question completed">4</div>
+						<div className="question marked">5</div>
+						<div className="question markedcompleted">6</div>
+						<div className="question completed">7</div>
+						<div className="question">8</div>
+						<div className="question markedcompleted">9</div>
+						<div className="question completed">10</div>
+						<div className="question marked">11</div>
+						<div className="question">12</div>
+						<div className="question markedcompleted">13</div>
+						<div className="question completed">14</div>
+						<div className="question marked">15</div>
+						<div className="question markedcompleted">16</div>
+						<div className="question completed">17</div>
+					</div>
+					<div className="bottom">
+						<div className="unit">
+							<div className="question">1</div>
+							<span>Not Attempted</span>
 						</div>
-						<div className="attemptTest__Question completed">
-							13
+						<div className="unit">
+							<div className="question completed">1</div>
+							<span>Attempted</span>
 						</div>
-						<div className="attemptTest__Question marked">14</div>
-						<div className="attemptTest__Question completedmarked">
-							15
+						<div className="unit">
+							<div className="question marked">1</div>
+							<span>Marked for Review</span>
 						</div>
-						<div className="attemptTest__Question">16</div>
-						<div className="attemptTest__Question">17</div>
-						<div className="attemptTest__Question completed">
-							18
-						</div>
-						<div className="attemptTest__Question">19</div>
-						<div className="attemptTest__Question completed">
-							20
-						</div>
-						<div className="attemptTest__Question">21</div>
-						<div className="attemptTest__Question marked">22</div>
-						<div className="attemptTest__Question">23</div>
-						<div className="attemptTest__Question completedmarked">
-							24
-						</div>
-						<div className="attemptTest__Question completed">
-							25
-						</div>
-						<div className="attemptTest__Question completedmarked">
-							26
-						</div>
-						<div className="attemptTest__Question marked">27</div>
-						<div className="attemptTest__Question">28</div>
-						<div className="attemptTest__Question completed">
-							29
-						</div>
-						<div className="attemptTest__Question completedmarked">
-							30
-						</div>
-						<div className="attemptTest__Question">31</div>
-						<div className="attemptTest__Question marked">32</div>
-						<div className="attemptTest__Question marked">33</div>
-						<div className="attemptTest__Question ">34</div>
-						<div className="attemptTest__Question completed">
-							35
-						</div>
-						<div className="attemptTest__Question">36</div>
-						<div className="attemptTest__Question marked">37</div>
-						<div className="attemptTest__Question">38</div>
-						<div className="attemptTest__Question completedmarked">
-							39
-						</div>
-						<div className="attemptTest__Question completedmarked">
-							40
-						</div>
-						<div className="attemptTest__Question">41</div>
-						<div className="attemptTest__Question marked">42</div>
-						<div className="attemptTest__Question">43</div>
-						<div className="attemptTest__Question completedmarked">
-							44
-						</div>
-						<div className="attemptTest__Question completed">
-							45
-						</div>
-						<div className="attemptTest__Question completedmarked">
-							46
-						</div>
-						<div className="attemptTest__Question marked">47</div>
-						<div className="attemptTest__Question">48</div>
-						<div className="attemptTest__Question completed">
-							49
-						</div>
-						<div className="attemptTest__Question completedmarked">
-							50
-						</div>
-						<div className="attemptTest__Question">51</div>
-						<div className="attemptTest__Question marked">52</div>
-						<div className="attemptTest__Question marked">53</div>
-						<div className="attemptTest__Question ">54</div>
-						<div className="attemptTest__Question completed">
-							55
-						</div>
-						<div className="attemptTest__Question">56</div>
-						<div className="attemptTest__Question marked">57</div>
-						<div className="attemptTest__Question">58</div>
-						<div className="attemptTest__Question completedmarked">
-							59
-						</div>
-						<div className="attemptTest__Question completedmarked">
-							60
+						<div className="unit">
+							<div className="question markedcompleted">1</div>
+							<span>Attempted & Marked for Review</span>
 						</div>
 					</div>
 				</div>
-				<div className="attemptTest__QuestionArea">
-					<Paper className="p-3 attemptTest__LayoutBox">
-						<div className="attemptTest__Question">
-							<MultipleChoice />
-						</div>
-						<div className="attemptTest__Footer">
-							<Button startIcon={<ChevronLeftRounded />}>
-								Prev
-							</Button>
-							<Button startIcon={<ChevronRightRounded />}>
-								Next
-							</Button>
-							<OutlineButton
-								startIcon={<BookmarkBorderRounded />}
-							>
-								Mark for review
-							</OutlineButton>
-						</div>
-					</Paper>
-				</div>
-				<div className="attemptTest__Right">
-					<div className="attemptTest__Conventions">
-						<div className="convention">
-							<div>1</div>
-							<p>Not attempted</p>
-						</div>
-						<div className="convention">
-							<div className="completed">1</div>
-							<p>Attempted</p>
-						</div>
-						<div className="convention">
-							<div className="marked">1</div>
-							<p>Marked for review</p>
-						</div>
-						<div className="convention">
-							<div className="completedmarked">1</div>
-							<p>Attempted & Marked for review</p>
-						</div>
-					</div>
-				</div>
-			</div>
+			</Paper>
 		</div>
 	);
 };
