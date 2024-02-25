@@ -3,17 +3,21 @@ import { Logo } from "../../common/logo";
 import { Button, Input } from "../../library";
 import { useNavigate } from "react-router-dom";
 import { PiEyeFill, PiEyeSlashFill } from "react-icons/pi";
+import { useDispatch } from "react-redux";
+import { login } from "../../store/actions";
 
 const Login = () => {
 	const [formData, setFormData] = useState({
-		username: "",
+		email: "",
 		password: "",
 	});
 	const [seePassword, setSeePassword] = useState(false);
 
-	const { username, password } = formData;
+	const { email, password } = formData;
 
 	const navigate = useNavigate();
+
+	const dispatch = useDispatch<any>();
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -21,7 +25,8 @@ const Login = () => {
 
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		setFormData((v) => ({ username: "", password: "" }));
+		dispatch(login({ ...formData, navigate }))
+		setFormData((v) => ({ email: "", password: "" }));
 	};
 
 	return (
@@ -39,9 +44,9 @@ const Login = () => {
 						</div>
 						<Input
 							type="email"
-							value={username}
+							value={email}
 							onChange={handleChange}
-							name="username"
+							name="email"
 							placeholder={"example@email.com"}
 							label={"Email"}
 							required

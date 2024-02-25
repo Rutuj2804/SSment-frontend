@@ -1,15 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { AuthenticationState } from "./types";
-import { createContact } from "./actions";
+import { login } from "./actions";
 
-const initialState: AuthenticationState = {}
+const initialState: AuthenticationState = {
+    isAuthenticated: false
+}
 
 export const authenticationSlice = createSlice({
     name: "authentication",
     initialState,
     reducers: {},
     extraReducers(builder) {
-        builder.addCase(createContact.fulfilled, (s, a) => {})
+        builder.addCase(login.fulfilled, (s, a) => {
+            s.isAuthenticated = true
+            localStorage.setItem("ssment-frag-granade", a.payload.token)
+        })
     },
 })
 
