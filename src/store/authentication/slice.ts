@@ -3,13 +3,17 @@ import { AuthenticationState } from "./types";
 import { login } from "./actions";
 
 const initialState: AuthenticationState = {
-    isAuthenticated: false
+    isAuthenticated: null
 }
 
 export const authenticationSlice = createSlice({
     name: "authentication",
     initialState,
-    reducers: {},
+    reducers: {
+        updateAuthenticationState: (s, a) => {
+            s.isAuthenticated = a.payload
+        },
+    },
     extraReducers(builder) {
         builder.addCase(login.fulfilled, (s, a) => {
             s.isAuthenticated = true
@@ -18,6 +22,6 @@ export const authenticationSlice = createSlice({
     },
 })
 
-export const {} = authenticationSlice.reducer
+export const { updateAuthenticationState } = authenticationSlice.actions
 
 export default authenticationSlice.reducer;

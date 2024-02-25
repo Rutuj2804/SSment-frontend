@@ -3,10 +3,7 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 import { Message, MessageState } from "./types";
 
 const initialState: MessageState = {
-    messages: [
-        { text: "Successfully started the application.", type: "SUCCESS", _id: "1" },
-        { text: "Unauthorized. Contact Administrator.", type: "ERROR", _id: "2" },
-    ],
+    messages: [],
 };
 
 export const messageSlice = createSlice({

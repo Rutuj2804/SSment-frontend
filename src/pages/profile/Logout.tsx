@@ -6,7 +6,7 @@ const Logout = () => {
 	const navigate = useNavigate()
 
 	useEffect(() => {
-		// clear token
+		localStorage.removeItem("ssment-frag-granade")
 		navigate("/login")
 	}, [navigate])
 

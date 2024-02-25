@@ -1,7 +1,7 @@
 import { BaseInterface } from "..";
 
 export interface AuthenticationState {
-    isAuthenticated: boolean
+    isAuthenticated: boolean | null
 }
 
 export interface ContactRequest extends BaseInterface{
