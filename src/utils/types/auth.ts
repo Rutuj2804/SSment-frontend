@@ -7,4 +7,7 @@ export interface UserInterface extends BaseInterface {
     midname?: string;
     lastname?: string;
     instituteId?: string;
+    dob?: any;
+    country?: string;
+    state?: string;
 }

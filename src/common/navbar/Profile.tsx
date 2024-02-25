@@ -1,6 +1,6 @@
 import { Avatar, IconButton, Tooltip } from "@mui/material";
 import { useRef } from "react";
-import { data } from "../../assets/data/profile";
+import { getProfileData } from "../../assets/data/profile";
 import { useDispatch, useSelector } from "react-redux";
 import { setProfile } from "../../store/layout/slice";
 import { RootState } from "../../store";
@@ -10,6 +10,8 @@ import { PersonRounded } from "@mui/icons-material";
 
 const Profile = () => {
 	const profile = useSelector((state: RootState) => state.layout.profile);
+
+	const user = useSelector((state: RootState) => state.profile.user)
 
 	const dispatch = useDispatch();
 
@@ -39,7 +41,7 @@ const Profile = () => {
 						<p>Pune, Maharashtra</p>
 					</div>
 					<div className="profileMenu__Options">
-						{data.map((d, i) => (
+						{getProfileData(user.email)?.map((d, i) => (
 							<div
 								key={i}
 								className="profileMenu__NavLink"

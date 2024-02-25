@@ -9,4 +9,12 @@ export interface UpdateProfileRequest extends BaseInterface {
     firstname: string;
     midname: string;
     lastname: string;
+    dob: Date | null,
+    country: string,
+    state: string
+}
+
+export interface ResetPasswordRequest extends BaseInterface {
+    password: string;
+    cpassword: string;
 }
