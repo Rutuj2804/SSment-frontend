@@ -5,7 +5,6 @@ import { setMessage } from "../messages/slice";
 import { errorType } from "../messages/types";
 import { ContactRequest, ForgotPasswordRequest, LoginRequest } from "./types";
 import axios from "../axios"
-import { userToken } from "../../utils/helpers";
 
 export const createContact = createAsyncThunk( "createContact/Authentication", async (data: ContactRequest, thunkAPI) => {
         thunkAPI.dispatch(updateLoading(1));

@@ -3,18 +3,33 @@ import { useDispatch } from "react-redux";
 import { setBreadcrumps } from "../../store/breadcrumps/slice";
 import { Button, Input, Select } from "../../library";
 import { Paper } from "../../components/paper";
+import { useNavigate } from "react-router-dom";
+import { createRoleDefinition } from "../../store/actions";
 
 const options = [
-	{ name: "No Access", value: 0 },
-	{ name: "Read Only", value: 1 },
-	{ name: "Read, Write & Delete", value: 2 },
-	{ name: "Global Access", value: 3 },
+	{ name: "No Access", value: 1 },
+	{ name: "Read Only", value: 101 },
+	{ name: "Read & Write", value: 201 },
+	{ name: "Module Access", value: 301 },
 ];
 
 const CreateRole = () => {
 	const [name, setName] = useState("");
+	const [alias, setAlias] = useState("");
 
-	const dispatch = useDispatch();
+	const [formData, setFormData] = useState({
+		institute: 1,
+		batch: 1,
+		term: 1,
+		test: 1,
+		role: 1,
+	});
+
+	const dispatch = useDispatch<any>();
+
+	const navigate = useNavigate()
+
+	const { institute, batch, term, test, role } = formData;
 
 	useEffect(() => {
 		dispatch(
@@ -25,8 +40,11 @@ const CreateRole = () => {
 		);
 	}, [dispatch]);
 
+	const onChange = (type: string, value: any) => setFormData((f) => ({ ...f, [type]: value }));
+
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
+		dispatch(createRoleDefinition({ ...formData, alias, name, navigate }))
 	};
 
 	return (
@@ -39,28 +57,37 @@ const CreateRole = () => {
 
 					<form onSubmit={handleSubmit}>
 						<div className="row">
-							<div className="createRole__BasicInformation">
-								<div className="col-lg-6 col-md-8 col-12">
-									<Input
-										type="text"
-										value={name}
-										name="name"
-										onChange={(e) =>
-											setName(e.target.value)
-										}
-										required
-										autoComplete="Off"
-										label="Role Name"
-										placeholder="Role Name"
-										autoFocus
-									/>
-								</div>
+							<div className="col-lg-6 col-md-6 col-12">
+								<Input
+									type="text"
+									value={name}
+									name="name"
+									onChange={(e) => setName(e.target.value.toUpperCase())}
+									required
+									autoComplete="Off"
+									label="Role Name"
+									placeholder="Role Name"
+									autoFocus
+								/>
+							</div>
+							<div className="col-lg-6 col-md-6 col-12">
+								<Input
+									type="text"
+									value={alias}
+									name="alias"
+									onChange={(e) => setAlias(e.target.value)}
+									required
+									autoComplete="Off"
+									label="Display Name"
+									placeholder="Display Name"
+									autoFocus
+								/>
 							</div>
 
 							<div className="col-12">
 								<div className="createRole__SwitchBox">
 									<div className="createRole__Details">
-										<h5>General</h5>
+										<h5>Institute</h5>
 										<p>
 											Gives user access to create and
 											update new lectures
@@ -71,15 +98,18 @@ const CreateRole = () => {
 											options={options}
 											name="name"
 											value="value"
-											selected={0}
+											selected={institute}
+											onChange={(v) =>
+												onChange("institute", v)
+											}
 											label="Select Access"
 										/>
 									</div>
 								</div>
-								
+
 								<div className="createRole__SwitchBox">
 									<div className="createRole__Details">
-										<h5>Administration</h5>
+										<h5>Batch</h5>
 										<p>
 											Gives user access to create and
 											update new lectures
@@ -90,32 +120,17 @@ const CreateRole = () => {
 											options={options}
 											name="name"
 											value="value"
-											selected={0}
-											label="Select Access"
-										/>
-									</div>
-								</div>
-								<div className="createRole__SwitchBox">
-									<div className="createRole__Details">
-										<h5>Roles</h5>
-										<p>
-											Gives user access to create and
-											update new lectures
-										</p>
-									</div>
-									<div className="col-lg-4 col-md-6 col-12">
-										<Select
-											options={options}
-											name="name"
-											value="value"
-											selected={0}
+											selected={batch}
+											onChange={(v) =>
+												onChange("batch", v)
+											}
 											label="Select Access"
 										/>
 									</div>
 								</div>
 								<div className="createRole__SwitchBox">
 									<div className="createRole__Details">
-										<h5>Explore</h5>
+										<h5>Term</h5>
 										<p>
 											Gives user access to create and
 											update new lectures
@@ -126,7 +141,52 @@ const CreateRole = () => {
 											options={options}
 											name="name"
 											value="value"
-											selected={0}
+											selected={term}
+											onChange={(v) =>
+												onChange("term", v)
+											}
+											label="Select Access"
+										/>
+									</div>
+								</div>
+								<div className="createRole__SwitchBox">
+									<div className="createRole__Details">
+										<h5>Test</h5>
+										<p>
+											Gives user access to create and
+											update new lectures
+										</p>
+									</div>
+									<div className="col-lg-4 col-md-6 col-12">
+										<Select
+											options={options}
+											name="name"
+											value="value"
+											selected={test}
+											onChange={(v) =>
+												onChange("test", v)
+											}
+											label="Select Access"
+										/>
+									</div>
+								</div>
+								<div className="createRole__SwitchBox">
+									<div className="createRole__Details">
+										<h5>Role</h5>
+										<p>
+											Gives user access to create and
+											update new lectures
+										</p>
+									</div>
+									<div className="col-lg-4 col-md-6 col-12">
+										<Select
+											options={options}
+											name="name"
+											value="value"
+											selected={role}
+											onChange={(v) =>
+												onChange("role", v)
+											}
 											label="Select Access"
 										/>
 									</div>

@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Routes, useNavigate } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { authRoutes, regularRoutes } from "./routes/routes";
 import PrivateRoute from "./routes/PrivateRoute";
 import PublicLayout from "./hocs/PublicLayout";
@@ -18,7 +18,7 @@ const App = () => {
 
         if(token) dispatch(getProfile())
         else dispatch(updateAuthenticationState(false))
-    }, [])
+    }, [dispatch])
 
     return (
         <div>

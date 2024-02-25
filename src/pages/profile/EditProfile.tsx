@@ -38,8 +38,8 @@ const EditProfile = () => {
 	}, [dispatch]);
 
 	useEffect(() => {
-		if (username != user.email) navigate(`/edit/${user.email}`);
-	}, [username, user]);
+		if (username !== user.email) navigate(`/edit/${user.email}`);
+	}, [username, user, navigate]);
 
 	useEffect(() => {
 		if (user.email) {
