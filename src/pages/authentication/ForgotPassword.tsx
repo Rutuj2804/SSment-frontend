@@ -2,15 +2,19 @@ import React, { useState } from "react";
 import { Logo } from "../../common/logo";
 import { useNavigate } from "react-router-dom";
 import { Button, Input } from "../../library";
+import { useDispatch } from "react-redux";
+import { forgotPassword } from "../../store/actions";
 
 const ForgotPassword = () => {
 	const [formData, setFormData] = useState({
-		username: "",
+		email: "",
 	});
 
 	const navigate = useNavigate();
+	
+	const dispatch = useDispatch<any>()
 
-	const { username } = formData;
+	const { email } = formData;
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -18,8 +22,8 @@ const ForgotPassword = () => {
 
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		// await dispatch(loginUser({ email: username }))
-		setFormData((v) => ({ username: "" }));
+		await dispatch(forgotPassword(formData))
+		setFormData((v) => ({ email: "" }));
 	};
 
 	return (
@@ -37,9 +41,9 @@ const ForgotPassword = () => {
 						</div>
 						<Input
 							type="email"
-							value={username}
+							value={email}
 							onChange={handleChange}
-							name="username"
+							name="email"
 							placeholder={"Email"}
 							label={"Email"}
 							required

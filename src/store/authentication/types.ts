@@ -15,3 +15,7 @@ export interface LoginRequest extends BaseInterface {
     email: string;
     password: string;
 }
+
+export interface ForgotPasswordRequest extends BaseInterface {
+    email: string;
+}
