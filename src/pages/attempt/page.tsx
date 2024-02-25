@@ -2,7 +2,7 @@ import React from "react";
 import { Paper } from "../../components/paper";
 import { Logo } from "../../common/logo";
 import { Avatar } from "@mui/material";
-import { ImageChoice, MultipleChoice } from "../../components/attempt";
+import { MultipleChoice } from "../../components/attempt";
 import { Button, OutlineButton } from "../../library";
 import { BookmarkBorderRounded, ChevronLeftRounded, ChevronRightRounded, DoneRounded } from "@mui/icons-material";
 

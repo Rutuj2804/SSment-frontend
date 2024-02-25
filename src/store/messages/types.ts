@@ -1,6 +1,6 @@
-export const errorType = {
-    0: "ERROR",
-    1: "SUCCESS",
+export enum errorType {
+    "ERROR"= "ERROR",
+    "SUCCESS"= "SUCCESS",
 };
 
 export interface Message {

@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Button, Input, Textarea } from "../../library";
 import { Logo } from "../../common/logo";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { createContact } from "../../store/actions";
 
 const ContactUs = () => {
 	const [formData, setFormData] = useState({
@@ -15,12 +17,15 @@ const ContactUs = () => {
 
 	const navigate = useNavigate();
 
+	const dispatch = useDispatch<any>();
+
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
 		setFormData({ ...formData, [e.target.name]: e.target.value });
 	};
 
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
+		dispatch(createContact({ ...formData, email: formData.email.toLowerCase(), navigate }))
 	};
 
 	return (
@@ -43,7 +48,7 @@ const ContactUs = () => {
 							name="firstname"
 							placeholder={"First Name"}
 							label={"First Name"}
-							required
+							// required
 						/>
 						<Input
 							type="text"
@@ -52,7 +57,6 @@ const ContactUs = () => {
 							name="lastname"
 							placeholder={"Last Name"}
 							label={"Last Name"}
-							required
 						/>
 						<Input
 							type="email"
@@ -61,7 +65,7 @@ const ContactUs = () => {
 							name="email"
 							placeholder={"Email"}
 							label={"Email"}
-							required
+							// required
 						/>
 						<Textarea
 							value={message}

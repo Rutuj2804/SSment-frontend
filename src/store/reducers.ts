@@ -3,10 +3,14 @@ import layout from "./layout/slice"
 import settings from "./settings/slice"
 import breadcrumps from "./breadcrumps/slice"
 import messages from "./messages/slice"
+import loading from "./loading/slice"
+import authentication from "./authentication/slice"
 
 export const reducers = combineReducers({
     layout,
     settings,
     breadcrumps,
-    messages
+    messages,
+    loading,
+    authentication
 });
