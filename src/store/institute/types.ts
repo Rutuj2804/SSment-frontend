@@ -5,5 +5,6 @@ export interface InstituteState {
 }
 
 export interface CreateInstituteRequest extends BaseInterface {
-
+    name: string;
+    description: string;
 }

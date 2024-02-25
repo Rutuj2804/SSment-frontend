@@ -17,7 +17,7 @@ export const createInstitute = createAsyncThunk( "createInstitute/Institute", as
             },
         };
 
-        const res = await axios.put(`/authentication/update-user`, data, config);
+        const res = await axios.post(`/institute/i/create`, data, config);
 
         thunkAPI.dispatch(updateLoading(-1));
 
@@ -28,6 +28,8 @@ export const createInstitute = createAsyncThunk( "createInstitute/Institute", as
                 _id: Date.now().toString(),
             })
         );
+
+        if(data.navigate) data.navigate("/institutes")
 
         return res.data.data;
     } catch (err) {
