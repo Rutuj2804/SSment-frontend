@@ -4,11 +4,10 @@ import { useNavigate } from "react-router-dom";
 import { setBreadcrumps } from "../../store/breadcrumps/slice";
 import { Paper } from "../../components/paper";
 import { Stepper } from "../../components/stepper";
-import { AddRoles, BasicInformation, Confirmation } from "../../components/institute";
+import { BasicInformation, Confirmation } from "../../components/institute";
 
 const steps = [
 	"Basic Information",
-	"Add Roles",
 	"Confirmation",
 ];
 
@@ -45,7 +44,6 @@ const CreateInstitute = () => {
 					controller={controller}
                     components={[
                         <BasicInformation key={1} />,
-                        <AddRoles key={2} />,
                         <Confirmation key={3} />
                     ]}
 				/>
