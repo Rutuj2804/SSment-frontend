@@ -4,6 +4,13 @@ export interface TermState {
     terms: []
 }
 
-export interface CreateTermRequest extends BaseInterface {
+interface Role {
+    email: string;
+    roleId: string;
+}
 
+export interface CreateTermRequest extends BaseInterface {
+    name: string;
+    instituteId: string;
+    roles: Role[]
 }

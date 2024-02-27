@@ -15,5 +15,6 @@ export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 
 export interface BaseInterface {
-    navigate?: NavigateFunction
+    navigate?: NavigateFunction;
+    termId?: string;
 }

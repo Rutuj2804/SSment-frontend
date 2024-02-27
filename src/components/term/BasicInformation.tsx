@@ -1,24 +1,38 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Input, Select } from "../../library";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../store";
+import { getAllInstitutes } from "../../store/actions";
 
-const option = [
-    { name: "MIT ADT University", value: "1" },
-    { name: "MIT WPU University", value: "2" },
-    { name: "IIIT Delhi", value: "3" },
-]
+interface BasicInformationCProps {
+    setInstitute: Function;
+    setTerm: Function;
+    institute: string;
+    term: string;
+}
 
-const BasicInformation = () => {
+const BasicInformation = ({ setInstitute, institute, setTerm, term }: BasicInformationCProps) => {
+    
+    const dispatch = useDispatch<any>()
+
+	useEffect(() => {
+		dispatch(getAllInstitutes({ termId: "" }));
+	}, [dispatch]);
+
+    const institutes = useSelector((state: RootState) => state.institute.institutes)
+
 	return (
 		<div className="row">
             <div className="col-lg-6 col-md-6 col-12">
-			    <Input label="Title *" placeholder="Title" />
+			    <Input label="Title *" onChange={e=>setTerm(e.target.value)} value={term} placeholder="Title" />
             </div>
             <div className="col-lg-6 col-md-6 col-12">
                 <Select
                     name="name"
-                    value="value"
-                    selected={"1"}
-                    options={option}
+                    value="_id"
+                    selected={institute}
+                    onChange={c=>setInstitute(c)}
+                    options={institutes}
                     label="Select Institute *"
                 />
             </div>

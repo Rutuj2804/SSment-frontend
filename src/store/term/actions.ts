@@ -17,7 +17,7 @@ export const createTerm = createAsyncThunk( "createTerm/Term", async (data: Crea
             },
         };
 
-        const res = await axios.put(`/authentication/update-user`, data, config);
+        const res = await axios.post(`/institute/t/create`, data, config);
 
         thunkAPI.dispatch(updateLoading(-1));
 
@@ -28,6 +28,8 @@ export const createTerm = createAsyncThunk( "createTerm/Term", async (data: Crea
                 _id: Date.now().toString(),
             })
         );
+
+        if(data.navigate) data.navigate("/terms")
 
         return res.data.data;
     } catch (err) {

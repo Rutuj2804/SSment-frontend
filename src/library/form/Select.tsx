@@ -9,7 +9,7 @@ interface SelectProps {
 	value: string;
 	startIcon?: React.ReactNode;
 	bottomOptionText?: string;
-	selected: any;
+	selected?: any;
 	onChange?: (value: any) => void;
 	className?: string
 }
@@ -30,7 +30,7 @@ const Select = ({
 	const dropDownRef = useRef<HTMLDivElement>(null)
 
 	const getSelected = () => {
-		return options.filter((o) => o[value] === selected)[0][name];
+		return selected ? options.filter((o) => o[value] === selected)[0][name] : "Select"
 	};
 
 	useOutsideClick(dropDownRef, () => setIsOpen(false))

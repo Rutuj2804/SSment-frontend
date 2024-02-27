@@ -7,6 +7,7 @@ import { RootState } from "../../store";
 import { useNavigate } from "react-router-dom";
 import { useOutsideClick } from "../../utils/hooks";
 import { PersonRounded } from "@mui/icons-material";
+import { location, username } from "../../utils/helpers";
 
 const Profile = () => {
 	const profile = useSelector((state: RootState) => state.layout.profile);
@@ -37,8 +38,8 @@ const Profile = () => {
 				<div className={`profileMenu__Wrapper ${profile && "active"}`}>
 					<div className="profileMenu__Avatar">
 						<Avatar sx={{ height: 50, width: 50 }} />
-						<h6>Rutuj Jeevan Bokade</h6>
-						<p>Pune, Maharashtra</p>
+						<h6>{username(user)}</h6>
+						<p>{location(user)}</p>
 					</div>
 					<div className="profileMenu__Options">
 						{getProfileData(user.email)?.map((d, i) => (

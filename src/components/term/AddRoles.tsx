@@ -1,34 +1,57 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Input, Select } from "../../library";
 import { AddRounded } from "@mui/icons-material";
 import { UserCardSmall } from "../card";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllRoleDefinitions } from "../../store/actions";
+import { RootState } from "../../store";
 
-const options = [
-	{ name: "ADMIN", value: 1 },
-	{ name: "INSTITUTE_OWNER", value: 1 },
-	{ name: "INSTITUTE_HELPER", value: 1 },
-];
+interface RoleAssignment {
+	email: string;
+	roleId: string;
+}
 
-const AddRoles = () => {
-	const [role, setRole] = useState<number[]>([]);
+interface AddRolesCProps {
+	setRole: Function;
+	role: RoleAssignment[];
+}
+
+const AddRoles = ({ role, setRole }: AddRolesCProps) => {
+	const [selectedRole, setSelectedRole] = useState("");
+	const [email, setEmail] = useState("");
+
+	const dispatch = useDispatch<any>();
+
+	useEffect(() => {
+		dispatch(getAllRoleDefinitions({ termId: "" }));
+	}, [dispatch]);
+
+	const roles = useSelector((state: RootState) => state.role.roles);
 
 	const onSubmit = () => {
-		setRole((v) => [...v, Math.random()]);
+		setRole((v: RoleAssignment[]) => [...v, { email: email, roleId: selectedRole }]);
 	};
 
 	return (
 		<div>
 			<div className="row">
 				<div className="col-lg-6 col-md-6 col-12">
-					<Input label="Email *" placeholder="example@email.com" />
+					<Input
+						label="Email *"
+						type="email"
+						value={email}
+						onChange={(e) => setEmail(e.target.value)}
+						placeholder="example@email.com"
+					/>
 				</div>
 				<div className="col-lg-6 col-md-6 col-12">
 					<Select
 						label="Role *"
-						options={options}
+						options={roles}
 						name="name"
-						value="value"
-						selected={1}
+						value="_id"
+						selected={selectedRole}
+						onChange={(c) => setSelectedRole(c)}
 					/>
 				</div>
 			</div>
@@ -38,7 +61,7 @@ const AddRoles = () => {
 				</Button>
 			</div>
 			<div className="row mt-3">
-				{role.map((i) => (
+				{role.map((_, i) => (
 					<div key={i} className="col-lg-4 col-md-4 col-12">
 						<UserCardSmall />
 					</div>
