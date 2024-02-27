@@ -1,4 +1,5 @@
 import { BaseInterface } from "./base";
+import { Institute } from "./institute";
 
 export interface UserInterface extends BaseInterface {
     email?: string;
@@ -6,7 +7,7 @@ export interface UserInterface extends BaseInterface {
     firstname?: string;
     midname?: string;
     lastname?: string;
-    instituteId?: string;
+    instituteId?: Institute;
     dob?: any;
     country?: string;
     state?: string;

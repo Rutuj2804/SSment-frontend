@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Navbar } from "../common/navbar";
 import { Footer } from "../common/footer";
 import { Sidebar } from "../common/sidebar";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { sidebarLayout } from "../store/settings/types";
 import { RootState } from "../store";
 import { Breadcrumps } from "../common/breadcrumps";
@@ -10,6 +10,7 @@ import { Section } from "../common/section";
 import { Message } from "../common/message";
 import { Popups } from "../components/popup";
 import { Backdrop } from "../common/backdrop";
+import { getDisplayTerms } from "../store/actions";
 
 interface PrivateLayoutProps {
     children: React.ReactNode;
@@ -18,6 +19,13 @@ interface PrivateLayoutProps {
 const PrivateLayout = ({ children }: PrivateLayoutProps) => {
     const sidebar = useSelector((state: RootState) => state.layout.sidebar);
     const sidebarStyle = useSelector((state: RootState) => state.settings.sidebar);
+    const user = useSelector((state: RootState) => state.profile.user)
+
+    const dispatch = useDispatch<any>();
+
+    useEffect(() => {
+        if(user.instituteId) dispatch(getDisplayTerms({ instituteId: user.instituteId._id! }))
+    }, [user.instituteId])
 
     return (
         <div>

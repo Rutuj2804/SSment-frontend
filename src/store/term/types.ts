@@ -1,7 +1,10 @@
 import { BaseInterface } from "..";
+import { Term } from "../../utils/types";
 
 export interface TermState {
-    terms: []
+    terms: Term[]
+    display: Term[];
+    current: string;
 }
 
 interface Role {
@@ -13,4 +16,8 @@ export interface CreateTermRequest extends BaseInterface {
     name: string;
     instituteId: string;
     roles: Role[]
+}
+
+export interface GetDisplayTermRequest extends BaseInterface {
+    instituteId: string;
 }

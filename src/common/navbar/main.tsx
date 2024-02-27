@@ -13,18 +13,14 @@ import { BsBox } from "react-icons/bs";
 import Profile from "./Profile";
 import Notification from "./Notification";
 
-const terms = [
-	{ name: "2024 Term 1", value: 1 },
-	{ name: "2023 Term 2", value: 2 },
-	{ name: "2023 Term 1", value: 3 },
-	{ name: "2022 Term 2", value: 4 },
-	{ name: "2022 Term 1", value: 5 },
-];
-
 const Navbar = () => {
 	const layout = useSelector((state: RootState) => state.layout);
 
 	const dispatch = useDispatch();
+
+	const terms = useSelector((state: RootState) => state.term.display)
+
+	const current = useSelector((state: RootState) => state.term.current)
 
 	return (
 		<div className="navbar__Wrapper">
@@ -37,8 +33,8 @@ const Navbar = () => {
 							<Select
 								options={terms}
 								name="name"
-								value="value"
-								selected={1}
+								value="_id"
+								selected={current}
 								startIcon={<BsBox />}
 								className="p-0 m-0"
 							/>
@@ -50,8 +46,8 @@ const Navbar = () => {
 						<Select
 							options={terms}
 							name="name"
-							value="value"
-							selected={1}
+							value="_id"
+							selected={current}
 							startIcon={<BsBox />}
 							className="p-0 m-0"
 						/>

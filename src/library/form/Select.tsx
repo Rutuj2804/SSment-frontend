@@ -30,7 +30,11 @@ const Select = ({
 	const dropDownRef = useRef<HTMLDivElement>(null)
 
 	const getSelected = () => {
-		return selected ? options.filter((o) => o[value] === selected)[0][name] : "Select"
+		try {
+			return selected ? options?.filter((o) => o[value] === selected)[0][name] : "Select"
+		} catch (error) {
+			return "Select"			
+		}
 	};
 
 	useOutsideClick(dropDownRef, () => setIsOpen(false))
