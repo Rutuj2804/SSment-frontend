@@ -3,7 +3,8 @@ import { RoleAssignment, RoleDefinition } from "../../utils/types/role";
 
 export interface RoleState {
     roles: RoleDefinition[],
-    assignments: RoleAssignment[]
+    assignments: RoleAssignment[],
+    role: RoleDefinition
 }
 
 export interface CreateRoleDefinitionRequest extends BaseInterface {

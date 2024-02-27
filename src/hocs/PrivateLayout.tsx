@@ -11,6 +11,7 @@ import { Message } from "../common/message";
 import { Popups } from "../components/popup";
 import { Backdrop } from "../common/backdrop";
 import { getDisplayTerms } from "../store/actions";
+import { Loader } from "../common/loader";
 
 interface PrivateLayoutProps {
     children: React.ReactNode;
@@ -20,6 +21,7 @@ const PrivateLayout = ({ children }: PrivateLayoutProps) => {
     const sidebar = useSelector((state: RootState) => state.layout.sidebar);
     const sidebarStyle = useSelector((state: RootState) => state.settings.sidebar);
     const user = useSelector((state: RootState) => state.profile.user)
+    const isLoading = useSelector((state: RootState) => state.loading.isLoading)
 
     const dispatch = useDispatch<any>();
 
@@ -41,6 +43,7 @@ const PrivateLayout = ({ children }: PrivateLayoutProps) => {
                 <Message />
                 <Footer />
             </div>
+            {isLoading && <Loader />}
         </div>
     );
 };

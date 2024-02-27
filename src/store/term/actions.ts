@@ -7,6 +7,7 @@ import { CreateTermRequest, GetDisplayTermRequest } from "./types";
 import axios from "../axios"
 import { userToken } from "../../utils/helpers";
 import { setCurrentTerm } from "./slice";
+import { getMyRole } from "../actions";
 
 export const createTerm = createAsyncThunk( "createTerm/Term", async (data: CreateTermRequest, thunkAPI) => {
         thunkAPI.dispatch(updateLoading(1));
@@ -77,6 +78,7 @@ export const getDisplayTerms = createAsyncThunk( "getDisplayTerms/Term", async (
 
             if(res.data.data.length) {
                 thunkAPI.dispatch(setCurrentTerm(res.data.data[0]._id))
+                thunkAPI.dispatch(getMyRole({ termId: res.data.data[0]._id }))
             }
 
             return res.data.data;

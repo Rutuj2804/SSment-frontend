@@ -1,10 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { RoleState } from "./types";
-import { getAllRoleDefinitions } from "./actions";
+import { getAllRoleDefinitions, getMyRole } from "./actions";
 
 const initialState: RoleState = {
     roles: [],
-    assignments: []
+    assignments: [],
+    role: {}
 }
 
 export const roleSlice = createSlice({
@@ -14,6 +15,9 @@ export const roleSlice = createSlice({
     extraReducers(builder) {
         builder.addCase(getAllRoleDefinitions.fulfilled, (s, a) => {
             s.roles = a.payload
+        })
+        builder.addCase(getMyRole.fulfilled, (s, a) => {
+            s.role = a.payload
         })
     },
 })

@@ -95,3 +95,46 @@ export const getAllRoleDefinitions = createAsyncThunk( "getAllRoleDefinitions/Ro
         }
     }
 );
+
+export const getMyRole = createAsyncThunk( "getMyRole/Role", async (data: BaseInterface, thunkAPI) => {
+        thunkAPI.dispatch(updateLoading(1));
+        try {
+            const config = {
+                headers: {
+                    "Content-Type": "Application/json",
+                    "Authorization": `Bearer ${userToken()}`
+                },
+            };
+
+            const res = await axios.put(`/role/a/get-my`, data, config);
+
+            thunkAPI.dispatch(updateLoading(-1));
+
+            return res.data;
+        } catch (err) {
+            thunkAPI.dispatch(updateLoading(-1));
+
+            if (err instanceof AxiosError) {
+                if(Array.isArray(err?.response?.data.message)) {
+                    thunkAPI.dispatch(
+                        setMessage({
+                            text: err?.response?.data.message[0],
+                            type: errorType.ERROR,
+                            _id: Date.now().toString(),
+                        })
+                    );
+                } else {
+                    thunkAPI.dispatch(
+                        setMessage({
+                            text: err?.response?.data.message,
+                            type: errorType.ERROR,
+                            _id: Date.now().toString(),
+                        })
+                    );
+                }
+            }
+
+            return thunkAPI.rejectWithValue(err);
+        }
+    }
+);
