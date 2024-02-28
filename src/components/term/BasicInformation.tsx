@@ -15,11 +15,14 @@ const BasicInformation = ({ setInstitute, institute, setTerm, term }: BasicInfor
     
     const dispatch = useDispatch<any>()
 
-	useEffect(() => {
-		dispatch(getAllInstitutes({ termId: "" }));
-	}, [dispatch]);
-
     const institutes = useSelector((state: RootState) => state.institute.institutes)
+
+    const termId = useSelector((state: RootState) => state.term.current)
+
+	useEffect(() => {
+        if(termId)
+		    dispatch(getAllInstitutes({ termId }));
+	}, [dispatch, termId]);
 
 	return (
 		<div className="row">

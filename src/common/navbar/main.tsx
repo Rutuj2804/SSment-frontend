@@ -12,6 +12,7 @@ import { Select } from "../../library";
 import { BsBox } from "react-icons/bs";
 import Profile from "./Profile";
 import Notification from "./Notification";
+import { setCurrentTerm } from "../../store/term/slice";
 
 const Navbar = () => {
 	const layout = useSelector((state: RootState) => state.layout);
@@ -37,6 +38,7 @@ const Navbar = () => {
 								selected={current}
 								startIcon={<BsBox />}
 								className="p-0 m-0"
+								onChange={c=>dispatch(setCurrentTerm(c))}
 							/>
 						</div>
 					</div>
@@ -50,6 +52,7 @@ const Navbar = () => {
 							selected={current}
 							startIcon={<BsBox />}
 							className="p-0 m-0"
+							onChange={c=>dispatch(setCurrentTerm(c))}
 						/>
 					)}
 				</div>

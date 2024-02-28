@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setBreadcrumps } from "../../store/breadcrumps/slice";
 import { Button, Input, Select } from "../../library";
 import { Paper } from "../../components/paper";
 import { useNavigate } from "react-router-dom";
 import { createRoleDefinition } from "../../store/actions";
+import { RootState } from "../../store";
 
 const options = [
 	{ name: "No Access", value: 1 },
@@ -25,6 +26,8 @@ const CreateRole = () => {
 		role: 1,
 	});
 
+	const termId = useSelector((state: RootState) => state.term.current)
+
 	const dispatch = useDispatch<any>();
 
 	const navigate = useNavigate()
@@ -44,7 +47,7 @@ const CreateRole = () => {
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		dispatch(createRoleDefinition({ ...formData, alias, name, navigate }))
+		dispatch(createRoleDefinition({ ...formData, alias, name, navigate, termId }))
 	};
 
 	return (

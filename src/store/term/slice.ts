@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { TermState } from "./types";
-import { getDisplayTerms } from "./actions";
+import { getAllTerms, getDisplayTerms } from "./actions";
 
 const initialState: TermState = {
     terms: [],
@@ -19,6 +19,9 @@ export const termSlice = createSlice({
     extraReducers(builder) {
         builder.addCase(getDisplayTerms.fulfilled, (s, a) => {
             s.display = a.payload
+        })
+        builder.addCase(getAllTerms.fulfilled, (s, a) => {
+            s.terms = a.payload
         })
     },
 })

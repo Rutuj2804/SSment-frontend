@@ -22,11 +22,14 @@ const AddRoles = ({ role, setRole }: AddRolesCProps) => {
 
 	const dispatch = useDispatch<any>();
 
-	useEffect(() => {
-		dispatch(getAllRoleDefinitions({ termId: "" }));
-	}, [dispatch]);
-
 	const roles = useSelector((state: RootState) => state.role.roles);
+
+    const termId = useSelector((state: RootState) => state.term.current)
+
+	useEffect(() => {
+		if(termId)
+			dispatch(getAllRoleDefinitions({ termId }));
+	}, [dispatch, termId]);
 
 	const onSubmit = () => {
 		setRole((v: RoleAssignment[]) => [...v, { email: email, roleId: selectedRole }]);

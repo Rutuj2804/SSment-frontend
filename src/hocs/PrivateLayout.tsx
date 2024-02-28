@@ -10,7 +10,7 @@ import { Section } from "../common/section";
 import { Message } from "../common/message";
 import { Popups } from "../components/popup";
 import { Backdrop } from "../common/backdrop";
-import { getDisplayTerms } from "../store/actions";
+import { getDisplayTerms, getMyRole } from "../store/actions";
 import { Loader } from "../common/loader";
 
 interface PrivateLayoutProps {
@@ -22,12 +22,18 @@ const PrivateLayout = ({ children }: PrivateLayoutProps) => {
     const sidebarStyle = useSelector((state: RootState) => state.settings.sidebar);
     const user = useSelector((state: RootState) => state.profile.user)
     const isLoading = useSelector((state: RootState) => state.loading.isLoading)
+    const termId = useSelector((state: RootState) => state.term.current)
 
     const dispatch = useDispatch<any>();
 
     useEffect(() => {
         if(user.instituteId) dispatch(getDisplayTerms({ instituteId: user.instituteId._id! }))
-    }, [user.instituteId])
+    }, [user.instituteId, dispatch])
+
+    useEffect(() => {
+        if(termId)
+            dispatch(getMyRole({ termId }))
+    }, [termId, dispatch])
 
     return (
         <div>

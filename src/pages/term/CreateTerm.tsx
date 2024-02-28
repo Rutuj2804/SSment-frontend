@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Paper } from "../../components/paper";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setBreadcrumps } from "../../store/breadcrumps/slice";
 import { useNavigate } from "react-router-dom";
 import {
@@ -10,6 +10,7 @@ import {
 } from "../../components/term";
 import { Stepper } from "../../components/stepper";
 import { createTerm } from "../../store/actions";
+import { RootState } from "../../store";
 
 const steps = ["Basic Information", "Add Roles", "Confirmation"];
 
@@ -25,6 +26,8 @@ const CreateTerm = () => {
 
 	const dispatch = useDispatch<any>();
 
+	const termId = useSelector((state: RootState) => state.term.current)
+
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -38,7 +41,7 @@ const CreateTerm = () => {
 
 	const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		dispatch(createTerm({ navigate, termId: "", name: term, instituteId: institute, roles: role  }))
+		dispatch(createTerm({ navigate, termId, name: term, instituteId: institute, roles: role  }))
 	};
 
 	const controller = () => {

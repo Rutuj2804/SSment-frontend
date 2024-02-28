@@ -21,3 +21,7 @@ export interface CreateTermRequest extends BaseInterface {
 export interface GetDisplayTermRequest extends BaseInterface {
     instituteId: string;
 }
+
+export interface GetAllTermsRequest extends BaseInterface {
+    status: number;
+}
