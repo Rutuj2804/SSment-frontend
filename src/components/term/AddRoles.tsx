@@ -28,7 +28,7 @@ const AddRoles = ({ role, setRole }: AddRolesCProps) => {
 
 	useEffect(() => {
 		if(termId)
-			dispatch(getAllRoleDefinitions({ termId }));
+			dispatch(getAllRoleDefinitions({ termId, status: 1 }));
 	}, [dispatch, termId]);
 
 	const onSubmit = () => {

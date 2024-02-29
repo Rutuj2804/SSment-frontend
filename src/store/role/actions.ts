@@ -5,7 +5,7 @@ import { setMessage } from "../messages/slice";
 import { errorType } from "../messages/types";
 import axios from "../axios"
 import { userToken } from "../../utils/helpers";
-import { CreateRoleAssignmentRequest, CreateRoleDefinitionRequest } from "./types";
+import { CreateRoleAssignmentRequest, CreateRoleDefinitionRequest, GetAllRoleAssignmentsRequest, GetAllRoleDefinitionsRequest } from "./types";
 import { BaseInterface } from "..";
 
 export const createRoleDefinition = createAsyncThunk( "createRoleDefinition/Role", async (data: CreateRoleDefinitionRequest, thunkAPI) => {
@@ -53,7 +53,7 @@ export const createRoleDefinition = createAsyncThunk( "createRoleDefinition/Role
     }
 );
 
-export const getAllRoleDefinitions = createAsyncThunk( "getAllRoleDefinitions/Role", async (data: BaseInterface, thunkAPI) => {
+export const getAllRoleDefinitions = createAsyncThunk( "getAllRoleDefinitions/Role", async (data: GetAllRoleDefinitionsRequest, thunkAPI) => {
         thunkAPI.dispatch(updateLoading(1));
         try {
             const config = {
@@ -190,4 +190,47 @@ export const createRoleAssignment = createAsyncThunk( "createRoleAssignment/Role
         return thunkAPI.rejectWithValue(err);
     }
 }
+);
+
+export const getAllRoleAssignments = createAsyncThunk( "getAllRoleAssignments/Role", async (data: GetAllRoleAssignmentsRequest, thunkAPI) => {
+        thunkAPI.dispatch(updateLoading(1));
+        try {
+            const config = {
+                headers: {
+                    "Content-Type": "Application/json",
+                    "Authorization": `Bearer ${userToken()}`
+                },
+            };
+
+            const res = await axios.put(`/role/a/get-all`, data, config);
+
+            thunkAPI.dispatch(updateLoading(-1));
+
+            return res.data.data;
+        } catch (err) {
+            thunkAPI.dispatch(updateLoading(-1));
+
+            if (err instanceof AxiosError) {
+                if(Array.isArray(err?.response?.data.message)) {
+                    thunkAPI.dispatch(
+                        setMessage({
+                            text: err?.response?.data.message[0],
+                            type: errorType.ERROR,
+                            _id: Date.now().toString(),
+                        })
+                    );
+                } else {
+                    thunkAPI.dispatch(
+                        setMessage({
+                            text: err?.response?.data.message,
+                            type: errorType.ERROR,
+                            _id: Date.now().toString(),
+                        })
+                    );
+                }
+            }
+
+            return thunkAPI.rejectWithValue(err);
+        }
+    }
 );

@@ -22,3 +22,11 @@ export interface CreateRoleAssignmentRequest extends BaseInterface {
     term: string;
     email: string
 }
+
+export interface GetAllRoleAssignmentsRequest extends BaseInterface {
+    status: number;
+}
+
+export interface GetAllRoleDefinitionsRequest extends BaseInterface {
+    status: number;
+}
