@@ -1,20 +1,26 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Paper } from "../../components/paper";
 import { Button, Input, Select } from "../../library";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setBreadcrumps } from "../../store/breadcrumps/slice";
-
-const options = [
-	{ name: "ADMIN", value: 1 },
-	{ name: "OWNER", value: 2 },
-	{ name: "HELPER", value: 3 },
-];
+import { RootState } from "../../store";
+import { createRoleAssignment, getAllRoleDefinitions, getAllTerms } from "../../store/actions";
 
 const AddAssignment = () => {
-	const dispatch = useDispatch();
+
+	const [role, setRole] = useState("")
+	const [term, setTerm] = useState("")
+	const [email, setEmail] = useState("")
+
+	const dispatch = useDispatch<any>();
 
 	const navigate = useNavigate();
+
+	const termId = useSelector((state: RootState) => state.term.current)
+
+	const terms = useSelector((state: RootState) => state.term.terms)
+	const roles = useSelector((state: RootState) => state.role.roles)
 
 	useEffect(() => {
 		dispatch(
@@ -25,9 +31,18 @@ const AddAssignment = () => {
 		);
 	}, [dispatch]);
 
+	useEffect(() => {
+		if(termId) dispatch(getAllTerms({ termId, status: 1 }))
+	} ,[termId, dispatch])
+
+	useEffect(() => {
+		if(termId)
+			dispatch(getAllRoleDefinitions({ termId }));
+	}, [dispatch, termId]);
+
 	const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		navigate("/assignment");
+		dispatch(createRoleAssignment({ termId: term, roleId: role, email, navigate, term }))
 	};
 
 	return (
@@ -38,17 +53,34 @@ const AddAssignment = () => {
 					<div className="row">
 						<div className="col-lg-6 col-md-6 col-12">
 							<Input
+								type="email"
+								value={email}
+								onChange={e=>setEmail(e.target.value)}
 								label="User Email"
 								placeholder="User Email"
+								required
+								autoFocus
+							/>
+						</div>
+						<div className="col-lg-6 col-md-6 col-12">
+							<Select
+								name="alias"
+								value="_id"
+								options={roles}
+								selected={role}
+								onChange={c=>setRole(c)}
+								label="Select Role"
+								className="mb-2"
 							/>
 						</div>
 						<div className="col-lg-6 col-md-6 col-12">
 							<Select
 								name="name"
-								value="value"
-								options={options}
-								selected={1}
-								label="Select Role"
+								value="_id"
+								options={terms}
+								selected={term}
+								onChange={c=>setTerm(c)}
+								label="Select Term"
 								className="mb-2"
 							/>
 						</div>

@@ -16,3 +16,9 @@ export interface CreateRoleDefinitionRequest extends BaseInterface {
     test: number;
     role: number;
 }
+
+export interface CreateRoleAssignmentRequest extends BaseInterface {
+    roleId: string;
+    term: string;
+    email: string
+}
