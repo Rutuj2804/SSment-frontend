@@ -27,6 +27,8 @@ export interface CreateBatchFormData {
 const CreateBatch = () => {
 	const [title, setTitle] = useState("");
 	const [description, setDescription] = useState("");
+	
+	const [participants, setParticipants] = useState<any[]>([])
 
 	const navigate = useNavigate();
 
@@ -83,7 +85,7 @@ const CreateBatch = () => {
 							setDescription={setDescription}
 							setTitle={setTitle}
 						/>,
-						<AddParticipants key={2} />,
+						<AddParticipants key={2} setParticipants={setParticipants} participants={participants} />,
 						<SelectPlan key={3} />,
 						<PaymentAndConfirmation key={4} />,
 					]}

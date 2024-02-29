@@ -9,7 +9,6 @@ interface DropzoneCP {
 const Dropzone = ({ title, onChange } : DropzoneCP) => {
 
     const onDrop = useCallback((acceptedFiles: File[]) => {
-        // Do something with the files
         if(onChange) onChange(acceptedFiles)
     }, [onChange]);
 

@@ -101,7 +101,7 @@ const Assignments = () => {
 	useEffect(() => {
 		if (termId)
 			dispatch(getAllRoleAssignments({ termId, status: activeTab - 1 }));
-	}, [dispatch, activeTab]);
+	}, [dispatch, activeTab, termId]);
 
 	return (
 		<div className="test__Wrapper mt-2">

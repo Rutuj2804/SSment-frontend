@@ -97,7 +97,7 @@ const Roles = () => {
 
 	useEffect(() => {
 		if (termId) dispatch(getAllRoleDefinitions({ termId, status: activeTab - 1 }));
-	}, [dispatch, activeTab]);
+	}, [dispatch, activeTab, termId]);
 
 	return (
 		<div className="test__Wrapper mt-2">
