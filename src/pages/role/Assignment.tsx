@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { setBreadcrumps } from "../../store/breadcrumps/slice";
 import { Paper } from "../../components/paper";
 import { Button } from "../../library";
@@ -14,7 +14,7 @@ import {
 } from "@mui/icons-material";
 import { getAllRoleAssignments } from "../../store/actions";
 import { RootState } from "../../store";
-import { username } from "../../utils/helpers";
+import { encrypt, username } from "../../utils/helpers";
 import moment from "moment";
 
 const columns: GridColDef[] = [
@@ -60,9 +60,11 @@ const columns: GridColDef[] = [
 		align: "center",
 		renderCell: (params) => (
 			<div className="d-flex gap-2">
-				<IconButton size="small">
-					<EditRounded />
-				</IconButton>
+				<NavLink to={`/assignment/edit/${encrypt(params.row._id)}`}>
+					<IconButton size="small">
+						<EditRounded />
+					</IconButton>
+				</NavLink>
 				<IconButton size="small">
 					<DeleteRounded />
 				</IconButton>

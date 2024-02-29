@@ -3,9 +3,9 @@ import { AxiosError } from "axios";
 import { updateLoading } from "../loading/slice";
 import { setMessage } from "../messages/slice";
 import { errorType } from "../messages/types";
-import { CreateInstituteRequest, } from "./types";
+import { CreateInstituteRequest, GetInstitute, } from "./types";
 import axios from "../axios"
-import { userToken } from "../../utils/helpers";
+import { decrypt, userToken } from "../../utils/helpers";
 import { BaseInterface } from "..";
 
 export const createInstitute = createAsyncThunk( "createInstitute/Institute", async (data: CreateInstituteRequest, thunkAPI) => {
@@ -72,6 +72,51 @@ export const getAllInstitutes = createAsyncThunk( "getAllInstitutes/Institute", 
             };
 
             const res = await axios.put(`/institute/i/get-all`, data, config);
+
+            thunkAPI.dispatch(updateLoading(-1));
+
+            return res.data.data;
+        } catch (err) {
+            thunkAPI.dispatch(updateLoading(-1));
+
+            if (err instanceof AxiosError) {
+                if(Array.isArray(err?.response?.data.message)) {
+                    thunkAPI.dispatch(
+                        setMessage({
+                            text: err?.response?.data.message[0],
+                            type: errorType.ERROR,
+                            _id: Date.now().toString(),
+                        })
+                    );
+                } else {
+                    thunkAPI.dispatch(
+                        setMessage({
+                            text: err?.response?.data.message,
+                            type: errorType.ERROR,
+                            _id: Date.now().toString(),
+                        })
+                    );
+                }
+            }
+
+            return thunkAPI.rejectWithValue(err);
+        }
+    }
+);
+
+export const getInstitute = createAsyncThunk( "getInstitute/Institute", async (data: GetInstitute, thunkAPI) => {
+        thunkAPI.dispatch(updateLoading(1));
+        try {
+            const config = {
+                headers: {
+                    "Content-Type": "Application/json",
+                    "Authorization": `Bearer ${userToken()}`
+                },
+            };
+
+            data.instituteId = decrypt(data.instituteId)!
+
+            const res = await axios.put(`/institute/i/get/${data.instituteId}`, data, config);
 
             thunkAPI.dispatch(updateLoading(-1));
 

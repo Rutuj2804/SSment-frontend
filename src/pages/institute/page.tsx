@@ -6,10 +6,11 @@ import { Button } from "../../library";
 import { AddRounded, CloudDownloadRounded, DeleteRounded, EditRounded } from "@mui/icons-material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { IconButton } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { getAllInstitutes } from "../../store/actions";
 import { RootState } from "../../store";
 import moment from "moment";
+import { encrypt } from "../../utils/helpers";
 
 const columns: GridColDef[] = [
 	{
@@ -44,7 +45,7 @@ const columns: GridColDef[] = [
 		align: "center",
 		renderCell: (params) => (
 			<div className="d-flex gap-2">
-				<IconButton size="small"><EditRounded /></IconButton>
+				<NavLink to={`/institute/edit/${encrypt(params.row._id)}`}><IconButton size="small"><EditRounded /></IconButton></NavLink>
 				<IconButton size="small"><DeleteRounded /></IconButton>
 			</div>
 		)

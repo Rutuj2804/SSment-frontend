@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { setBreadcrumps } from "../../store/breadcrumps/slice";
 import { Button, Input, Select } from "../../library";
 import { Paper } from "../../components/paper";
-import { useNavigate } from "react-router-dom";
-import { createRoleDefinition } from "../../store/actions";
+import { useNavigate, useParams } from "react-router-dom";
+import { createRoleDefinition, getRole } from "../../store/actions";
 import { RootState } from "../../store";
 
 const options = [
@@ -28,7 +28,11 @@ const CreateRole = () => {
 
 	const termId = useSelector((state: RootState) => state.term.current)
 
+	const roleOnMount = useSelector((state: RootState) => state.role.roleOnMount)
+
 	const dispatch = useDispatch<any>();
+
+	const { id } = useParams()
 
 	const navigate = useNavigate()
 
@@ -42,6 +46,26 @@ const CreateRole = () => {
 			})
 		);
 	}, [dispatch]);
+
+	useEffect(() => {
+		if(id) {
+			dispatch(getRole({ roleId: id, termId }))
+		}
+	}, [id, termId])
+
+	useEffect(() => {
+		if(id) {
+			setFormData({
+				institute: roleOnMount.institute!,
+				batch: roleOnMount.batch!,
+				term: roleOnMount.term!,
+				test: roleOnMount.test!,
+				role: roleOnMount.role!,
+			})
+			setName(roleOnMount.name!)
+			setAlias(roleOnMount.alias!)
+		}
+	}, [roleOnMount, id])
 
 	const onChange = (type: string, value: any) => setFormData((f) => ({ ...f, [type]: value }));
 

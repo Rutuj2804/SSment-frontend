@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Paper } from "../../components/paper";
 import { Button, Input, Select } from "../../library";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setBreadcrumps } from "../../store/breadcrumps/slice";
 import { RootState } from "../../store";
-import { createRoleAssignment, getAllRoleDefinitions, getAllTerms } from "../../store/actions";
+import { createRoleAssignment, getAllRoleDefinitions, getAllTerms, getRoleAssignment } from "../../store/actions";
 
 const AddAssignment = () => {
 
@@ -17,10 +17,12 @@ const AddAssignment = () => {
 
 	const navigate = useNavigate();
 
-	const termId = useSelector((state: RootState) => state.term.current)
+	const { id } = useParams()
 
+	const termId = useSelector((state: RootState) => state.term.current)
 	const terms = useSelector((state: RootState) => state.term.terms)
 	const roles = useSelector((state: RootState) => state.role.roles)
+	const assignment = useSelector((state: RootState) => state.role.assignment)
 
 	useEffect(() => {
 		dispatch(
@@ -32,13 +34,25 @@ const AddAssignment = () => {
 	}, [dispatch]);
 
 	useEffect(() => {
-		if(termId) dispatch(getAllTerms({ termId, status: 1 }))
+		if(termId) {
+			dispatch(getAllTerms({ termId, status: 1 }))
+			dispatch(getAllRoleDefinitions({ termId, status: 1 }));
+		}
 	} ,[termId, dispatch])
 
 	useEffect(() => {
-		if(termId)
-			dispatch(getAllRoleDefinitions({ termId, status: 1 }));
-	}, [dispatch, termId]);
+		if(id) {
+			dispatch(getRoleAssignment({ roleId: id, termId }))
+		}
+	}, [dispatch, id, termId]);
+
+	useEffect(() => {
+		if(id) {
+			setRole(assignment.roleId!)
+			setTerm(assignment.termId!)
+			setEmail(assignment.userId?.email!)
+		}
+	}, [assignment, id])
 
 	const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -60,6 +74,7 @@ const AddAssignment = () => {
 								placeholder="User Email"
 								required
 								autoFocus
+								disabled={!!id}
 							/>
 						</div>
 						<div className="col-lg-6 col-md-6 col-12">

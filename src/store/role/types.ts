@@ -4,7 +4,9 @@ import { RoleAssignment, RoleDefinition } from "../../utils/types/role";
 export interface RoleState {
     roles: RoleDefinition[],
     assignments: RoleAssignment[],
-    role: RoleDefinition
+    role: RoleDefinition;
+    roleOnMount: RoleDefinition;
+    assignment: RoleAssignment;
 }
 
 export interface CreateRoleDefinitionRequest extends BaseInterface {
@@ -29,4 +31,8 @@ export interface GetAllRoleAssignmentsRequest extends BaseInterface {
 
 export interface GetAllRoleDefinitionsRequest extends BaseInterface {
     status: number;
+}
+
+export interface GetRoleRequest extends BaseInterface {
+    roleId: string;
 }

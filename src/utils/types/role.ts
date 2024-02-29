@@ -1,3 +1,4 @@
+import { UserInterface } from "./auth";
 import { BaseInterface } from "./base";
 
 export interface RoleDefinition extends BaseInterface {
@@ -12,6 +13,6 @@ export interface RoleDefinition extends BaseInterface {
 
 export interface RoleAssignment extends BaseInterface {
     roleId?: string;
-    userId?: string;
+    userId?: UserInterface;
     termId?: string;
 }

@@ -16,6 +16,7 @@ export const regularRoutes = [
 
     { path: "/institutes", element: <Institute /> },
     { path: "/institutes/create", element: <CreateInstitute /> },
+    { path: "/institute/edit/:id", element: <CreateInstitute /> },
 
     { path: "/batches", element: <Batch /> },
     { path: "/admin/batches", element: <AdminBatch /> },
@@ -31,8 +32,10 @@ export const regularRoutes = [
 
     { path: "/roles", element: <Roles /> },
     { path: "/roles/create", element: <CreateRole /> },
+    { path: "/role/edit/:id", element: <CreateRole /> },
     { path: "/assignments", element: <Assignments /> },
     { path: "/assignments/create", element: <AddAssignment /> },
+    { path: "/assignment/edit/:id", element: <AddAssignment /> },
 
     { path: "/tests", element: <Test /> },
     { path: "/tests/create", element: <CreateTest /> },
