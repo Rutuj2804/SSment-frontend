@@ -3,7 +3,7 @@ import { AxiosError } from "axios";
 import { updateLoading } from "../loading/slice";
 import { setMessage } from "../messages/slice";
 import { errorType } from "../messages/types";
-import { CreateTermRequest, GetAllTermsRequest, GetDisplayTermRequest, GetTermRequest, UpdateTermRequest } from "./types";
+import { CreateTermRequest, GetAllTermsRequest, GetDisplayTermRequest, GetTermOfInstituteRequest, GetTermRequest, UpdateTermRequest } from "./types";
 import axios from "../axios"
 import { decrypt, userToken } from "../../utils/helpers";
 import { setCurrentTerm } from "./slice";
@@ -294,4 +294,47 @@ export const deleteTerms = createAsyncThunk( "deleteTerms/Term", async (data: Ge
             return thunkAPI.rejectWithValue(err);
         }
     }
+);
+
+export const getTermsOfInstitute = createAsyncThunk( "getTermsOfInstitute/Term", async (data: GetTermOfInstituteRequest, thunkAPI) => {
+    thunkAPI.dispatch(updateLoading(1));
+    try {
+        const config = {
+            headers: {
+                "Content-Type": "Application/json",
+                "Authorization": `Bearer ${userToken()}`
+            },
+        };
+
+        const res = await axios.put(`/institute/t/get/i/${data.institute}`, data, config);
+
+        thunkAPI.dispatch(updateLoading(-1));
+
+        return res.data.data;
+    } catch (err) {
+        thunkAPI.dispatch(updateLoading(-1));
+
+        if (err instanceof AxiosError) {
+            if(Array.isArray(err?.response?.data.message)) {
+                thunkAPI.dispatch(
+                    setMessage({
+                        text: err?.response?.data.message[0],
+                        type: errorType.ERROR,
+                        _id: Date.now().toString(),
+                    })
+                );
+            } else {
+                thunkAPI.dispatch(
+                    setMessage({
+                        text: err?.response?.data.message,
+                        type: errorType.ERROR,
+                        _id: Date.now().toString(),
+                    })
+                );
+            }
+        }
+
+        return thunkAPI.rejectWithValue(err);
+    }
+}
 );

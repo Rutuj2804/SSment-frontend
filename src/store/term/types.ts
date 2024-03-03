@@ -30,3 +30,7 @@ export interface GetAllTermsRequest extends BaseInterface {
 export interface GetTermRequest extends BaseInterface {
     termId: string;
 }
+
+export interface GetTermOfInstituteRequest extends BaseInterface {
+    institute: string;
+}

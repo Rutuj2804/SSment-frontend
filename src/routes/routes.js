@@ -6,7 +6,7 @@ import { Result } from "../pages/result";
 import { AddQuestion, CreateTest, Test, TestDetail } from "../pages/test";
 import { ContactUs, ForgotPassword, Login } from "../pages/authentication";
 import { CreateRole, Assignments, Roles, AddAssignment } from "../pages/role";
-import { CreateTerm, Term } from "../pages/term";
+import { CreateTerm, CreateTermInstitute, Term } from "../pages/term";
 import { EditProfile, Logout, Profile, ResetPassword } from "../pages/profile";
 import { AttemptTest, EndTest, StartTest, TermsAndCondition } from "../pages/attempt";
 import { CreateInstitute, Institute } from "../pages/institute";
@@ -28,15 +28,19 @@ export const regularRoutes = [
     { path: "/results", element: <Result /> },
 
     { path: "/terms", element: <Term /> },
-    { path: "/terms/create", element: <CreateTerm /> },
+    { path: "/terms/create", element: <CreateTermInstitute /> },
+    { path: "/a/terms/create", element: <CreateTerm /> },
     { path: "/terms/edit/:id", element: <CreateTerm /> },
+    { path: "/a/terms/edit/:id", element: <CreateTermInstitute /> },
 
     { path: "/roles", element: <Roles /> },
     { path: "/roles/create", element: <CreateRole /> },
     { path: "/role/edit/:id", element: <CreateRole /> },
     { path: "/assignments", element: <Assignments /> },
     { path: "/assignments/create", element: <AddAssignment /> },
+    { path: "/a/assignments/create", element: <AddAssignment /> },
     { path: "/assignment/edit/:id", element: <AddAssignment /> },
+    { path: "/a/assignment/edit/:id", element: <AddAssignment /> },
 
     { path: "/tests", element: <Test /> },
     { path: "/tests/create", element: <CreateTest /> },

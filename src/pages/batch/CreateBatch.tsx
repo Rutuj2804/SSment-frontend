@@ -11,6 +11,9 @@ import {
 import { useDispatch } from "react-redux";
 import { setMessage } from "../../store/messages/slice";
 import { setBreadcrumps } from "../../store/breadcrumps/slice";
+import { createBatch } from "../../store/batch/actions";
+import { useAccessRole } from "../../utils/helpers";
+import moment from "moment";
 
 const steps = [
 	"Basic Information",
@@ -18,6 +21,12 @@ const steps = [
 	"Select Plan",
 	"Payment & Confirmation",
 ];
+
+enum PlanTypes {
+	"Monthly"=1,
+	"Quaterly"=3,
+	"Yearly"=12,
+}
 
 export interface CreateBatchFormData {
 	title: string;
@@ -27,16 +36,23 @@ export interface CreateBatchFormData {
 const CreateBatch = () => {
 	const [title, setTitle] = useState("");
 	const [description, setDescription] = useState("");
-	
 	const [participants, setParticipants] = useState<any[]>([])
+	const [institute, setInstitute] = useState("")
+	const [term, setTerm] = useState("")
+	const [plan, setPlan] = useState(PlanTypes.Quaterly)
 
 	const navigate = useNavigate();
 
-	const dispatch = useDispatch();
+	const instituteId = useAccessRole()
+
+	const dispatch = useDispatch<any>();
 
 	const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		navigate("/batch/123");
+
+		const expiryDate = moment().add(plan, "M").subtract(1, "day").toString()
+
+		dispatch(createBatch({ description, name: title, expiryDate, participants, termId: term, navigate, instituteId }))
 	};
 
 	useEffect(() => {
@@ -84,9 +100,13 @@ const CreateBatch = () => {
 							description={description}
 							setDescription={setDescription}
 							setTitle={setTitle}
+							institute={institute}
+							setInstitute={setInstitute}
+							term={term}
+							setTerm={setTerm}
 						/>,
 						<AddParticipants key={2} setParticipants={setParticipants} participants={participants} />,
-						<SelectPlan key={3} />,
+						<SelectPlan key={3} setPlan={setPlan} plan={plan} />,
 						<PaymentAndConfirmation key={4} />,
 					]}
 				/>

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setBreadcrumps } from "../../store/breadcrumps/slice";
 import { Paper } from "../../components/paper";
@@ -11,7 +11,15 @@ const steps = [
     "Payment & Confirmation"
 ]
 
+enum PlanTypes {
+	"Monthly"=1,
+	"Quaterly"=3,
+	"Yearly"=12,
+}
+
 const RenewBatch = () => {
+	const [plan, setPlan] = useState(PlanTypes.Quaterly)
+
 	const dispatch = useDispatch();
 
 	const navigate = useNavigate();
@@ -43,7 +51,7 @@ const RenewBatch = () => {
 					submitButtonText="Proceed to Payment"
 					controller={controller}
 					components={[
-						<SelectPlan key={1} />,
+						<SelectPlan key={1} plan={plan} setPlan={setPlan} />,
 						<PaymentAndConfirmation key={2} />,
 					]}
 				/>
