@@ -73,7 +73,7 @@ export const sideBarData = [
             },
             {
                 name: "Batches",
-                link: "/admin/batches",
+                link: "/a/batches",
                 icon: <BsCollection />,
                 notifications: 0,
                 matches: ["/faculties"],

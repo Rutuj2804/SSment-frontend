@@ -4,23 +4,20 @@ import { Button, Select } from "../../library";
 import { IconButton } from "@mui/material";
 import { AddRounded, CloudDownloadRounded, DeleteRounded, EditRounded } from "@mui/icons-material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { NavLink, useNavigate } from "react-router-dom";
 import { setBreadcrumps } from "../../store/breadcrumps/slice";
+import { RootState } from "../../store";
+import moment from "moment";
+import { encrypt, useAccessRole } from "../../utils/helpers";
+import { getAllBatches } from "../../store/batch/actions";
 
 const columns: GridColDef[] = [
 	{
 		field: "testName",
 		headerName: "Title",
 		flex: 1,
-		renderCell: (params) => <div>{params.row.testName}</div>
-	},
-	{
-		field: "batches",
-		headerName: "Batches",
-		width: 150,
-		align: "center",
-		headerAlign: "center",
+		renderCell: (params) => <div>{params.row.name}</div>
 	},
 	{
 		field: "status",
@@ -29,7 +26,7 @@ const columns: GridColDef[] = [
 		align: "center",
 		headerAlign: "center",
 		renderCell: (params) => (
-			<div className="activetag">Active</div>
+			<div className={params.row.isActive ? "activetag": "inactivetag"}>{params.row.isActive ? "Active" : "Deleted"}</div>
 		)
 	},
 	{
@@ -38,6 +35,7 @@ const columns: GridColDef[] = [
 		headerAlign: "center",
 		width: 110,
 		align: "center",
+		renderCell: (params) => <div>{params.row.participants.length}</div>
 	},
 	{
 		field: "date",
@@ -45,13 +43,7 @@ const columns: GridColDef[] = [
 		headerAlign: "center",
 		width: 110,
 		align: "center",
-	},
-	{
-		field: "time",
-		headerName: "Time",
-		headerAlign: "center",
-		width: 110,
-		align: "center",
+		renderCell: (params) => <div>{moment(params.row.createdAt).format("DD MMM, YYYY")}</div>
 	},
 	{
 		field: "actions",
@@ -61,37 +53,16 @@ const columns: GridColDef[] = [
 		align: "center",
 		renderCell: (params) => (
 			<div className="d-flex gap-2">
-				<IconButton size="small"><EditRounded /></IconButton>
+				<NavLink to={`/batch/edit/${encrypt(params.row._id)}`}><IconButton size="small"><EditRounded /></IconButton></NavLink>
 				<IconButton size="small"><DeleteRounded /></IconButton>
 			</div>
 		)
 	},
 ];
 
-const rows = [
-	{ id: 1, students: 300, date: "21 Jan, 2024", time: "11:00 PM", testName: "Jon", batches: 4 },
-	{ id: 2, students: 100, date: "2 Feb, 2024", time: "12:00 PM", testName: "Cersei", batches: 3 },
-	{ id: 3, students: 400, date: "29 Mar, 2024", time: "01:00 PM", testName: "Jaime", batches: 3 },
-	{ id: 4, students: 550, date: "30 Jun, 2024", time: "10:00 PM", testName: "Arya", batches: 11 },
-	{ id: 5, students: 208, date: "8 Jan, 2024", time: "06:00 PM", testName: "Daenerys", batches: 2 },
-	{ id: 6, students: 1080, date: "6 Arp, 2024", time: "02:00 PM", testName: "Trion", batches: 5 },
-	{ id: 7, students: 79, date: "10 May, 2024", time: "06:00 PM", testName: "Ferrara", batches: 4 },
-	{ id: 8, students: 800, date: "20 Feb, 2024", time: "08:00 PM", testName: "Rossini", batches: 3 },
-	{ id: 9, students: 200, date: "16 Dec, 2024", time: "09:00 PM", testName: "Harvey", batches: 6 },
-	{ id: 1, students: 300, date: "21 Jan, 2024", time: "11:00 PM", testName: "Jon", batches: 4 },
-	{ id: 2, students: 100, date: "2 Feb, 2024", time: "12:00 PM", testName: "Cersei", batches: 3 },
-	{ id: 3, students: 400, date: "29 Mar, 2024", time: "01:00 PM", testName: "Jaime", batches: 3 },
-	{ id: 4, students: 550, date: "30 Jun, 2024", time: "10:00 PM", testName: "Arya", batches: 11 },
-	{ id: 5, students: 208, date: "8 Jan, 2024", time: "06:00 PM", testName: "Daenerys", batches: 2 },
-	{ id: 6, students: 1080, date: "6 Arp, 2024", time: "02:00 PM", testName: "Trion", batches: 5 },
-	{ id: 7, students: 79, date: "10 May, 2024", time: "06:00 PM", testName: "Ferrara", batches: 4 },
-	{ id: 8, students: 800, date: "20 Feb, 2024", time: "08:00 PM", testName: "Rossini", batches: 3 },
-	{ id: 9, students: 200, date: "16 Dec, 2024", time: "09:00 PM", testName: "Harvey", batches: 6 },
-];
-
 enum Tabs {
-	"ONGOING" = 1,
-	"COMPLETED" = 2,
+	"ONGOING" = 2,
+	"COMPLETED" = 1,
 }
 
 const institutionOptions = [
@@ -104,9 +75,13 @@ const AdminBatch = () => {
 
 	const [activeTab, setActiveTab] = useState(Tabs.ONGOING);
 
-	const dispatch = useDispatch();
+	const dispatch = useDispatch<any>();
 
 	const navigate = useNavigate()
+
+	const batches = useSelector((state: RootState) => state.batch.batches)
+
+	const instituteId = useAccessRole()
 
 	useEffect(() => {
 		dispatch(
@@ -116,6 +91,11 @@ const AdminBatch = () => {
 			})
 		);
 	}, [dispatch]);
+
+	useEffect(() => {
+		if(instituteId)
+			dispatch(getAllBatches({ instituteId, status: activeTab - 1 }))
+	}, [instituteId, dispatch, activeTab])
 
 	return (
 		<div className="test__Wrapper">
@@ -162,7 +142,7 @@ const AdminBatch = () => {
 					</div>
 					<div className="test__Grid mt-3">
 						<DataGrid
-							rows={rows}
+							rows={batches}
 							columns={columns}
 							initialState={{
 								pagination: {
@@ -174,7 +154,7 @@ const AdminBatch = () => {
 							pageSizeOptions={[5]}
 							checkboxSelection
 							disableRowSelectionOnClick
-                            getRowId={(row) => row.id}
+                            getRowId={(row) => row._id}
 						/>
 					</div>
 				</div>

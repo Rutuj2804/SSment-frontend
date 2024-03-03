@@ -10,6 +10,7 @@ import { CreateTerm, CreateTermInstitute, Term } from "../pages/term";
 import { EditProfile, Logout, Profile, ResetPassword } from "../pages/profile";
 import { AttemptTest, EndTest, StartTest, TermsAndCondition } from "../pages/attempt";
 import { CreateInstitute, Institute } from "../pages/institute";
+import CreateBatchInstitute from "../pages/batch/CreateBatchInstitute";
 
 export const regularRoutes = [
     { path: "/dashboard", element: <Dashboard /> },
@@ -19,8 +20,9 @@ export const regularRoutes = [
     { path: "/institute/edit/:id", element: <CreateInstitute /> },
 
     { path: "/batches", element: <Batch /> },
-    { path: "/admin/batches", element: <AdminBatch /> },
-    { path: "/batches/create", element: <CreateBatch /> },
+    { path: "/a/batches", element: <AdminBatch /> },
+    { path: "/batches/create", element: <CreateBatchInstitute /> },
+    { path: "/a/batches/create", element: <CreateBatch /> },
     { path: "/batch/renew/:id", element: <RenewBatch /> },
     { path: "/batch/edit/:id", element: <EditBatch /> },
     { path: "/batch/:id", element: <BatchDetail /> },

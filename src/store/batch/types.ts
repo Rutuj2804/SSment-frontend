@@ -1,7 +1,9 @@
 import { BaseInterface } from "..";
+import { BatchInterface } from "../../utils/types";
 
 export interface BatchState {
-    batches: []
+    batches: BatchInterface[]
+    batch: BatchInterface
 }
 
 interface Participant {
@@ -16,4 +18,19 @@ export interface CreateBatchRequest extends BaseInterface {
     termId: string;
     expiryDate: string;
     participants: Participant[];
+    navigation: string;
+}
+
+export interface UpdateBatchRequest extends BaseInterface {
+    name: string;
+    description: string;
+    batchId: string;
+}
+
+export interface GetAllBatchRequest extends BaseInterface {
+    status: number;
+}
+
+export interface GetBatchRequest extends BaseInterface {
+    batchId: string;
 }

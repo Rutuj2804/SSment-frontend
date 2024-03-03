@@ -4,16 +4,17 @@ import { useNavigate } from "react-router-dom";
 import { Stepper } from "../../components/stepper";
 import {
 	AddParticipants,
-	BasicInformation,
+	BasicInformationInstitution,
 	PaymentAndConfirmation,
 	SelectPlan,
 } from "../../components/batch";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setMessage } from "../../store/messages/slice";
 import { setBreadcrumps } from "../../store/breadcrumps/slice";
 import { createBatch } from "../../store/batch/actions";
 import { useAccessRole } from "../../utils/helpers";
 import moment from "moment";
+import { RootState } from "../../store";
 
 const steps = [
 	"Basic Information",
@@ -33,17 +34,17 @@ export interface CreateBatchFormData {
 	description: string;
 }
 
-const CreateBatch = () => {
+const CreateBatchInstitute = () => {
 	const [title, setTitle] = useState("");
 	const [description, setDescription] = useState("");
 	const [participants, setParticipants] = useState<any[]>([])
-	const [institute, setInstitute] = useState("")
-	const [term, setTerm] = useState("")
 	const [plan, setPlan] = useState(PlanTypes.Quaterly)
 
 	const navigate = useNavigate();
 
 	const instituteId = useAccessRole()
+
+	const termId = useSelector((state: RootState) => state.term.current)
 
 	const dispatch = useDispatch<any>();
 
@@ -52,7 +53,7 @@ const CreateBatch = () => {
 
 		const expiryDate = moment().add(plan, "M").subtract(1, "day").toString()
 
-		dispatch(createBatch({ description, name: title, expiryDate, participants, termId: term, navigate, instituteId, navigation: "/a/batches" }))
+		dispatch(createBatch({ description, name: title, expiryDate, participants, termId: termId, navigate, instituteId, navigation: "/batches" }))
 	};
 
 	useEffect(() => {
@@ -94,16 +95,12 @@ const CreateBatch = () => {
 					submitButtonText="Proceed to Payment"
 					controller={controller}
 					components={[
-						<BasicInformation
+						<BasicInformationInstitution
 							key={1}
 							title={title}
 							description={description}
 							setDescription={setDescription}
 							setTitle={setTitle}
-							institute={institute}
-							setInstitute={setInstitute}
-							term={term}
-							setTerm={setTerm}
 						/>,
 						<AddParticipants key={2} setParticipants={setParticipants} participants={participants} />,
 						<SelectPlan key={3} setPlan={setPlan} plan={plan} />,
@@ -115,4 +112,4 @@ const CreateBatch = () => {
 	);
 };
 
-export default CreateBatch;
+export default CreateBatchInstitute;
