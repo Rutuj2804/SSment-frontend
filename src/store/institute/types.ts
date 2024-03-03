@@ -12,5 +12,5 @@ export interface CreateInstituteRequest extends BaseInterface {
 }
 
 export interface GetInstitute extends BaseInterface {
-    instituteId: string;
+    institute: string;
 }

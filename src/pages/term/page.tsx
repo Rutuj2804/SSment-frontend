@@ -10,6 +10,7 @@ import { AddRounded, CloudDownloadRounded, DeleteRounded, EditRounded } from "@m
 import { RootState } from "../../store";
 import { getAllTerms } from "../../store/actions";
 import moment from "moment";
+import { useAccessRole } from "../../utils/helpers";
 
 enum Tabs {
 	"ACTIVE" = 2,
@@ -73,7 +74,7 @@ const Term = () => {
 
 	const navigate = useNavigate();
 
-	const termId = useSelector((state: RootState) => state.term.current)
+	const instituteId = useAccessRole()
 
 	const terms = useSelector((state: RootState) => state.term.terms)
 
@@ -87,9 +88,9 @@ const Term = () => {
 	}, [dispatch]);
 
 	useEffect(() => {
-		if(termId)
-			dispatch(getAllTerms({ termId, status: activeTab - 1 }))
-	}, [termId, dispatch, activeTab])
+		if(instituteId)
+			dispatch(getAllTerms({ instituteId, status: activeTab - 1 }))
+	}, [instituteId, dispatch, activeTab])
 
 	return (
 		<div className="test__Wrapper">

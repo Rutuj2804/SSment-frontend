@@ -10,7 +10,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { getAllInstitutes } from "../../store/actions";
 import { RootState } from "../../store";
 import moment from "moment";
-import { encrypt } from "../../utils/helpers";
+import { encrypt, useAccessRole } from "../../utils/helpers";
 
 const columns: GridColDef[] = [
 	{
@@ -58,7 +58,7 @@ const Institute = () => {
 
 	const navigate = useNavigate();
 
-	const termId = useSelector((state: RootState) => state.term.current)
+	const instituteId = useAccessRole()
 
 	const institutes = useSelector((state: RootState) => state.institute.institutes)
 
@@ -72,9 +72,9 @@ const Institute = () => {
 	}, [dispatch]);
 
 	useEffect(() => {
-		if(termId)
-			dispatch(getAllInstitutes({ termId: termId }))
-	}, [termId, dispatch])
+		if(instituteId)
+			dispatch(getAllInstitutes({ instituteId }))
+	}, [instituteId, dispatch])
 
 	return (
 		<div className="test__Wrapper">

@@ -14,7 +14,7 @@ import {
 } from "@mui/icons-material";
 import { getAllRoleAssignments } from "../../store/actions";
 import { RootState } from "../../store";
-import { encrypt, username } from "../../utils/helpers";
+import { encrypt, useAccessRole, username } from "../../utils/helpers";
 import moment from "moment";
 
 const columns: GridColDef[] = [
@@ -89,7 +89,7 @@ const Assignments = () => {
 		(state: RootState) => state.role.assignments
 	);
 
-	const termId = useSelector((state: RootState) => state.term.current);
+	const instituteId = useAccessRole()
 
 	useEffect(() => {
 		dispatch(
@@ -101,9 +101,9 @@ const Assignments = () => {
 	}, [dispatch]);
 
 	useEffect(() => {
-		if (termId)
-			dispatch(getAllRoleAssignments({ termId, status: activeTab - 1 }));
-	}, [dispatch, activeTab, termId]);
+		if (instituteId)
+			dispatch(getAllRoleAssignments({ instituteId, status: activeTab - 1 }));
+	}, [dispatch, activeTab, instituteId]);
 
 	return (
 		<div className="test__Wrapper mt-2">

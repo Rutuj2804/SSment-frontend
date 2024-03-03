@@ -5,6 +5,7 @@ import { UserCardSmall } from "../card";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllRoleDefinitions } from "../../store/actions";
 import { RootState } from "../../store";
+import { useAccessRole } from "../../utils/helpers";
 
 interface RoleAssignment {
 	email: string;
@@ -24,12 +25,12 @@ const AddRoles = ({ role, setRole }: AddRolesCProps) => {
 
 	const roles = useSelector((state: RootState) => state.role.roles);
 
-    const termId = useSelector((state: RootState) => state.term.current)
+    const instituteId = useAccessRole()
 
 	useEffect(() => {
-		if(termId)
-			dispatch(getAllRoleDefinitions({ termId, status: 1 }));
-	}, [dispatch, termId]);
+		if(instituteId)
+			dispatch(getAllRoleDefinitions({ instituteId, status: 1 }));
+	}, [dispatch, instituteId]);
 
 	const onSubmit = () => {
 		setRole((v: RoleAssignment[]) => [...v, { email: email, roleId: selectedRole }]);

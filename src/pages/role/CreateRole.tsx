@@ -6,6 +6,7 @@ import { Paper } from "../../components/paper";
 import { useNavigate, useParams } from "react-router-dom";
 import { createRoleDefinition, getRole } from "../../store/actions";
 import { RootState } from "../../store";
+import { useAccessRole } from "../../utils/helpers";
 
 const options = [
 	{ name: "No Access", value: 1 },
@@ -26,7 +27,7 @@ const CreateRole = () => {
 		role: 1,
 	});
 
-	const termId = useSelector((state: RootState) => state.term.current)
+	const instituteId = useAccessRole()
 
 	const roleOnMount = useSelector((state: RootState) => state.role.roleOnMount)
 
@@ -49,9 +50,9 @@ const CreateRole = () => {
 
 	useEffect(() => {
 		if(id) {
-			dispatch(getRole({ roleId: id, termId }))
+			dispatch(getRole({ roleId: id, instituteId }))
 		}
-	}, [id, termId])
+	}, [id, instituteId, dispatch])
 
 	useEffect(() => {
 		if(id) {
@@ -71,7 +72,7 @@ const CreateRole = () => {
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		dispatch(createRoleDefinition({ ...formData, alias, name, navigate, termId }))
+		dispatch(createRoleDefinition({ ...formData, alias, name, navigate, instituteId }))
 	};
 
 	return (

@@ -14,7 +14,7 @@ interface Role {
 
 export interface CreateTermRequest extends BaseInterface {
     name: string;
-    instituteId: string;
+    institute: string;
     roles: Role[]
 }
 

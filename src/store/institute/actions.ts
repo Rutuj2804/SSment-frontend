@@ -114,9 +114,9 @@ export const getInstitute = createAsyncThunk( "getInstitute/Institute", async (d
                 },
             };
 
-            data.instituteId = decrypt(data.instituteId)!
+            data.institute = decrypt(data.institute)!
 
-            const res = await axios.put(`/institute/i/get/${data.instituteId}`, data, config);
+            const res = await axios.put(`/institute/i/get/${data.institute}`, data, config);
 
             thunkAPI.dispatch(updateLoading(-1));
 

@@ -15,7 +15,7 @@ import {
 import { RootState } from "../../store";
 import { getAllRoleDefinitions } from "../../store/actions";
 import moment from "moment";
-import { encrypt } from "../../utils/helpers";
+import { encrypt, useAccessRole } from "../../utils/helpers";
 
 const columns: GridColDef[] = [
 	{
@@ -87,7 +87,7 @@ const Roles = () => {
 
 	const roles = useSelector((state: RootState) => state.role.roles);
 
-	const termId = useSelector((state: RootState) => state.term.current);
+	const instituteId = useAccessRole()
 
 	useEffect(() => {
 		dispatch(
@@ -99,8 +99,8 @@ const Roles = () => {
 	}, [dispatch]);
 
 	useEffect(() => {
-		if (termId) dispatch(getAllRoleDefinitions({ termId, status: activeTab - 1 }));
-	}, [dispatch, activeTab, termId]);
+		if (instituteId) dispatch(getAllRoleDefinitions({ instituteId, status: activeTab - 1 }));
+	}, [dispatch, activeTab, instituteId]);
 
 	return (
 		<div className="test__Wrapper mt-2">

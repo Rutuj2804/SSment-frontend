@@ -20,13 +20,6 @@ export const sideBarData = [
 				matches: ["/dashboard", "/profile"],
 			},
 			{
-				name: "Batches",
-				link: "/batches",
-				icon: <BsCollection />,
-				notifications: 0,
-				matches: ["/lectures", "/lectures/add"],
-			},
-			{
 				name: "Tests",
 				link: "/tests",
 				icon: <BsBarChartLine />,
@@ -43,7 +36,26 @@ export const sideBarData = [
 		],
 	},
     {
-        title: "ADMINISTRATION",
+        title: "INSTITUTE",
+        links: [
+            {
+                name: "Terms",
+                link: "/terms",
+                icon: <BsBox />,
+                notifications: 0,
+                matches: ["/students"],
+            },
+			{
+				name: "Batches",
+				link: "/batches",
+				icon: <BsCollection />,
+				notifications: 0,
+				matches: ["/lectures", "/lectures/add"],
+			},
+        ],
+    },
+    {
+        title: "VENDOR",
         links: [
             {
                 name: "Institutes",
@@ -69,7 +81,31 @@ export const sideBarData = [
         ],
     },
     {
-        title: "Responsibilities",
+        title: "Vendor Responsibilities",
+        links: [
+            {
+                name: "Roles Assigned",
+                link: "/assignments",
+                icon: <BsAward />,
+                notifications: 0,
+                matches: ["/assigned"],
+            },
+        ],
+    },
+    {
+        title: "Institute Responsibilities",
+        links: [
+            {
+                name: "Roles Assigned",
+                link: "/assignments",
+                icon: <BsAward />,
+                notifications: 0,
+                matches: ["/assigned"],
+            },
+        ],
+    },
+    {
+        title: "SSment Responsibilities",
         links: [
             {
                 name: "Roles Definition",

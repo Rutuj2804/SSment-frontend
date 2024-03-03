@@ -9,6 +9,7 @@ import { setMessage } from "../../store/messages/slice";
 import { errorType } from "../../store/messages/types";
 import { createInstitute, getInstitute } from "../../store/actions";
 import { RootState } from "../../store";
+import { useAccessRole } from "../../utils/helpers";
 
 const steps = ["Basic Information", "Confirmation"];
 
@@ -22,7 +23,7 @@ const CreateInstitute = () => {
 
 	const navigate = useNavigate();
 
-	const termId = useSelector((state: RootState) => state.term.current)
+	const instituteId = useAccessRole()
 
 	const institute = useSelector((state: RootState) => state.institute.institute)
 
@@ -37,9 +38,9 @@ const CreateInstitute = () => {
 
 	useEffect(() => {
 		if(id) {
-			dispatch(getInstitute({ instituteId: id, termId }))
+			dispatch(getInstitute({ institute: id, instituteId }))
 		}
-	}, [termId])
+	}, [instituteId, dispatch, id])
 
 	useEffect(() => {
 		if(id) {
@@ -50,7 +51,7 @@ const CreateInstitute = () => {
 
 	const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		dispatch(createInstitute({ name, description, navigate, termId }))
+		dispatch(createInstitute({ name, description, navigate, instituteId }))
 	};
 
 	const controller = (i: number) => {

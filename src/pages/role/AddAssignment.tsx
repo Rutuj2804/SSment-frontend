@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setBreadcrumps } from "../../store/breadcrumps/slice";
 import { RootState } from "../../store";
 import { createRoleAssignment, getAllRoleDefinitions, getAllTerms, getRoleAssignment } from "../../store/actions";
+import { useAccessRole } from "../../utils/helpers";
 
 const AddAssignment = () => {
 
@@ -19,7 +20,7 @@ const AddAssignment = () => {
 
 	const { id } = useParams()
 
-	const termId = useSelector((state: RootState) => state.term.current)
+	const instituteId = useAccessRole()
 	const terms = useSelector((state: RootState) => state.term.terms)
 	const roles = useSelector((state: RootState) => state.role.roles)
 	const assignment = useSelector((state: RootState) => state.role.assignment)
@@ -34,17 +35,17 @@ const AddAssignment = () => {
 	}, [dispatch]);
 
 	useEffect(() => {
-		if(termId) {
-			dispatch(getAllTerms({ termId, status: 1 }))
-			dispatch(getAllRoleDefinitions({ termId, status: 1 }));
+		if(instituteId) {
+			dispatch(getAllTerms({ instituteId, status: 1 }))
+			dispatch(getAllRoleDefinitions({ instituteId, status: 1 }));
 		}
-	} ,[termId, dispatch])
+	} ,[instituteId, dispatch])
 
 	useEffect(() => {
 		if(id) {
-			dispatch(getRoleAssignment({ roleId: id, termId }))
+			dispatch(getRoleAssignment({ roleId: id, instituteId }))
 		}
-	}, [dispatch, id, termId]);
+	}, [dispatch, id, instituteId]);
 
 	useEffect(() => {
 		if(id) {
@@ -56,7 +57,7 @@ const AddAssignment = () => {
 
 	const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		dispatch(createRoleAssignment({ termId: term, roleId: role, email, navigate, term }))
+		dispatch(createRoleAssignment({ instituteId, roleId: role, email, navigate, term }))
 	};
 
 	return (

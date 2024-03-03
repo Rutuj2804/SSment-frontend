@@ -12,6 +12,7 @@ import { Popups } from "../components/popup";
 import { Backdrop } from "../common/backdrop";
 import { getDisplayTerms, getMyRole } from "../store/actions";
 import { Loader } from "../common/loader";
+import { useAccessRole } from "../utils/helpers";
 
 interface PrivateLayoutProps {
     children: React.ReactNode;
@@ -22,7 +23,7 @@ const PrivateLayout = ({ children }: PrivateLayoutProps) => {
     const sidebarStyle = useSelector((state: RootState) => state.settings.sidebar);
     const user = useSelector((state: RootState) => state.profile.user)
     const isLoading = useSelector((state: RootState) => state.loading.isLoading)
-    const termId = useSelector((state: RootState) => state.term.current)
+    const instituteId = useAccessRole()
 
     const dispatch = useDispatch<any>();
 
@@ -31,9 +32,9 @@ const PrivateLayout = ({ children }: PrivateLayoutProps) => {
     }, [user.instituteId, dispatch])
 
     useEffect(() => {
-        if(termId)
-            dispatch(getMyRole({ termId }))
-    }, [termId, dispatch])
+        if(instituteId)
+            dispatch(getMyRole({ instituteId }))
+    }, [instituteId, dispatch])
 
     return (
         <div>
