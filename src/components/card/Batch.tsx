@@ -5,7 +5,7 @@ import { EditRounded, VisibilityRounded } from "@mui/icons-material";
 import { GoDotFill } from "react-icons/go";
 import { Button } from "../../library";
 import { useNavigate } from "react-router-dom";
-import { encrypt } from "../../utils/helpers";
+import { encrypt, formatNumber } from "../../utils/helpers";
 
 interface BatchCProps {
 	name: string;
@@ -31,7 +31,7 @@ const Batch = ({ _id, description, isActive, name, students }: BatchCProps) => {
 				<p>
 					{description}
 				</p>
-				<span>{students} stundents enrolled</span>
+				<span>{formatNumber(students)} stundents enrolled</span>
 			</div>
 			<div className="batchCard__Footer">
 				<p className={isActive ? "batchCard__Active" : "batchCard__InActive"}>
