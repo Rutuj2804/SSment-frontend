@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Paper } from "../../components/paper";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
 import { setBreadcrumps } from "../../store/breadcrumps/slice";
 import { Button, OutlineButton } from "../../library";
 import { Tab, Tabs } from "@mui/material";
 import { StudentRibbon, TestRibbon } from "../../components/ribbon";
+import { getBatch } from "../../store/batch/actions";
+import { encrypt, useAccessRole } from "../../utils/helpers";
+import { RootState } from "../../store";
 
 const BatchDetail = () => {
 	const [value, setValue] = useState(0);
@@ -14,7 +17,13 @@ const BatchDetail = () => {
 		setValue(newValue);
 	};
 
-	const dispatch = useDispatch();
+	const dispatch = useDispatch<any>();
+
+	const { id } = useParams()
+
+	const instituteId = useAccessRole()
+
+	const batch = useSelector((state: RootState) => state.batch.batch)
 
 	const navigate = useNavigate();
 
@@ -27,30 +36,26 @@ const BatchDetail = () => {
 		);
 	}, [dispatch]);
 
+	useEffect(() => {
+		if(id && instituteId)
+			dispatch(getBatch({ batchId: id, instituteId }))
+	}, [id, instituteId])
+
 	return (
 		<Paper className="p-3">
 			<div className="batchDetail__Wrapper">
 				<div className="batchDetail__Header">
-					<h5>Batch Awesome</h5>
+					<h5>{batch.name}</h5>
 					<p>
-						Writing: A text is a passage of words that conveys a set
-						of meanings to the reader. It can be a written or spoken
-						passage, especially one used in a school or university
-						for discussion or in an examination. A text can be
-						words, phrases, and sentences that piece together a
-						passage of written work. It can be as simple as 1-2
-						words (such as a stop sign) or as complex as a novel.
-						Original words: The original words of a piece of writing
-						or a speech. Edited copy: An edited or emended copy of
-						an original work
+						{batch.description}
 					</p>
 				</div>
 				<div className="batchDetail__Actions">
 					<h6>Actions :</h6>
 					<div className="batchDetail__ActionButton">
-						<OutlineButton onClick={() => navigate("/batch/renew/123")}>Renew Batch</OutlineButton>
+						<OutlineButton onClick={() => navigate(`/batch/renew/${encrypt(batch._id!)}`)}>Renew Batch</OutlineButton>
 						<OutlineButton>Delete</OutlineButton>
-						<Button onClick={() => navigate("/batch/edit/123")}>
+						<Button onClick={() => navigate(`/batch/edit/${encrypt(batch._id!)}`)}>
 							Edit Batch
 						</Button>
 					</div>

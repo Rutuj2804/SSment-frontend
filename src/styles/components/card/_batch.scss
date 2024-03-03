@@ -31,7 +31,12 @@
         p{
             font-size: 14px;
             font-weight: 600;
-            color: $green;
+            &.batchCard__Active {
+                color: $green;
+            }
+            &.batchCard__InActive {
+                color: $red;
+            }
             span {
                 font-size: 20px;
             }

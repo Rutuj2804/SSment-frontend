@@ -31,7 +31,13 @@ const Batch = () => {
 			<div className="row">
 				{batches.map((b) => (
 					<div key={b._id} className="col-lg-4 col-md-6 col-12">
-						<BatchCard />
+						<BatchCard
+							_id={b._id!}
+							name={b.name!}
+							description={b.description!}
+							isActive={b.isActive!}
+							students={b.participants?.length!}
+						/>
 					</div>
 				))}
 			</div>
