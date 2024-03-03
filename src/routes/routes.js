@@ -29,6 +29,7 @@ export const regularRoutes = [
 
     { path: "/terms", element: <Term /> },
     { path: "/terms/create", element: <CreateTerm /> },
+    { path: "/terms/edit/:id", element: <CreateTerm /> },
 
     { path: "/roles", element: <Roles /> },
     { path: "/roles/create", element: <CreateRole /> },

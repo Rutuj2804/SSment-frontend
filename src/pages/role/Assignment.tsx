@@ -12,7 +12,7 @@ import {
 import { getAllRoleAssignments } from "../../store/actions";
 import { RootState } from "../../store";
 import { useAccessRole } from "../../utils/helpers";
-import { GetRoleAssignmentColumns } from "../../utils/data-grid/role-assignment";
+import { GetRoleAssignmentColumns } from "../../utils/data-grid";
 
 enum Tabs {
 	"ACTIVE" = 2,

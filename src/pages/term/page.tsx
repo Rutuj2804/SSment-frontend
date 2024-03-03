@@ -4,68 +4,17 @@ import { Button } from "../../library";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setBreadcrumps } from "../../store/breadcrumps/slice";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import { IconButton } from "@mui/material";
-import { AddRounded, CloudDownloadRounded, DeleteRounded, EditRounded } from "@mui/icons-material";
+import { DataGrid } from "@mui/x-data-grid";
+import { AddRounded, CloudDownloadRounded } from "@mui/icons-material";
 import { RootState } from "../../store";
 import { getAllTerms } from "../../store/actions";
-import moment from "moment";
 import { useAccessRole } from "../../utils/helpers";
+import { GetTermColumns } from "../../utils/data-grid";
 
 enum Tabs {
 	"ACTIVE" = 2,
 	"DELETED" = 1,
 }
-
-const columns: GridColDef[] = [
-	{
-		field: "testName",
-		headerName: "Name",
-		flex: 1,
-		renderCell: (params) => <div>{params.row.name}</div>,
-	},
-	{
-		field: "status",
-		headerName: "Status",
-		width: 110,
-		align: "center",
-		headerAlign: "center",
-		renderCell: (params) => <div className={params.row.isActive ? "activetag" : "inactivetag"}>{params.row.isActive ? "Active" : "Completed"}</div>,
-	},
-	{
-		field: "institute",
-		headerName: "Institute",
-		flex: 1,
-		align: "center",
-		headerAlign: "center",
-		renderCell: (params) => <div className="">{params.row.instituteId?.name}</div>,
-	},
-	{
-		field: "date",
-		headerName: "Created On",
-		headerAlign: "center",
-		width: 110,
-		align: "center",
-		renderCell: (params) => <div className="">{moment(params.row.createdAt).format("DD MMM, YYYY")}</div>,
-	},
-	{
-		field: "actions",
-		headerName: "Actions",
-		headerAlign: "center",
-		width: 140,
-		align: "center",
-		renderCell: (params) => (
-			<div className="d-flex gap-2">
-				<IconButton size="small">
-					<EditRounded />
-				</IconButton>
-				<IconButton size="small">
-					<DeleteRounded />
-				</IconButton>
-			</div>
-		),
-	},
-];
 
 const Term = () => {
 	const [activeTab, setActiveTab] = useState(Tabs.ACTIVE);
@@ -77,6 +26,8 @@ const Term = () => {
 	const instituteId = useAccessRole()
 
 	const terms = useSelector((state: RootState) => state.term.terms)
+
+	const columns = GetTermColumns()
 
 	useEffect(() => {
 		dispatch(

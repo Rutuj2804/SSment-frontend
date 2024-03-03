@@ -1,32 +1,30 @@
 import React, { useEffect, useState } from "react";
 import { Paper } from "../../components/paper";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setBreadcrumps } from "../../store/breadcrumps/slice";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
-	AddRoles,
 	BasicInformation,
 	Confirmation,
 } from "../../components/term";
 import { Stepper } from "../../components/stepper";
-import { createTerm } from "../../store/actions";
+import { createTerm, getTerms, updateTerm } from "../../store/actions";
 import { useAccessRole } from "../../utils/helpers";
+import { RootState } from "../../store";
 
-const steps = ["Basic Information", "Add Roles", "Confirmation"];
-
-interface RoleAssignment {
-	email: string;
-	roleId: string;
-}
+const steps = ["Basic Information", "Confirmation"];
 
 const CreateTerm = () => {
 	const [institute, setInstitute] = useState("");
 	const [term, setTerm] = useState("");
-	const [role, setRole] = useState<RoleAssignment[]>([]);
 
 	const dispatch = useDispatch<any>();
 
+	const { id } = useParams()
+
 	const instituteId = useAccessRole()
+
+	const fetchedTerm = useSelector((state: RootState) => state.term.term)
 
 	const navigate = useNavigate();
 
@@ -39,9 +37,24 @@ const CreateTerm = () => {
 		);
 	}, [dispatch]);
 
+	useEffect(() => {
+		if(id)
+			dispatch(getTerms({ termId: id, instituteId }))
+	}, [id, dispatch, instituteId])
+
+	useEffect(() => {
+		if(fetchedTerm._id) {
+			setTerm(fetchedTerm.name!)
+			setInstitute(fetchedTerm.instituteId!)
+		}
+	}, [fetchedTerm])
+
 	const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		dispatch(createTerm({ navigate, instituteId, name: term, institute, roles: role  }))
+		if(id)
+			dispatch(updateTerm({ navigate, instituteId, name: term, institute, termId: id }))
+		else
+			dispatch(createTerm({ navigate, instituteId, name: term, institute  }))
 	};
 
 	const controller = () => {
@@ -54,7 +67,7 @@ const CreateTerm = () => {
 				<Stepper
 					steps={steps}
 					onSubmit={onSubmit}
-					submitButtonText="Create Institute"
+					submitButtonText={id ? "Update Term" :"Create Term"}
 					controller={controller}
 					components={[
 						<BasicInformation
@@ -64,8 +77,7 @@ const CreateTerm = () => {
 							setInstitute={setInstitute}
 							institute={institute}
 						/>,
-						<AddRoles key={2} setRole={setRole} role={role} />,
-						<Confirmation key={3} />,
+						<Confirmation key={2} />,
 					]}
 				/>
 			</Paper>
