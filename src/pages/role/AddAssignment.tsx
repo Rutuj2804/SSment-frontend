@@ -5,13 +5,13 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setBreadcrumps } from "../../store/breadcrumps/slice";
 import { RootState } from "../../store";
-import { createRoleAssignment, getAllRoleDefinitions, getAllTerms, getRoleAssignment } from "../../store/actions";
+import { createRoleAssignment, getAllInstitutes, getAllRoleDefinitions, getRoleAssignment } from "../../store/actions";
 import { useAccessRole } from "../../utils/helpers";
 
 const AddAssignment = () => {
 
 	const [role, setRole] = useState("")
-	const [term, setTerm] = useState("")
+	const [institute, setInstitute] = useState("")
 	const [email, setEmail] = useState("")
 
 	const dispatch = useDispatch<any>();
@@ -21,7 +21,7 @@ const AddAssignment = () => {
 	const { id } = useParams()
 
 	const instituteId = useAccessRole()
-	const terms = useSelector((state: RootState) => state.term.terms)
+	const institutes = useSelector((state: RootState) => state.institute.institutes)
 	const roles = useSelector((state: RootState) => state.role.roles)
 	const assignment = useSelector((state: RootState) => state.role.assignment)
 
@@ -36,7 +36,7 @@ const AddAssignment = () => {
 
 	useEffect(() => {
 		if(instituteId) {
-			dispatch(getAllTerms({ instituteId, status: 1 }))
+			dispatch(getAllInstitutes({ instituteId }))
 			dispatch(getAllRoleDefinitions({ instituteId, status: 1 }));
 		}
 	} ,[instituteId, dispatch])
@@ -50,14 +50,14 @@ const AddAssignment = () => {
 	useEffect(() => {
 		if(id) {
 			setRole(assignment.roleId!)
-			setTerm(assignment.termId!)
+			setInstitute(assignment.termId!)
 			setEmail(assignment.userId?.email!)
 		}
 	}, [assignment, id])
 
 	const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		dispatch(createRoleAssignment({ instituteId, roleId: role, email, navigate, term }))
+		dispatch(createRoleAssignment({ instituteId, roleId: role, email, navigate, institute }))
 	};
 
 	return (
@@ -93,10 +93,10 @@ const AddAssignment = () => {
 							<Select
 								name="name"
 								value="_id"
-								options={terms}
-								selected={term}
-								onChange={c=>setTerm(c)}
-								label="Select Term"
+								options={institutes}
+								selected={institute}
+								onChange={c=>setInstitute(c)}
+								label="Select Institute"
 								className="mb-2"
 							/>
 						</div>

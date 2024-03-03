@@ -21,7 +21,7 @@ export interface CreateRoleDefinitionRequest extends BaseInterface {
 
 export interface CreateRoleAssignmentRequest extends BaseInterface {
     roleId: string;
-    term: string;
+    institute: string;
     email: string
 }
 
