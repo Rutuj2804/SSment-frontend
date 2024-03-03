@@ -14,5 +14,5 @@ export interface RoleDefinition extends BaseInterface {
 export interface RoleAssignment extends BaseInterface {
     roleId?: string;
     userId?: UserInterface;
-    termId?: string;
+    instituteId?: string;
 }

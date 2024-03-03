@@ -1,77 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { setBreadcrumps } from "../../store/breadcrumps/slice";
 import { Paper } from "../../components/paper";
 import { Button } from "../../library";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import { IconButton } from "@mui/material";
+import { DataGrid } from "@mui/x-data-grid";
 import {
 	AddRounded,
 	CloudDownloadRounded,
-	DeleteRounded,
-	EditRounded,
 } from "@mui/icons-material";
 import { getAllRoleAssignments } from "../../store/actions";
 import { RootState } from "../../store";
-import { encrypt, useAccessRole, username } from "../../utils/helpers";
-import moment from "moment";
-
-const columns: GridColDef[] = [
-	{
-		field: "testName",
-		headerName: "Name",
-		flex: 1,
-		renderCell: (params) => username(params.row.userId),
-	},
-	{
-		field: "status",
-		headerName: "Status",
-		width: 110,
-		align: "center",
-		headerAlign: "center",
-		renderCell: (params) => (
-			<div className={params.row.isActive ? "activetag" : "inactivetag"}>
-				{params.row.isActive ? "Active" : "Deleted"}
-			</div>
-		),
-	},
-	{
-		field: "role",
-		headerName: "Role",
-		width: 110,
-		align: "center",
-		headerAlign: "center",
-		renderCell: (params) => <div>{params.row.roleId.name}</div>,
-	},
-	{
-		field: "date",
-		headerName: "Assigned On",
-		headerAlign: "center",
-		width: 110,
-		align: "center",
-		renderCell: (params) => <span>{moment(params.row.createdAt).format("DD MMM, YYYY")}</span>,
-	},
-	{
-		field: "actions",
-		headerName: "Actions",
-		headerAlign: "center",
-		width: 180,
-		align: "center",
-		renderCell: (params) => (
-			<div className="d-flex gap-2">
-				<NavLink to={`/assignment/edit/${encrypt(params.row._id)}`}>
-					<IconButton size="small">
-						<EditRounded />
-					</IconButton>
-				</NavLink>
-				<IconButton size="small">
-					<DeleteRounded />
-				</IconButton>
-			</div>
-		),
-	},
-];
+import { useAccessRole } from "../../utils/helpers";
+import { GetRoleAssignmentColumns } from "../../utils/data-grid/role-assignment";
 
 enum Tabs {
 	"ACTIVE" = 2,
@@ -90,6 +31,8 @@ const Assignments = () => {
 	);
 
 	const instituteId = useAccessRole()
+
+	const columns = GetRoleAssignmentColumns()
 
 	useEffect(() => {
 		dispatch(

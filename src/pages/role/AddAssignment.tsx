@@ -5,7 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setBreadcrumps } from "../../store/breadcrumps/slice";
 import { RootState } from "../../store";
-import { createRoleAssignment, getAllInstitutes, getAllRoleDefinitions, getRoleAssignment } from "../../store/actions";
+import { createRoleAssignment, getAllInstitutes, getAllRoleDefinitions, getRoleAssignment, updateRoleAssignment } from "../../store/actions";
 import { useAccessRole } from "../../utils/helpers";
 
 const AddAssignment = () => {
@@ -50,14 +50,17 @@ const AddAssignment = () => {
 	useEffect(() => {
 		if(id) {
 			setRole(assignment.roleId!)
-			setInstitute(assignment.termId!)
+			setInstitute(assignment.instituteId!)
 			setEmail(assignment.userId?.email!)
 		}
 	}, [assignment, id])
 
 	const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		dispatch(createRoleAssignment({ instituteId, roleId: role, email, navigate, institute }))
+		if(id)
+			dispatch(updateRoleAssignment({ instituteId, roleId: role, navigate, institute, assignmentId: id }))
+		else
+			dispatch(createRoleAssignment({ instituteId, roleId: role, email, navigate, institute }))
 	};
 
 	return (
@@ -102,7 +105,7 @@ const AddAssignment = () => {
 						</div>
 					</div>
 
-					<Button type="submit">Assign Role</Button>
+					<Button type="submit">{id ? "Update" : "Assign"} Role</Button>
 				</form>
 			</Paper>
 		</div>

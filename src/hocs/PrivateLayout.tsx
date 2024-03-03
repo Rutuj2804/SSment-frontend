@@ -28,7 +28,7 @@ const PrivateLayout = ({ children }: PrivateLayoutProps) => {
     const dispatch = useDispatch<any>();
 
     useEffect(() => {
-        if(user.instituteId) dispatch(getDisplayTerms({ instituteId: user.instituteId._id! }))
+        if(user.instituteId?._id) dispatch(getDisplayTerms({ instituteId: user.instituteId._id! }))
     }, [user.instituteId, dispatch])
 
     useEffect(() => {

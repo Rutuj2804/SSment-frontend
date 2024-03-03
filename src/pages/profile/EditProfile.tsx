@@ -7,13 +7,14 @@ import { setBreadcrumps } from "../../store/breadcrumps/slice";
 import { updateUserDetails } from "../../store/actions";
 import { RootState } from "../../store";
 import { useNavigate, useParams } from "react-router-dom";
+import moment from "moment";
 
 const EditProfile = () => {
 	const [formData, setFormData] = useState({
 		firstname: "",
 		lastname: "",
 		midname: "",
-		dob: null,
+		dob: "",
 		country: "",
 		state: "",
 	});
@@ -48,7 +49,7 @@ const EditProfile = () => {
 				firstname: user.firstname!,
 				lastname: user.lastname!,
 				midname: user.midname!,
-				dob: user.dob!,
+				dob: moment(user.dob).format("DD-MM-yyyy"),
 				country: user.country!,
 				state: user.state!,
 			}));
@@ -144,6 +145,7 @@ const EditProfile = () => {
 							<Input
 								label="Institute"
 								placeholder="Institute"
+								value={user.instituteId?.name}
 								disabled
 							/>
 						</div>

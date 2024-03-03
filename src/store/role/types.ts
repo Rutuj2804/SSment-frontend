@@ -40,6 +40,16 @@ export interface CreateRoleAssignmentRequest extends BaseInterface {
     email: string
 }
 
+export interface UpdateRoleAssignmentRequest extends BaseInterface {
+    roleId: string;
+    institute: string;
+    assignmentId: string
+}
+
+export interface DeleteRoleAssignmentRequest extends BaseInterface {
+    assignmentId: string
+}
+
 export interface GetAllRoleAssignmentsRequest extends BaseInterface {
     status: number;
 }

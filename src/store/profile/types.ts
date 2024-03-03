@@ -9,7 +9,7 @@ export interface UpdateProfileRequest extends BaseInterface {
     firstname: string;
     midname: string;
     lastname: string;
-    dob: Date | null,
+    dob: string,
     country: string,
     state: string
 }
