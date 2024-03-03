@@ -1,77 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { setBreadcrumps } from "../../store/breadcrumps/slice";
 import { Button } from "../../library";
 import { Paper } from "../../components/paper";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import { IconButton } from "@mui/material";
+import { DataGrid } from "@mui/x-data-grid";
 import {
 	AddRounded,
 	CloudDownloadRounded,
-	DeleteRounded,
-	EditRounded,
 } from "@mui/icons-material";
 import { RootState } from "../../store";
 import { getAllRoleDefinitions } from "../../store/actions";
-import moment from "moment";
-import { encrypt, useAccessRole } from "../../utils/helpers";
-
-const columns: GridColDef[] = [
-	{
-		field: "name",
-		headerName: "Name",
-		flex: 1,
-	},
-	{
-		field: "status",
-		headerName: "Status",
-		width: 110,
-		align: "center",
-		headerAlign: "center",
-		renderCell: (params) => (
-			<div className={params.row.isActive ? "activetag" : "inactivetag"}>
-				{params.row.isActive ? "Active" : "Deleted"}
-			</div>
-		),
-	},
-	{
-		field: "students",
-		headerName: "Created By",
-		headerAlign: "center",
-		width: 200,
-		align: "center",
-		renderCell: () => <div>Rutuj Jeevan Bokade</div>,
-	},
-	{
-		field: "date",
-		headerName: "Created On",
-		headerAlign: "center",
-		width: 110,
-		align: "center",
-		renderCell: (params) =>
-			moment(params.row.createdAt).format("DD MMM, YYYY"),
-	},
-	{
-		field: "actions",
-		headerName: "Actions",
-		headerAlign: "center",
-		width: 180,
-		align: "center",
-		renderCell: (params) => (
-			<div className="d-flex gap-2">
-				<NavLink to={`/role/edit/${encrypt(params.row._id)}`}>
-					<IconButton size="small">
-						<EditRounded />
-					</IconButton>
-				</NavLink>
-				<IconButton size="small">
-					<DeleteRounded />
-				</IconButton>
-			</div>
-		),
-	},
-];
+import { useAccessRole } from "../../utils/helpers";
+import { GetRoleDefinitionColumns } from "../../utils/data-grid";
 
 enum Tabs {
 	"ACTIVE" = 2,
@@ -88,6 +29,8 @@ const Roles = () => {
 	const roles = useSelector((state: RootState) => state.role.roles);
 
 	const instituteId = useAccessRole()
+
+	const columns = GetRoleDefinitionColumns()
 
 	useEffect(() => {
 		dispatch(

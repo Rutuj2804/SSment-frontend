@@ -5,7 +5,7 @@ import { setMessage } from "../messages/slice";
 import { errorType } from "../messages/types";
 import axios from "../axios"
 import { decrypt, userToken } from "../../utils/helpers";
-import { CreateRoleAssignmentRequest, CreateRoleDefinitionRequest, GetAllRoleAssignmentsRequest, GetAllRoleDefinitionsRequest, GetRoleRequest } from "./types";
+import { CreateRoleAssignmentRequest, CreateRoleDefinitionRequest, DeleteRoleDefinitionRequest, GetAllRoleAssignmentsRequest, GetAllRoleDefinitionsRequest, GetRoleRequest, UpdateRoleDefinitionRequest } from "./types";
 import { BaseInterface } from "..";
 
 export const createRoleDefinition = createAsyncThunk( "createRoleDefinition/Role", async (data: CreateRoleDefinitionRequest, thunkAPI) => {
@@ -51,6 +51,98 @@ export const createRoleDefinition = createAsyncThunk( "createRoleDefinition/Role
             return thunkAPI.rejectWithValue(err);
         }
     }
+);
+
+export const updateRoleDefinition = createAsyncThunk( "updateRoleDefinition/Role", async (data: UpdateRoleDefinitionRequest, thunkAPI) => {
+    thunkAPI.dispatch(updateLoading(1));
+    try {
+        const config = {
+            headers: {
+                "Content-Type": "Application/json",
+                "Authorization": `Bearer ${userToken()}`
+            },
+        };
+        
+        data.roleId = decrypt(data.roleId)!
+
+        const res = await axios.put(`/role/d/update/${data.roleId}`, data, config);
+
+        thunkAPI.dispatch(updateLoading(-1));
+
+        if(data.navigate) data.navigate("/roles")
+
+        return res.data;
+    } catch (err) {
+        thunkAPI.dispatch(updateLoading(-1));
+
+        if (err instanceof AxiosError) {
+            if(Array.isArray(err?.response?.data.message)) {
+                thunkAPI.dispatch(
+                    setMessage({
+                        text: err?.response?.data.message[0],
+                        type: errorType.ERROR,
+                        _id: Date.now().toString(),
+                    })
+                );
+            } else {
+                thunkAPI.dispatch(
+                    setMessage({
+                        text: err?.response?.data.message,
+                        type: errorType.ERROR,
+                        _id: Date.now().toString(),
+                    })
+                );
+            }
+        }
+
+        return thunkAPI.rejectWithValue(err);
+    }
+}
+);
+
+export const deleteRoleDefinition = createAsyncThunk( "deleteRoleDefinition/Role", async (data: DeleteRoleDefinitionRequest, thunkAPI) => {
+    thunkAPI.dispatch(updateLoading(1));
+    try {
+        const config = {
+            headers: {
+                "Content-Type": "Application/json",
+                "Authorization": `Bearer ${userToken()}`
+            },
+        };
+
+        const res = await axios.put(`/role/d/delete/${data.roleId}`, data, config);
+
+        thunkAPI.dispatch(updateLoading(-1));
+
+        thunkAPI.dispatch(getAllRoleDefinitions({ instituteId: data.instituteId, status: 1 }))
+
+        return res.data;
+    } catch (err) {
+        thunkAPI.dispatch(updateLoading(-1));
+
+        if (err instanceof AxiosError) {
+            if(Array.isArray(err?.response?.data.message)) {
+                thunkAPI.dispatch(
+                    setMessage({
+                        text: err?.response?.data.message[0],
+                        type: errorType.ERROR,
+                        _id: Date.now().toString(),
+                    })
+                );
+            } else {
+                thunkAPI.dispatch(
+                    setMessage({
+                        text: err?.response?.data.message,
+                        type: errorType.ERROR,
+                        _id: Date.now().toString(),
+                    })
+                );
+            }
+        }
+
+        return thunkAPI.rejectWithValue(err);
+    }
+}
 );
 
 export const getAllRoleDefinitions = createAsyncThunk( "getAllRoleDefinitions/Role", async (data: GetAllRoleDefinitionsRequest, thunkAPI) => {

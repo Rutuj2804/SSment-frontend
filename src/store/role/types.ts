@@ -19,6 +19,21 @@ export interface CreateRoleDefinitionRequest extends BaseInterface {
     role: number;
 }
 
+export interface UpdateRoleDefinitionRequest extends BaseInterface {
+    alias: string;
+    name: string;
+    institute: number;
+    batch: number;
+    term: number;
+    test: number;
+    role: number;
+    roleId: string;
+}
+
+export interface DeleteRoleDefinitionRequest extends BaseInterface {
+    roleId: string;
+}
+
 export interface CreateRoleAssignmentRequest extends BaseInterface {
     roleId: string;
     institute: string;

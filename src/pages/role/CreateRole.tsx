@@ -4,7 +4,7 @@ import { setBreadcrumps } from "../../store/breadcrumps/slice";
 import { Button, Input, Select } from "../../library";
 import { Paper } from "../../components/paper";
 import { useNavigate, useParams } from "react-router-dom";
-import { createRoleDefinition, getRole } from "../../store/actions";
+import { createRoleDefinition, getRole, updateRoleDefinition } from "../../store/actions";
 import { RootState } from "../../store";
 import { useAccessRole } from "../../utils/helpers";
 
@@ -72,7 +72,10 @@ const CreateRole = () => {
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		dispatch(createRoleDefinition({ ...formData, alias, name, navigate, instituteId }))
+		if(id)
+			dispatch(updateRoleDefinition({ ...formData, alias, name, navigate, instituteId, roleId: id! }))
+		else
+			dispatch(createRoleDefinition({ ...formData, alias, name, navigate, instituteId }))
 	};
 
 	return (
@@ -222,7 +225,7 @@ const CreateRole = () => {
 							</div>
 
 							<div className="createRole__Button">
-								<Button type="submit">Create Role</Button>
+								<Button type="submit">{id ? "Update" : "Create"} Role</Button>
 							</div>
 						</div>
 					</form>
