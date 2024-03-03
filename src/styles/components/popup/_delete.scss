@@ -1,0 +1,30 @@
+.deleteConfirmation__Wrapper {
+    width: 400px;
+    background-color: $white;
+    padding: 7px;
+    border-radius: 4px;
+    .deleteConfirmation__Header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        h5 {
+            margin: 0%;
+        }
+    }
+    .deleteConfirmation__Body {
+        margin: 10px 0;
+    }
+    .deleteConfirmation__Footer {
+        display: flex;
+        justify-content: flex-end;
+        gap: 7px;
+        .deleteConfirmation__Outline {
+            font-size: 12px;
+            border-color: $red!important;
+            color: $red!important;
+        }
+        .deleteConfirmation__Fill {
+            background-color: $red!important;
+        }
+    }
+}

@@ -11,7 +11,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { setMessage } from "../../store/messages/slice";
 import { setBreadcrumps } from "../../store/breadcrumps/slice";
-import { createBatch } from "../../store/batch/actions";
+import { createBatch } from "../../store/actions";
 import { useAccessRole } from "../../utils/helpers";
 import moment from "moment";
 import { RootState } from "../../store";

@@ -4,7 +4,7 @@ import { setBreadcrumps } from "../../store/breadcrumps/slice";
 import { BatchCard } from "../../components/card";
 import { RootState } from "../../store";
 import { useAccessRole } from "../../utils/helpers";
-import { getAllBatches } from "../../store/batch/actions";
+import { getAllBatches } from "../../store/actions";
 
 const Batch = () => {
 	const dispatch = useDispatch<any>();

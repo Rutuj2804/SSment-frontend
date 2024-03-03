@@ -1,64 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Paper } from "../../components/paper";
 import { Button, Select } from "../../library";
-import { IconButton } from "@mui/material";
-import { AddRounded, CloudDownloadRounded, DeleteRounded, EditRounded } from "@mui/icons-material";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { AddRounded, CloudDownloadRounded } from "@mui/icons-material";
+import { DataGrid } from "@mui/x-data-grid";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { setBreadcrumps } from "../../store/breadcrumps/slice";
 import { RootState } from "../../store";
-import moment from "moment";
-import { encrypt, useAccessRole } from "../../utils/helpers";
-import { getAllBatches } from "../../store/batch/actions";
-
-const columns: GridColDef[] = [
-	{
-		field: "testName",
-		headerName: "Title",
-		flex: 1,
-		renderCell: (params) => <div>{params.row.name}</div>
-	},
-	{
-		field: "status",
-		headerName: "Status",
-		width: 110,
-		align: "center",
-		headerAlign: "center",
-		renderCell: (params) => (
-			<div className={params.row.isActive ? "activetag": "inactivetag"}>{params.row.isActive ? "Active" : "Deleted"}</div>
-		)
-	},
-	{
-		field: "students",
-		headerName: "Students",
-		headerAlign: "center",
-		width: 110,
-		align: "center",
-		renderCell: (params) => <div>{params.row.participants.length}</div>
-	},
-	{
-		field: "date",
-		headerName: "Date",
-		headerAlign: "center",
-		width: 110,
-		align: "center",
-		renderCell: (params) => <div>{moment(params.row.createdAt).format("DD MMM, YYYY")}</div>
-	},
-	{
-		field: "actions",
-		headerName: "Actions",
-		headerAlign: "center",
-		width: 180,
-		align: "center",
-		renderCell: (params) => (
-			<div className="d-flex gap-2">
-				<NavLink to={`/batch/edit/${encrypt(params.row._id)}`}><IconButton size="small"><EditRounded /></IconButton></NavLink>
-				<IconButton size="small"><DeleteRounded /></IconButton>
-			</div>
-		)
-	},
-];
+import { useAccessRole } from "../../utils/helpers";
+import { getAllBatches } from "../../store/actions";
+import GetBatchColumns from "../../utils/data-grid/batch";
 
 enum Tabs {
 	"ONGOING" = 2,
@@ -82,6 +33,8 @@ const AdminBatch = () => {
 	const batches = useSelector((state: RootState) => state.batch.batches)
 
 	const instituteId = useAccessRole()
+
+	const columns = GetBatchColumns()
 
 	useEffect(() => {
 		dispatch(

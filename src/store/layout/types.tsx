@@ -6,4 +6,11 @@ export interface LayoutState {
 	search: boolean;
 	popup: boolean;
 	question: boolean;
+	delete: DeleteInterface;
+}
+
+export interface DeleteInterface {
+	isActive: boolean;
+	callback: () => void;
+	text: string;
 }

@@ -5,7 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setBreadcrumps } from "../../store/breadcrumps/slice";
 import { useAccessRole } from "../../utils/helpers";
-import { getBatch, updateBatch } from "../../store/batch/actions";
+import { getBatch, updateBatch } from "../../store/actions";
 import { RootState } from "../../store";
 
 const EditBatch = () => {
