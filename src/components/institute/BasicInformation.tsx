@@ -26,6 +26,7 @@ const BasicInformation = ({
 				label="Description "
 				onChange={(e) => setDescription(e.target.value)}
 				value={description}
+				rows={5}
 				placeholder="Description"
 			/>
 		</div>

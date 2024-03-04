@@ -23,6 +23,7 @@ const BasicInformationInstitution = ({ title, description, setTitle, setDescript
 				name="description"
 				placeholder="Description of Batch"
 				value={description}
+				rows={5}
 				onChange={e=>setDescription(e.target.value)}
 			/>
 		</div>
