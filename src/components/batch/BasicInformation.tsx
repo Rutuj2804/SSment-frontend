@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Input, RichTextEditor, Select, Textarea } from "../../library";
+import { Input, Select, Textarea } from "../../library";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { useAccessRole } from "../../utils/helpers";

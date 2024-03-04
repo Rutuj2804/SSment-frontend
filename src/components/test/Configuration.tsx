@@ -83,7 +83,7 @@ const Configuration = ({ formData, onChange, onCheckboxChange }: ConfigurationPr
 				<Checkbox
 					name="sendEmailOfResultOnceCompleted"
 					id="sendEmailOfResultOnceCompleted"
-					label="Show email of results once completed"
+					label="Send email of results once completed"
 					description="Sends a email of results to candidate immediately after scoring is completed."
 					onChange={onCheckboxChange}
 					checked={formData.sendEmailOfResultOnceCompleted}

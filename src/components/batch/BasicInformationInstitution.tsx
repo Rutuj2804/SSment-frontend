@@ -1,5 +1,5 @@
 import React from "react";
-import { Input, RichTextEditor, Textarea } from "../../library";
+import { Input, Textarea } from "../../library";
 
 interface BasicInformationProps {
 	title: string;

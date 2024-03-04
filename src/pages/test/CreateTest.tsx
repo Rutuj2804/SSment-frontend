@@ -13,6 +13,8 @@ import {
 	TermsAndCondition,
 } from "../../components/test";
 import moment from "moment";
+import { createTest } from "../../store/actions";
+import { useAccessRole } from "../../utils/helpers";
 
 const steps = [
 	"Basic Information",
@@ -90,9 +92,11 @@ const CreateTest = () => {
 		setFormData({ ...formData, [e.target.name]: c });
 	}
 
-	const dispatch = useDispatch();
+	const dispatch = useDispatch<any>();
 
 	const navigate = useNavigate();
+
+	const instituteId = useAccessRole()
 
 	useEffect(() => {
 		dispatch(
@@ -105,7 +109,7 @@ const CreateTest = () => {
 
 	const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		console.log(formData)
+		dispatch(createTest({ navigate, instituteId }))
 	};
 
 	const controller = (i: number) => {

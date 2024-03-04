@@ -10,7 +10,8 @@ import { RootState } from "../../store";
 
 const options = [
 	{ name: "Draft", value: 1 },
-	{ name: "Published", value: 1 },
+	{ name: "Published", value: 2 },
+	{ name: "Cancelled", value: 3 },
 ];
 
 const TestDetail = () => {

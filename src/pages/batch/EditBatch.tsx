@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Paper } from "../../components/paper";
-import { Button, Input, RichTextEditor } from "../../library";
+import { Button, Input, Textarea } from "../../library";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setBreadcrumps } from "../../store/breadcrumps/slice";
@@ -55,11 +55,12 @@ const EditBatch = () => {
 				<h4>Edit Batch</h4>
 				<form onSubmit={onSubmit}>
 					<Input label="Title *" value={name} onChange={e=>setName(e.target.value)} placeholder="Batch Awesome" />
-					<RichTextEditor
+					<Textarea
 						label="Description *"
 						placeholder="Description"
 						value={description}
-						onChange={c=>setDescription(c)}
+						rows={5}
+						onChange={e=>setDescription(e.target.value)}
 					/>
 					<Button type="submit">Edit Batch</Button>
 				</form>
