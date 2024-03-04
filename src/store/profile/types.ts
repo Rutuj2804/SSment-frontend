@@ -3,6 +3,7 @@ import { UserInterface } from "../../utils/types";
 
 export interface ProfileState {
     user: UserInterface;
+    display: UserInterface;
 }
 
 export interface UpdateProfileRequest extends BaseInterface {

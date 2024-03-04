@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setBreadcrumps } from "../../store/breadcrumps/slice";
 import { useNavigate } from "react-router-dom";
 import { Paper } from "../../components/paper";
 import { Avatar, Tab, Tabs } from "@mui/material";
 import { Button, Select, OutlineButton } from "../../library";
 import { BatchRibbon, StudentRibbon } from "../../components/ribbon";
+import { RootState } from "../../store";
 
 const options = [
 	{ name: "Draft", value: 1 },
@@ -20,6 +21,8 @@ const TestDetail = () => {
 	};
 
 	const dispatch = useDispatch();
+
+	const user = useSelector((state: RootState) => state.profile.user)
 
 	const navigate = useNavigate();
 
@@ -90,11 +93,11 @@ const TestDetail = () => {
 						</Tabs>
 
 						{value === 0 &&<div className="testDetail__Tab1Students">
-							{/* <StudentRibbon />
-							<StudentRibbon />
-							<StudentRibbon />
-							<StudentRibbon />
-							<StudentRibbon /> */}
+							<StudentRibbon user={user} parent="TEST" />
+							<StudentRibbon user={user} parent="TEST" />
+							<StudentRibbon user={user} parent="TEST" />
+							<StudentRibbon user={user} parent="TEST" />
+							<StudentRibbon user={user} parent="TEST" />
 						</div>}
 						{value === 1 && <div className="testDetail__Tab2Batches">
 							<BatchRibbon />

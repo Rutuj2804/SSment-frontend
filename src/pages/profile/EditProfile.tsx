@@ -4,7 +4,7 @@ import { Avatar } from "@mui/material";
 import { Button, Input } from "../../library";
 import { useDispatch, useSelector } from "react-redux";
 import { setBreadcrumps } from "../../store/breadcrumps/slice";
-import { updateUserDetails } from "../../store/actions";
+import { getProfile, updateUserDetails } from "../../store/actions";
 import { RootState } from "../../store";
 import { useNavigate, useParams } from "react-router-dom";
 import moment from "moment";
@@ -23,7 +23,7 @@ const EditProfile = () => {
 
 	const { firstname, lastname, midname, dob, country, state } = formData;
 
-	const { username } = useParams();
+	const { email } = useParams();
 
 	const dispatch = useDispatch<any>();
 
@@ -33,14 +33,18 @@ const EditProfile = () => {
 		dispatch(
 			setBreadcrumps({
 				name: ["General", "Profile", "Edit Profile"],
-				link: "/edit/:username",
+				link: "/edit/:email",
 			})
 		);
 	}, [dispatch]);
 
 	useEffect(() => {
-		if (username !== user.email) navigate(`/edit/${user.email}`);
-	}, [username, user, navigate]);
+		dispatch(getProfile())
+	}, [dispatch])
+
+	useEffect(() => {
+		if (email !== user.email) navigate(`/edit/${user.email}`);
+	}, [email, user, navigate]);
 
 	useEffect(() => {
 		if (user.email) {

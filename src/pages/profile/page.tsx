@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Paper } from "../../components/paper";
 import { Button, OutlineButton } from "../../library";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Avatar } from "@mui/material";
 import { DangerousRounded } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,20 +9,28 @@ import { setBreadcrumps } from "../../store/breadcrumps/slice";
 import { RootState } from "../../store";
 import moment from "moment";
 import { location, username } from "../../utils/helpers";
+import { getUserProfile } from "../../store/actions";
 
 const Profile = () => {
-	const dispatch = useDispatch();
+	const dispatch = useDispatch<any>();
 
-	const user = useSelector((state: RootState) => state.profile.user)
+	const user = useSelector((state: RootState) => state.profile.display)
+	const profile = useSelector((state: RootState) => state.profile.user)
+
+	const { email } = useParams();
 
 	useEffect(() => {
 		dispatch(
 			setBreadcrumps({
 				name: ["General", "Profile", "My Profile"],
-				link: "/:username",
+				link: "/:email",
 			})
 		);
 	}, [dispatch]);
+
+	useEffect(() => {
+		if(email) dispatch(getUserProfile({ email: email }))
+	}, [dispatch, email])
 
 	const navigate = useNavigate();
 
@@ -55,7 +63,7 @@ const Profile = () => {
 							<p>MIT ADT University</p>
 						</div>
 					</div>
-					<div className="actions">
+					{profile.email === user.email ? <div className="actions">
 						<h6>Actions :</h6>
 						<div className="testDetails__Actions">
 							<OutlineButton>Delete Profile</OutlineButton>
@@ -63,7 +71,7 @@ const Profile = () => {
 								Edit Profile
 							</Button>
 						</div>
-					</div>
+					</div> : null}
 					<div className="layoutMessage__Message layoutMessage__Danger">
 						<DangerousRounded />
 						<p>

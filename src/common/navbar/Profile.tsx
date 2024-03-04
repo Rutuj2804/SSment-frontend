@@ -46,7 +46,7 @@ const Profile = () => {
 							<div
 								key={i}
 								className="profileMenu__NavLink"
-								onClick={() => onNavigationClick(d.path)}
+								onClick={() => d.path && onNavigationClick(d.path)}
 							>
 								{d.icon}
 								<h6>{d.name}</h6>

@@ -102,7 +102,7 @@ const Notification = () => {
 					<div className="profileMenu__Options">
 						{data.map((d, i) => (
 							<div key={i} className="notificationMenu__NavLink">
-								<Avatar />
+								{/* <Avatar /> */}
 								<div className="details">
 									<h6>{d.text}</h6>
 									<p>{d.time}</p>

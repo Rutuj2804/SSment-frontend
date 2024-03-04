@@ -1,9 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { ProfileState } from "./types";
-import { getProfile, updateUserDetails } from "./actions";
+import { getProfile, getUserProfile, updateUserDetails } from "./actions";
 
 const initialState: ProfileState = {
-    user: {}
+    user: {},
+    display: {}
 }
 
 export const profileSlice = createSlice({
@@ -13,6 +14,9 @@ export const profileSlice = createSlice({
     extraReducers(builder) {
         builder.addCase(getProfile.fulfilled, (s, a) => {
             s.user = a.payload
+        })
+        builder.addCase(getUserProfile.fulfilled, (s, a) => {
+            s.display = a.payload
         })
         builder.addCase(updateUserDetails.fulfilled, (s, a) => {
             s.user = a.payload

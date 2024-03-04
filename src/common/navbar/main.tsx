@@ -71,13 +71,6 @@ const Navbar = () => {
 				<div className="profile">
 					<Profile />
 				</div>
-				<div className="settings">
-					<Tooltip title="Settings">
-						<IconButton>
-							<SettingsRounded />
-						</IconButton>
-					</Tooltip>
-				</div>
 				<div className="menu">
 					<Tooltip title="Menu">
 						<IconButton

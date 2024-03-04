@@ -49,8 +49,8 @@ export const regularRoutes = [
     { path: "/test/:id", element: <TestDetail /> },
     { path: "/test/questions/:id", element: <AddQuestion /> },
 
-    { path: "/:username", element: <Profile /> },
-    { path: "/edit/:username", element: <EditProfile /> },
+    { path: "/:email", element: <Profile /> },
+    { path: "/edit/:email", element: <EditProfile /> },
     { path: "/reset-password", element: <ResetPassword /> },
     { path: "/logout", element: <Logout /> },
     
