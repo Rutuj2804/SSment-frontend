@@ -6,7 +6,7 @@ import { setBreadcrumps } from "../../store/breadcrumps/slice";
 import { Button, OutlineButton } from "../../library";
 import { Tab, Tabs } from "@mui/material";
 import { StudentRibbon, TestRibbon } from "../../components/ribbon";
-import { deleteBatch, getBatch } from "../../store/actions";
+import { deleteBatch, getBatchDetails } from "../../store/actions";
 import { encrypt, useAccessRole } from "../../utils/helpers";
 import { RootState } from "../../store";
 import { setDeleteConfirmation } from "../../store/layout/slice";
@@ -38,7 +38,7 @@ const BatchDetail = () => {
 	}, [dispatch]);
 
 	useEffect(() => {
-		if (id && instituteId) dispatch(getBatch({ batchId: id, instituteId }));
+		if (id && instituteId) dispatch(getBatchDetails({ batchId: id, instituteId }));
 	}, [id, instituteId, dispatch]);
 
 	return (
@@ -87,25 +87,22 @@ const BatchDetail = () => {
 				</div>
 				<div className="body">
 					<Tabs value={value} onChange={handleChange}>
-						<Tab label="Students (202)" />
-						<Tab label="Tests (3)" />
+						<Tab label={`Students (${batch.participants?.length})`} />
+						<Tab label={`Tests (${batch.tests?.length || 0})`} />
 					</Tabs>
 
 					{value === 0 && (
 						<div className="batchDetail__Tab1Students">
-							<StudentRibbon />
-							<StudentRibbon />
-							<StudentRibbon />
-							<StudentRibbon />
-							<StudentRibbon />
+							{
+								batch.participants?.map(s=><StudentRibbon key={s._id} user={s} parent="BATCH"  />)
+							}
 						</div>
 					)}
 					{value === 1 && (
 						<div className="batchDetail__Tab2Tests">
-							<TestRibbon />
-							<TestRibbon />
-							<TestRibbon />
-							<TestRibbon />
+							{
+								batch.tests?.map(t=><TestRibbon key={t._id} />)
+							}
 						</div>
 					)}
 				</div>

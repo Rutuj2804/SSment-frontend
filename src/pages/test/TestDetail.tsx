@@ -90,11 +90,11 @@ const TestDetail = () => {
 						</Tabs>
 
 						{value === 0 &&<div className="testDetail__Tab1Students">
+							{/* <StudentRibbon />
 							<StudentRibbon />
 							<StudentRibbon />
 							<StudentRibbon />
-							<StudentRibbon />
-							<StudentRibbon />
+							<StudentRibbon /> */}
 						</div>}
 						{value === 1 && <div className="testDetail__Tab2Batches">
 							<BatchRibbon />

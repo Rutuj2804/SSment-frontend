@@ -34,11 +34,11 @@ const Batch = ({ _id, description, isActive, name, students }: BatchCProps) => {
 				<span>{formatNumber(students)} stundents enrolled</span>
 			</div>
 			<div className="batchCard__Footer">
-				<p className={isActive ? "batchCard__Active" : "batchCard__InActive"}>
+				<p className={!isActive ? "batchCard__Active" : "batchCard__InActive"}>
 					<span>
 						<GoDotFill />
 					</span>
-					&nbsp;Active
+					&nbsp;{!isActive ? "Active" : "Expired"}
 				</p>
 				<Button
 					className="batchCard__Button"

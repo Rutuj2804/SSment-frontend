@@ -203,6 +203,51 @@ export const getBatch = createAsyncThunk( "getBatch/Batch", async (data: GetBatc
     }
 );
 
+export const getBatchDetails = createAsyncThunk( "getBatchDetails/Batch", async (data: GetBatchRequest, thunkAPI) => {
+        thunkAPI.dispatch(updateLoading(1));
+        try {
+            const config = {
+                headers: {
+                    "Content-Type": "Application/json",
+                    "Authorization": `Bearer ${userToken()}`
+                },
+            };
+
+            data.batchId = decrypt(data.batchId)!
+
+            const res = await axios.put(`/institute/b/get-details/${data.batchId}`, data, config);
+
+            thunkAPI.dispatch(updateLoading(-1));
+
+            return res.data.data;
+        } catch (err) {
+            thunkAPI.dispatch(updateLoading(-1));
+
+            if (err instanceof AxiosError) {
+                if(Array.isArray(err?.response?.data.message)) {
+                    thunkAPI.dispatch(
+                        setMessage({
+                            text: err?.response?.data.message[0],
+                            type: errorType.ERROR,
+                            _id: Date.now().toString(),
+                        })
+                    );
+                } else {
+                    thunkAPI.dispatch(
+                        setMessage({
+                            text: err?.response?.data.message,
+                            type: errorType.ERROR,
+                            _id: Date.now().toString(),
+                        })
+                    );
+                }
+            }
+
+            return thunkAPI.rejectWithValue(err);
+        }
+    }
+);
+
 export const deleteBatch = createAsyncThunk( "deleteBatch/Batch", async (data: GetBatchRequest, thunkAPI) => {
         thunkAPI.dispatch(updateLoading(1));
         try {

@@ -35,7 +35,7 @@ const Batch = () => {
 							_id={b._id!}
 							name={b.name!}
 							description={b.description!}
-							isActive={b.isActive!}
+							isActive={b.expired!}
 							students={b.participants?.length!}
 						/>
 					</div>
