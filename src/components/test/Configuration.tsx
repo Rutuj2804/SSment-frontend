@@ -2,8 +2,8 @@ import { Checkbox, Input, Select } from "../../library";
 import { CreateTestFormDataInterface } from "../../pages/test";
 
 const options = [
-	{ name: "Single Pager", value: 1 },
-	{ name: "Multi Pager", value: 2 },
+	{ name: "Sectioned", value: 1 },
+	{ name: "Non Sectioned", value: 2 },
 ];
 
 interface ConfigurationProps {
@@ -38,6 +38,34 @@ const Configuration = ({ formData, onChange, onCheckboxChange }: ConfigurationPr
 				/>
 			</div>
 			<div className="col-lg-6 col-md-6 col-12">
+				<Input
+					type="time"
+					name="startTime"
+					label="Start Time *"
+					placeholder="Start Time"
+					required
+					disabled
+				/>
+			</div>
+			<div className="col-lg-6 col-md-6 col-12">
+				<Input
+					type="time"
+					name="endTime"
+					label="End Time *"
+					placeholder="End Time"
+					required
+				/>
+			</div>
+			<div className="col-lg-6 col-md-6 col-12">
+				<Select
+					options={options}
+					name="name"
+					value="value"
+					selected={1}
+					label="Test Style"
+				/>
+			</div>
+			<div className="col-lg-6 col-md-6 col-12">
 				<Checkbox
 					name="autoScore"
 					id="autoScore"
@@ -49,12 +77,12 @@ const Configuration = ({ formData, onChange, onCheckboxChange }: ConfigurationPr
 			</div>
 			<div className="col-lg-6 col-md-6 col-12">
 				<Checkbox
-					name="showResultOnceCompleted"
-					id="showResultOnceCompleted"
-					label="Show results once completed"
-					description="Displays results immediately after completing the test."
+					name="sendEmailOfResultOnceCompleted"
+					id="sendEmailOfResultOnceCompleted"
+					label="Show email of results once completed"
+					description="Sends a email of results to candidate immediately after scoring is completed."
 					onChange={onCheckboxChange}
-					checked={formData.showResultOnceCompleted}
+					checked={formData.sendEmailOfResultOnceCompleted}
 				/>
 			</div>
 			<div className="col-lg-6 col-md-6 col-12">
@@ -62,18 +90,9 @@ const Configuration = ({ formData, onChange, onCheckboxChange }: ConfigurationPr
 					name="randomizeQuestions"
 					id="randomizeQuestions"
 					label="Randomize Questions"
-					description="Presensts question randomly while attempting test."
+					description="Presents question randomly while attempting test."
 					onChange={onCheckboxChange}
 					checked={formData.randomizeQuestions}
-				/>
-			</div>
-			<div className="col-lg-6 col-md-6 col-12">
-				<Select
-					options={options}
-					name="name"
-					value="value"
-					selected={2}
-					label="Test Style"
 				/>
 			</div>
 		</div>

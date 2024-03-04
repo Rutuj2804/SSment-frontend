@@ -27,7 +27,7 @@ export interface CreateTestFormDataInterface {
 	bufferTime: number;
 	autoScore: boolean;
 	randomizeQuestions: boolean;
-	showResultOnceCompleted: boolean;
+	sendEmailOfResultOnceCompleted: boolean;
 	testStyle: number;
 	useCustomTermsAndConditions: boolean;
 	useDefaultTermsAndConditions: boolean;
@@ -47,7 +47,7 @@ const CreateTest = () => {
 		bufferTime: 0,
 		autoScore: false,
 		randomizeQuestions: false,
-		showResultOnceCompleted: false,
+		sendEmailOfResultOnceCompleted: false,
 		testStyle: 2,
 		useCustomTermsAndConditions: true,
 		useDefaultTermsAndConditions: false,
