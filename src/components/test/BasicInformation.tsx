@@ -1,4 +1,4 @@
-import { Input, RichTextEditor } from "../../library";
+import { Input, Textarea } from "../../library";
 import { CreateTestFormDataInterface } from "../../pages/test";
 
 interface BasicInformationProps {
@@ -23,12 +23,12 @@ const BasicInformation = ({ formData, onChange, description, setDescription }: B
 				/>
 			</div>
 			<div className="col-12">
-				<RichTextEditor
+				<Textarea
 					label="Description *"
 					placeholder="Description"
-					// rows={7}
+					rows={7}
 					value={description}
-					onChange={setDescription}
+					onChange={e => setDescription(e.target.value)}
 				/>
 			</div>
 		</>

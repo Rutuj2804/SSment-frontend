@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Input, RichTextEditor, Select } from "../../library";
+import { Input, RichTextEditor, Select, Textarea } from "../../library";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { useAccessRole } from "../../utils/helpers";
@@ -67,12 +67,12 @@ const BasicInformation = ({ title, description, setTitle, setDescription, instit
 					/>
 				</div>
 			</div>
-			<RichTextEditor
+			<Textarea
 				label="Description of Batch"
 				name="description"
 				placeholder="Description of Batch"
 				value={description}
-				onChange={setDescription}
+				onChange={e=>setDescription(e.target.value)}
 			/>
 		</div>
 	);

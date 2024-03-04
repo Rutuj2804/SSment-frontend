@@ -1,5 +1,5 @@
 import React from "react";
-import { Input, RichTextEditor } from "../../library";
+import { Input, RichTextEditor, Textarea } from "../../library";
 
 interface BasicInformationCProps {
 	name: string;
@@ -22,9 +22,9 @@ const BasicInformation = ({
 				value={name}
 				onChange={(e) => setName(e.target.value)}
 			/>
-			<RichTextEditor
+			<Textarea
 				label="Description "
-				onChange={(s) => setDescription(s)}
+				onChange={(e) => setDescription(e.target.value)}
 				value={description}
 				placeholder="Description"
 			/>

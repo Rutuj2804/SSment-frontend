@@ -12,6 +12,7 @@ import {
 	EndScreen,
 	TermsAndCondition,
 } from "../../components/test";
+import moment from "moment";
 
 const steps = [
 	"Basic Information",
@@ -25,12 +26,13 @@ export interface CreateTestFormDataInterface {
 	title: string;
 	timeLimit: number;
 	bufferTime: number;
+	startTime: string,
+	endTime: string,
 	autoScore: boolean;
 	randomizeQuestions: boolean;
 	sendEmailOfResultOnceCompleted: boolean;
 	testStyle: number;
 	useCustomTermsAndConditions: boolean;
-	useDefaultTermsAndConditions: boolean;
 	termsAndConditionsLabel: string;
 	termsAndConditionsCheckboxLabel: string;
 	startTestButton: string;
@@ -43,14 +45,15 @@ export interface CreateTestFormDataInterface {
 const CreateTest = () => {
 	const [formData, setFormData] = useState<CreateTestFormDataInterface>({
 		title: "",
-		timeLimit: 0,
-		bufferTime: 0,
+		timeLimit: 60,
+		bufferTime: 15,
+		startTime: "",
+		endTime: "",
 		autoScore: false,
 		randomizeQuestions: false,
 		sendEmailOfResultOnceCompleted: false,
 		testStyle: 2,
 		useCustomTermsAndConditions: true,
-		useDefaultTermsAndConditions: false,
 		termsAndConditionsLabel: "Terms & Conditions",
 		termsAndConditionsCheckboxLabel: "I agree to terms & conditions",
 		startTestButton: "Start Test",
@@ -79,6 +82,8 @@ const CreateTest = () => {
 		e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
 	) => {
 		setFormData({ ...formData, [e.target.name]: e.target.value });
+
+		if(e.target.name === "startTime" || e.target.name === "timeLimit") setFormData(v=>({ ...v, endTime: moment(v.startTime, "HH:mm").add(v.timeLimit, 'minutes').format("HH:mm").toString() }))
 	};
 
 	const onCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>, c: boolean) => {
@@ -100,7 +105,7 @@ const CreateTest = () => {
 
 	const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		navigate("/test/123");
+		console.log(formData)
 	};
 
 	const controller = (i: number) => {

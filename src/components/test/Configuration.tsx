@@ -44,7 +44,8 @@ const Configuration = ({ formData, onChange, onCheckboxChange }: ConfigurationPr
 					label="Start Time *"
 					placeholder="Start Time"
 					required
-					disabled
+					value={formData.startTime}
+					onChange={onChange}
 				/>
 			</div>
 			<div className="col-lg-6 col-md-6 col-12">
@@ -54,6 +55,9 @@ const Configuration = ({ formData, onChange, onCheckboxChange }: ConfigurationPr
 					label="End Time *"
 					placeholder="End Time"
 					required
+					value={formData.endTime}
+					onChange={onChange}
+					disabled
 				/>
 			</div>
 			<div className="col-lg-6 col-md-6 col-12">

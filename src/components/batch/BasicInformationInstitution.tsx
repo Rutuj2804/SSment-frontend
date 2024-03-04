@@ -1,5 +1,5 @@
 import React from "react";
-import { Input, RichTextEditor } from "../../library";
+import { Input, RichTextEditor, Textarea } from "../../library";
 
 interface BasicInformationProps {
 	title: string;
@@ -18,12 +18,12 @@ const BasicInformationInstitution = ({ title, description, setTitle, setDescript
 				value={title}
 				onChange={e=>setTitle(e.target.value)}
 			/>
-			<RichTextEditor
+			<Textarea
 				label="Description of Batch"
 				name="description"
 				placeholder="Description of Batch"
 				value={description}
-				onChange={setDescription}
+				onChange={e=>setDescription(e.target.value)}
 			/>
 		</div>
 	);
