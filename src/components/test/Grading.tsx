@@ -85,12 +85,12 @@ const Grading = ({
 				<>
 					<div className="col-lg-6 col-md-6 col-12">
 						<Checkbox
-							name="enableGrading"
-							id="enableGrading"
+							name="releaseGradesOnceCompleted"
+							id="releaseGradesOnceCompleted"
 							label="Release grades once test is completed."
 							description="Lets students know their grades."
 							onChange={onCheckboxChange}
-							checked={formData.enableGrading}
+							checked={formData.releaseGradesOnceCompleted}
 						/>
 					</div>
 					<div className="layoutMessage__Message layoutMessage__Warning">

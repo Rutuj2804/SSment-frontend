@@ -17,7 +17,7 @@ export const createTest = createAsyncThunk( "createTest/Test", async (data: Crea
             },
         };
 
-        const res = await axios.put(`/authentication/update-user`, data, config);
+        const res = await axios.post(`/test/t/create`, data, config);
 
         thunkAPI.dispatch(updateLoading(-1));
 

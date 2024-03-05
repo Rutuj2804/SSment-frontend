@@ -10,9 +10,11 @@ interface ConfigurationProps {
     formData: CreateTestFormDataInterface,
     onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
 	onCheckboxChange: (e: React.ChangeEvent<HTMLInputElement>, c: boolean) => void;
+	testStyle: number;
+	setTestStyle: any;
 }
 
-const Configuration = ({ formData, onChange, onCheckboxChange }: ConfigurationProps) => {
+const Configuration = ({ formData, onChange, onCheckboxChange, testStyle, setTestStyle }: ConfigurationProps) => {
 	return (
 		<div className="row">
 			<div className="col-lg-6 col-md-6 col-12">
@@ -64,7 +66,8 @@ const Configuration = ({ formData, onChange, onCheckboxChange }: ConfigurationPr
 					options={options}
 					name="name"
 					value="value"
-					selected={1}
+					selected={testStyle}
+					onChange={setTestStyle}
 					label="Test Style"
 				/>
 			</div>
@@ -93,12 +96,12 @@ const Configuration = ({ formData, onChange, onCheckboxChange }: ConfigurationPr
 					</div>
 					<div className="col-lg-6 col-md-6 col-12">
 						<Checkbox
-							name="passFail"
-							id="passFail"
+							name="releasePassFailOnceCompleted"
+							id="releasePassFailOnceCompleted"
 							label="Release results as Pass or Fail once test is completed."
 							description="Lets students know if they are passed or failed."
 							onChange={onCheckboxChange}
-							checked={formData.passFail}
+							checked={formData.releasePassFailOnceCompleted}
 						/>
 					</div>
 				</>

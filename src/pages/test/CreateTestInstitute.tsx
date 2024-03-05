@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setBreadcrumps } from "../../store/breadcrumps/slice";
 import { Paper } from "../../components/paper";
 import { useNavigate } from "react-router-dom";
 import { Stepper } from "../../components/stepper";
 import { setMessage } from "../../store/messages/slice";
 import {
-	BasicInformation,
+	BasicInformationInstitute,
 	Batches,
 	Configuration,
 	Confirmation,
@@ -16,6 +16,7 @@ import {
 import { createTest } from "../../store/actions";
 import { useAccessRole } from "../../utils/helpers";
 import moment from "moment";
+import { RootState } from "../../store";
 
 const steps = [
 	"Basic Information",
@@ -80,7 +81,6 @@ const CreateTest = () => {
 	const [grades, setGrades] = useState<Grades[]>([]);
 	const [testStyle, setTestStyle] = useState(1);
 	const [testImage, setTestImage] = useState<File | null>(null);
-	const [termId, setTermId] = useState("")
 
 	const {
 		title,
@@ -112,6 +112,8 @@ const CreateTest = () => {
 
 	const instituteId = useAccessRole();
 
+	const termId = useSelector((state: RootState) => state.term.current)
+
 	useEffect(() => {
 		dispatch(
 			setBreadcrumps({
@@ -142,7 +144,7 @@ const CreateTest = () => {
 	const controller = (i: number) => {
 		var proceedAllowed = true;
 		if (i === 0) {
-			if (title === "" || termId === "") {
+			if (title === "") {
 				dispatch(
 					setMessage({
 						_id: Date.now().toString(),
@@ -214,12 +216,10 @@ const CreateTest = () => {
 					steps={steps}
 					onSubmit={onSubmit}
 					components={[
-						<BasicInformation
+						<BasicInformationInstitute
 							key={1}
 							formData={formData}
 							onChange={onChange}
-							termId={termId}
-							setTermId={setTermId}
 						/>,
 						<Batches
 							key={2}

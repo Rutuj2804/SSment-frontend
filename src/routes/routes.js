@@ -3,7 +3,7 @@ import { Home } from "../pages/home";
 import { Dashboard } from "../pages/dashboard";
 import { AdminBatch, Batch, BatchDetail, CreateBatch, EditBatch, RenewBatch } from "../pages/batch";
 import { Result } from "../pages/result";
-import { AddQuestion, CreateTest, Test, TestDetail } from "../pages/test";
+import { AddQuestion, CreateTest, CreateTestInstitute, Test, TestDetail } from "../pages/test";
 import { ContactUs, ForgotPassword, Login } from "../pages/authentication";
 import { CreateRole, Assignments, Roles, AddAssignment } from "../pages/role";
 import { CreateTerm, CreateTermInstitute, Term } from "../pages/term";
@@ -45,7 +45,8 @@ export const regularRoutes = [
     { path: "/a/assignment/edit/:id", element: <AddAssignment /> },
 
     { path: "/tests", element: <Test /> },
-    { path: "/tests/create", element: <CreateTest /> },
+    { path: "/tests/create", element: <CreateTestInstitute /> },
+    { path: "/a/tests/create", element: <CreateTest /> },
     { path: "/test/:id", element: <TestDetail /> },
     { path: "/test/questions/:id", element: <AddQuestion /> },
 

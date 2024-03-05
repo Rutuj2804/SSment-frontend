@@ -9,6 +9,7 @@ export { default as OpinionCase } from "./OpinionCase"
 export { default as CodingType } from "./CodingType"
 
 export { default as BasicInformation } from "./BasicInformation"
+export { default as BasicInformationInstitute } from "./BasicInformationInstitute"
 export { default as Configuration } from "./Configuration"
 export { default as TermsAndCondition } from "./TermsAndCondition"
 export { default as Grading } from "./Grading"
