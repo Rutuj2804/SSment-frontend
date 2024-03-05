@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setBreadcrumps } from "../../store/breadcrumps/slice";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Paper } from "../../components/paper";
 import { Avatar, Tab, Tabs } from "@mui/material";
 import { Button, Select, OutlineButton } from "../../library";
 import { BatchRibbon, StudentRibbon } from "../../components/ribbon";
 import { RootState } from "../../store";
+import { getTestDetails } from "../../store/actions";
+import { useAccessRole } from "../../utils/helpers";
 
 const options = [
 	{ name: "Draft", value: 1 },
@@ -21,9 +23,15 @@ const TestDetail = () => {
 		setValue(newValue);
 	};
 
-	const dispatch = useDispatch();
+	const { id } = useParams()
+
+	const dispatch = useDispatch<any>();
+
+	const instituteId = useAccessRole()
 
 	const user = useSelector((state: RootState) => state.profile.user)
+
+	const test = useSelector((state: RootState) => state.test.test)
 
 	const navigate = useNavigate();
 
@@ -36,6 +44,12 @@ const TestDetail = () => {
 		);
 	}, [dispatch]);
 
+	useEffect(() => {
+		if(id && instituteId) {
+			dispatch(getTestDetails({ testId: id, instituteId }))
+		}
+	} , [id, instituteId])
+
 	return (
 		<div className="testDetail__Wrapper">
 			<Paper className="p-3">
@@ -46,21 +60,8 @@ const TestDetail = () => {
 							sx={{ height: 150, width: 150 }}
 						/>
 						<div className="details">
-							<h4>Test Awesome</h4>
-							<p>
-								Lume is a platform and network for nursing
-								professionals. Lume's goal is to become the
-								trusted advisor for all of nurses' financial
-								needs by bringing them access to innovative and
-								intuitive products that help them eliminate debt
-								to make the most of their money. Lume is a
-								platform and network for nursing professionals.
-								Lume's goal is to become the trusted advisor for
-								all of nurses' financial needs by bringing them
-								access to innovative and intuitive products that
-								help them eliminate debt to make the most of
-								their money.
-							</p>
+							<h4>{test.title}</h4>
+							<p>{test.description}</p>
 						</div>
 					</div>
 					<div className="actions">
@@ -75,7 +76,7 @@ const TestDetail = () => {
 							/>
 							<div className="vr"></div>
 							<OutlineButton
-								onClick={() => navigate("/test/questions/:id")}
+								onClick={() => navigate(`/test/questions/${test._id}`)}
 							>
 								Questions
 							</OutlineButton>

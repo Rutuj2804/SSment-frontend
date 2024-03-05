@@ -1,8 +1,10 @@
 import { BaseInterface } from "..";
 import { Grades } from "../../pages/test";
+import { TestInterface } from "../../utils/types";
 
 export interface TestState {
-    tests: []
+    tests: TestInterface[];
+    test: TestInterface;
 }
 
 export interface CreateTestRequest extends BaseInterface {
@@ -29,4 +31,8 @@ export interface CreateTestRequest extends BaseInterface {
     startTestButton: string;
     enableGrading: boolean;
     releaseGradesOnceCompleted: boolean;
+}
+
+export interface GetTestDetailsRequest extends BaseInterface {
+    testId: string;
 }

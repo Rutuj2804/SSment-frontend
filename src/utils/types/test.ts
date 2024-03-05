@@ -3,7 +3,7 @@ import { BaseInterface } from "./base";
 import { BatchInterface } from "./batch";
 
 export interface TestInterface extends BaseInterface {
-    name?:string;
+    title?:string;
     description?:string;
     batchId?:BatchInterface[];
     createdBy?:UserInterface;
@@ -13,7 +13,8 @@ export interface TestInterface extends BaseInterface {
     showResultAfterCompletion?:boolean;
     randomizeQuestions?: boolean;
     bufferTime?: number;
-    testType?: number;
+    testStyle?: number;
     status?: number;
+    startDateTime?: Date;
     isActive?: boolean;
 }
