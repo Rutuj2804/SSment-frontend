@@ -8,4 +8,5 @@ export interface BatchInterface extends BaseInterface {
     participants?: UserInterface[];
     tests?: TestInterface[];
     expired?: boolean;
+    expiryDate?: Date;
 }

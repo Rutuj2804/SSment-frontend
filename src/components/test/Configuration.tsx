@@ -39,6 +39,17 @@ const Configuration = ({ formData, onChange, onCheckboxChange }: ConfigurationPr
 			</div>
 			<div className="col-lg-6 col-md-6 col-12">
 				<Input
+					type="date"
+					name="startDate"
+					label="Start Date *"
+					placeholder="Start Date"
+					required
+					value={formData.startDate}
+					onChange={onChange}
+				/>
+			</div>
+			<div className="col-lg-6 col-md-6 col-12">
+				<Input
 					type="time"
 					name="startTime"
 					label="Start Time *"
@@ -46,18 +57,6 @@ const Configuration = ({ formData, onChange, onCheckboxChange }: ConfigurationPr
 					required
 					value={formData.startTime}
 					onChange={onChange}
-				/>
-			</div>
-			<div className="col-lg-6 col-md-6 col-12">
-				<Input
-					type="time"
-					name="endTime"
-					label="End Time *"
-					placeholder="End Time"
-					required
-					value={formData.endTime}
-					onChange={onChange}
-					disabled
 				/>
 			</div>
 			<div className="col-lg-6 col-md-6 col-12">
@@ -69,6 +68,41 @@ const Configuration = ({ formData, onChange, onCheckboxChange }: ConfigurationPr
 					label="Test Style"
 				/>
 			</div>
+			<div className="col-lg-6 col-md-6 col-12">
+				<Checkbox
+					name="passFail"
+					id="passFail"
+					label="Pass & Fail"
+					description="Allows to automatically classify students based on Pass and Fail."
+					onChange={onCheckboxChange}
+					checked={formData.passFail}
+				/>
+			</div>
+			{formData.passFail && (
+				<>
+					<div className="col-lg-6 col-md-6 col-12">
+						<Input
+							type="number"
+							name="passingPoints"
+							label="Passing Points *"
+							placeholder="Passing Points"
+							value={formData.passingPoints}
+							onChange={onChange}
+							required
+						/>
+					</div>
+					<div className="col-lg-6 col-md-6 col-12">
+						<Checkbox
+							name="passFail"
+							id="passFail"
+							label="Release results as Pass or Fail once test is completed."
+							description="Lets students know if they are passed or failed."
+							onChange={onCheckboxChange}
+							checked={formData.passFail}
+						/>
+					</div>
+				</>
+			)}
 			<div className="col-lg-6 col-md-6 col-12">
 				<Checkbox
 					name="autoScore"

@@ -23,6 +23,7 @@ const PrivateLayout = ({ children }: PrivateLayoutProps) => {
     const sidebarStyle = useSelector((state: RootState) => state.settings.sidebar);
     const user = useSelector((state: RootState) => state.profile.user)
     const isLoading = useSelector((state: RootState) => state.loading.isLoading)
+    const messages = useSelector((state: RootState) => state.messages.messages)
     const instituteId = useAccessRole()
 
     const dispatch = useDispatch<any>();
@@ -47,10 +48,10 @@ const PrivateLayout = ({ children }: PrivateLayoutProps) => {
                 <Section>
                     {children}
                 </Section>
-                <Message />
+                {messages.length ? <Message /> : null}
                 <Footer />
             </div>
-            {isLoading && <Loader />}
+            {isLoading ? <Loader /> : null}
         </div>
     );
 };

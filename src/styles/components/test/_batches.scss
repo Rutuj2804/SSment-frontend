@@ -1,0 +1,39 @@
+.batches__Wrapper {
+    .batches__Header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 7px;
+        p {
+            font-weight: 500;
+        }
+    }
+    .batches__Card {
+        box-shadow: $shadow-light;
+        padding: 7px;
+        border-radius: 4px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+        margin: 10px 0;
+        cursor: pointer;
+        &.batches__Selected { 
+            border: 1px solid $blue;
+        }
+        .left {
+            h6 {
+                @include single-line();
+                font-size: 14px;
+            }
+            p {
+                font-size: 12px;
+                margin: 0%;
+                color: $gray;
+            }
+        }
+        .right {
+            color: $blue;
+        }
+    }
+}
