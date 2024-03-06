@@ -5,10 +5,6 @@ import { setBreadcrumps } from "../../store/breadcrumps/slice";
 import { useDispatch } from "react-redux";
 import { setQuestion } from "../../store/layout/slice";
 
-interface QuestionProps {
-	type: number
-}
-
 const AddQuestion = () => {
 
 	const dispatch = useDispatch();
