@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setBreadcrumps } from "../../store/breadcrumps/slice";
 import { Paper } from "../../components/paper";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Stepper } from "../../components/stepper";
 import { setMessage } from "../../store/messages/slice";
 import {
@@ -13,7 +13,7 @@ import {
 	Grading,
 	TermsAndCondition,
 } from "../../components/test";
-import { createTest } from "../../store/actions";
+import { createTest, getTestDetails } from "../../store/actions";
 import { useAccessRole } from "../../utils/helpers";
 import moment from "moment";
 import { RootState } from "../../store";
@@ -55,6 +55,9 @@ export interface CreateTestFormDataInterface {
 }
 
 const CreateTest = () => {
+
+	const { id } = useParams()
+
 	const [formData, setFormData] = useState<CreateTestFormDataInterface>({
 		title: "",
 		description: "",
@@ -114,6 +117,8 @@ const CreateTest = () => {
 
 	const termId = useSelector((state: RootState) => state.term.current)
 
+	const test = useSelector((state: RootState) => state.test.test)
+
 	useEffect(() => {
 		dispatch(
 			setBreadcrumps({
@@ -122,6 +127,40 @@ const CreateTest = () => {
 			})
 		);
 	}, [dispatch]);
+
+	useEffect(() => {
+		console.log(id , instituteId)
+		if(id && instituteId) dispatch(getTestDetails({ testId: id, instituteId }))
+	}, [id, dispatch, instituteId])
+
+	useEffect(() => {
+		if(test._id && id) {
+			setFormData({
+				title: test.title!,
+				description: test.description!,
+				timeLimit: test.timeLimit!,
+				bufferTime: test.bufferTime!,
+				startTime: moment(test.startDateTime).format("HH:mm"),
+				startDate: moment(test.startDateTime).format("YYYY-MM-DD"),
+				autoScore: test.autoScore!,
+				randomizeQuestions: test.randomizeQuestions!,
+				sendEmailOfResultOnceCompleted: test.sendEmailOfResultOnceCompleted!,
+				useCustomTermsAndConditions: test.useCustomTermsAndConditions!,
+				releasePassFailOnceCompleted: test.releasePassFailOnceCompleted!,
+				releaseGradesOnceCompleted: test.releaseGradesOnceCompleted!,
+				termsAndConditionsLabel: test.termsAndConditionsLabel!,
+				termsAndConditionsCheckboxLabel: test.termsAndConditionsCheckboxLabel!,
+				startTestButton: test.startTestButton!,
+				passFail: test.passFail!,
+				enableGrading: test.enableGrading!,
+				passingPoints: test.passingPoints!,
+			})
+			setBatches(test.batchId!)
+			setTestStyle(test.testStyle!)
+			setTermsAndConditionsDescription(test.termsAndConditionsDescription!)
+			setGrades(test.gradeId!)
+		}
+	}, [test, id])
 
 	const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();

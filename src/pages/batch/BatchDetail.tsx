@@ -101,7 +101,7 @@ const BatchDetail = () => {
 					{value === 1 && (
 						<div className="batchDetail__Tab2Tests">
 							{
-								batch.tests?.map(t=><TestRibbon key={t._id} />)
+								batch.tests?.map(t=><TestRibbon key={t._id} test={t} />)
 							}
 						</div>
 					)}

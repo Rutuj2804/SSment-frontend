@@ -1,8 +1,15 @@
 import React from "react";
 import { Button } from "../../library";
 import { useNavigate } from "react-router-dom";
+import { BatchInterface } from "../../utils/types";
+import moment from "moment";
+import { encrypt } from "../../utils/helpers";
 
-const Batch = () => {
+interface BatchCProps {
+	batch: BatchInterface
+}
+
+const Batch = ({ batch }: BatchCProps) => {
 
     const navigate = useNavigate()
 
@@ -10,12 +17,12 @@ const Batch = () => {
         <div className="student__Wrapper">
 			<div className="left">
 				<div className="userdetails">
-					<h6>Batch Awesome</h6>
-					<p>Created on 12 Jan, 2024</p>
+					<h6>{batch.name}</h6>
+					<p>Created on {moment(batch._createdAt).format("DD MMM, YYYY")}</p>
 				</div>
 			</div>
 			<div className="right">
-				<Button onClick={() => navigate('/batch/123')}>View Batch</Button>
+				<Button onClick={() => navigate(`/batch/${encrypt(batch._id!)}`)}>View Batch</Button>
 			</div>
 		</div>
     );

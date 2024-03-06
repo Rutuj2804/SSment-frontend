@@ -2,9 +2,8 @@ import { DeleteRounded, EditRounded } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
 import { GridColDef } from "@mui/x-data-grid";
 import moment from "moment";
-import { NavLink, useNavigate } from "react-router-dom";
-import { encrypt, useAccessRole } from "../helpers";
-import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { encrypt } from "../helpers";
 
 export enum TestStatus {
     "DRAFT"=1,
@@ -25,10 +24,6 @@ const getStatus = (i: number) => {
 const GetTestColumns = () => {
 
     const navigate = useNavigate()
-
-	const dispatch = useDispatch<any>();
-
-	const instituteId = useAccessRole();
 
 	const columns: GridColDef[] = [
 		{

@@ -47,6 +47,7 @@ export const regularRoutes = [
     { path: "/tests", element: <Test /> },
     { path: "/tests/create", element: <CreateTestInstitute /> },
     { path: "/a/tests/create", element: <CreateTest /> },
+    { path: "/test/edit/:id", element: <CreateTestInstitute /> },
     { path: "/test/:id", element: <TestDetail /> },
     { path: "/test/questions/:id", element: <AddQuestion /> },
 

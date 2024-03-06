@@ -36,8 +36,6 @@ const TestDetail = () => {
 
 	const instituteId = useAccessRole();
 
-	const user = useSelector((state: RootState) => state.profile.user);
-
 	const test = useSelector((state: RootState) => state.test.test);
 
 	const batch = useSelector((state: RootState) => state.batch);
@@ -68,7 +66,7 @@ const TestDetail = () => {
 			dispatch(
 				getStudentsOfBatch({ instituteId, batchId: test.batchId })
 			);
-	}, [test]);
+	}, [test, dispatch, instituteId]);
 
 	return (
 		<div className="testDetail__Wrapper">
@@ -113,7 +111,7 @@ const TestDetail = () => {
 								</OutlineButton>
 							)}
 
-							<Button onClick={() => navigate("/tests/create")}>
+							<Button onClick={() => navigate(`/test/edit/${encrypt(test._id!)}`)}>
 								Edit Test
 							</Button>
 						</div>
@@ -140,7 +138,7 @@ const TestDetail = () => {
 						{value === 1 && (
 							<div className="testDetail__Tab2Batches">
 								{batch.batches.map((b) => (
-									<BatchRibbon key={b._id} />
+									<BatchRibbon key={b._id} batch={b} />
 								))}
 							</div>
 						)}

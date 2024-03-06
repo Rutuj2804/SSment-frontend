@@ -2,8 +2,15 @@ import { Avatar } from "@mui/material";
 import React from "react";
 import { Button, OutlineButton } from "../../library";
 import { useNavigate } from "react-router-dom";
+import { TestInterface } from "../../utils/types";
+import moment from "moment";
+import { encrypt } from "../../utils/helpers";
 
-const Test = () => {
+interface TestCProps {
+	test: TestInterface
+}
+
+const Test = ({ test }: TestCProps) => {
 
     const navigate = useNavigate()
 
@@ -12,12 +19,12 @@ const Test = () => {
 			<div className="left">
 				<Avatar />
 				<div className="userdetails">
-					<h6>Test Awesome</h6>
-					<p>12 Jan, 2024 | 11:00 AM IST</p>
+					<h6>{test.title}</h6>
+					<p>{moment(test.startDateTime).format("DD MMM, YYYY")} | {moment(test.startDateTime).format("HH:mm")}</p>
 				</div>
 			</div>
 			<div className="right">
-				<OutlineButton onClick={() => navigate('/test/123')}>View Test</OutlineButton>
+				<OutlineButton onClick={() => navigate(`/test/${encrypt(test._id!)}`)}>View Test</OutlineButton>
 				<Button onClick={() => navigate('/results')}>View Results</Button>
 			</div>
 		</div>
