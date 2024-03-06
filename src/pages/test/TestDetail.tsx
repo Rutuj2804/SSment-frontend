@@ -7,7 +7,7 @@ import { Avatar, Tab, Tabs } from "@mui/material";
 import { Button, Select, OutlineButton } from "../../library";
 import { BatchRibbon, StudentRibbon } from "../../components/ribbon";
 import { RootState } from "../../store";
-import { getStudentsOfBatch, getTestDetails } from "../../store/actions";
+import { changeStatus, getStudentsOfBatch, getTestDetails } from "../../store/actions";
 import { encrypt, useAccessRole } from "../../utils/helpers";
 
 const options = [
@@ -68,6 +68,11 @@ const TestDetail = () => {
 			);
 	}, [test, dispatch, instituteId]);
 
+	const onStatusChange = (i: number) => {
+		setStatus(i)
+		dispatch(changeStatus({ status: i, instituteId, testId: id!, navigate }))
+	}
+
 	return (
 		<div className="testDetail__Wrapper">
 			<Paper className="p-3">
@@ -91,6 +96,7 @@ const TestDetail = () => {
 								selected={status}
 								options={options}
 								className="testDetails__Status"
+								onChange={onStatusChange}
 							/>
 							<div className="vr"></div>
 							{test.testStyle === TestStyle.SECTIONED ? (

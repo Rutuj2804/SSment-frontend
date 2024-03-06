@@ -40,3 +40,8 @@ export interface GetTestDetailsRequest extends BaseInterface {
 export interface GetAllTestsRequest extends BaseInterface {
     status: number;
 }
+
+export interface ChangeStatusRequest extends BaseInterface {
+    status: number;
+    testId: string;
+}
