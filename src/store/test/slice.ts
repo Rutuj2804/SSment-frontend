@@ -1,10 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { TestState } from "./types";
-import { getTestDetails } from "./actions";
+import { getAllTests, getTestDetails } from "./actions";
 
 const initialState: TestState = {
     tests: [],
-    test: {}
+    test: {},
 }
 
 export const testSlice = createSlice({
@@ -14,6 +14,9 @@ export const testSlice = createSlice({
     extraReducers(builder) {
         builder.addCase(getTestDetails.fulfilled, (s, a) => {
             s.test = a.payload
+        })
+        builder.addCase(getAllTests.fulfilled, (s, a) => {
+            s.tests = a.payload
         })
     },
 })

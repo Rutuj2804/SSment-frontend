@@ -7,8 +7,8 @@ import { Avatar, Tab, Tabs } from "@mui/material";
 import { Button, Select, OutlineButton } from "../../library";
 import { BatchRibbon, StudentRibbon } from "../../components/ribbon";
 import { RootState } from "../../store";
-import { getTestDetails } from "../../store/actions";
-import { useAccessRole } from "../../utils/helpers";
+import { getStudentsOfBatch, getTestDetails } from "../../store/actions";
+import { encrypt, useAccessRole } from "../../utils/helpers";
 
 const options = [
 	{ name: "Draft", value: 1 },
@@ -16,22 +16,31 @@ const options = [
 	{ name: "Cancelled", value: 3 },
 ];
 
+export enum TestStyle {
+	"SECTIONED" = 1,
+	"NON_SECTIONED" = 2,
+}
+
 const TestDetail = () => {
+	const [status, setStatus] = useState(1);
+
 	const [value, setValue] = useState(0);
 
 	const handleChange = (event: React.SyntheticEvent, newValue: number) => {
 		setValue(newValue);
 	};
 
-	const { id } = useParams()
+	const { id } = useParams();
 
 	const dispatch = useDispatch<any>();
 
-	const instituteId = useAccessRole()
+	const instituteId = useAccessRole();
 
-	const user = useSelector((state: RootState) => state.profile.user)
+	const user = useSelector((state: RootState) => state.profile.user);
 
-	const test = useSelector((state: RootState) => state.test.test)
+	const test = useSelector((state: RootState) => state.test.test);
+
+	const batch = useSelector((state: RootState) => state.batch);
 
 	const navigate = useNavigate();
 
@@ -45,10 +54,21 @@ const TestDetail = () => {
 	}, [dispatch]);
 
 	useEffect(() => {
-		if(id && instituteId) {
-			dispatch(getTestDetails({ testId: id, instituteId }))
+		if (id && instituteId) {
+			dispatch(getTestDetails({ testId: id, instituteId }));
 		}
-	} , [id, instituteId])
+	}, [id, instituteId, dispatch]);
+
+	useEffect(() => {
+		if (test._id) setStatus(test.status!);
+	}, [test]);
+
+	useEffect(() => {
+		if (test.batchId)
+			dispatch(
+				getStudentsOfBatch({ instituteId, batchId: test.batchId })
+			);
+	}, [test]);
 
 	return (
 		<div className="testDetail__Wrapper">
@@ -70,44 +90,60 @@ const TestDetail = () => {
 							<Select
 								name="name"
 								value="value"
-								selected={1}
+								selected={status}
 								options={options}
 								className="testDetails__Status"
 							/>
 							<div className="vr"></div>
-							<OutlineButton
-								onClick={() => navigate(`/test/questions/${test._id}`)}
-							>
-								Questions
-							</OutlineButton>
+							{test.testStyle === TestStyle.SECTIONED ? (
+								<OutlineButton
+									onClick={() =>
+										navigate(`/test/sections/${encrypt(test._id!)}`)
+									}
+								>
+									Sections
+								</OutlineButton>
+							) : (
+								<OutlineButton
+									onClick={() =>
+										navigate(`/test/questions/${encrypt(test._id!)}`)
+									}
+								>
+									Questions
+								</OutlineButton>
+							)}
+
 							<Button onClick={() => navigate("/tests/create")}>
 								Edit Test
 							</Button>
 						</div>
 					</div>
 					<div className="body">
-						<Tabs
-							value={value}
-							onChange={handleChange}
-						>
-							<Tab label="Students (202)" />
-							<Tab label="Batches (3)" />
+						<Tabs value={value} onChange={handleChange}>
+							<Tab
+								label={`Students (${batch.students.length})`}
+							/>
+							<Tab label={`Batches (${batch.batches.length})`} />
 						</Tabs>
 
-						{value === 0 &&<div className="testDetail__Tab1Students">
-							<StudentRibbon user={user} parent="TEST" />
-							<StudentRibbon user={user} parent="TEST" />
-							<StudentRibbon user={user} parent="TEST" />
-							<StudentRibbon user={user} parent="TEST" />
-							<StudentRibbon user={user} parent="TEST" />
-						</div>}
-						{value === 1 && <div className="testDetail__Tab2Batches">
-							<BatchRibbon />
-							<BatchRibbon />
-							<BatchRibbon />
-							<BatchRibbon />
-							<BatchRibbon />
-						</div>}
+						{value === 0 && (
+							<div className="testDetail__Tab1Students">
+								{batch.students.map((s) => (
+									<StudentRibbon
+										user={s}
+										key={s._id}
+										parent="TEST"
+									/>
+								))}
+							</div>
+						)}
+						{value === 1 && (
+							<div className="testDetail__Tab2Batches">
+								{batch.batches.map((b) => (
+									<BatchRibbon key={b._id} />
+								))}
+							</div>
+						)}
 					</div>
 				</div>
 			</Paper>

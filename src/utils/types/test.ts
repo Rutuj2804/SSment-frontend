@@ -5,7 +5,7 @@ import { BatchInterface } from "./batch";
 export interface TestInterface extends BaseInterface {
     title?:string;
     description?:string;
-    batchId?:BatchInterface[];
+    batchId?:string[];
     createdBy?:UserInterface;
     passingPoints?: number;
     timeLimit?: number;

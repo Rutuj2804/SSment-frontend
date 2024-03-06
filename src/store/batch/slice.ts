@@ -1,10 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { BatchState } from "./types";
-import { getAllBatches, getBatch, getBatchDetails } from "./actions";
+import { getAllBatches, getBatch, getBatchDetails, getStudentsOfBatch } from "./actions";
 
 const initialState: BatchState = {
     batches: [],
-    batch: {}
+    batch: {},
+    students: []
 }
 
 export const termSlice = createSlice({
@@ -21,6 +22,10 @@ export const termSlice = createSlice({
         builder.addCase(getBatchDetails.fulfilled, (s, a) => {
             s.batch = a.payload.batch
             s.batch.tests = a.payload.tests
+        })
+        builder.addCase(getStudentsOfBatch.fulfilled, (s, a) => {
+            s.students = a.payload.students
+            s.batches = a.payload.batches
         })
     },
 })
