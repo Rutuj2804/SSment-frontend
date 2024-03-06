@@ -1,13 +1,18 @@
 import React, { useState } from "react";
 import { Button, Checkbox, Input, OutlineButton, Select } from "../../library";
-import { DeleteRounded, DoneRounded } from "@mui/icons-material";
+import { ChevronLeftRounded, DoneRounded } from "@mui/icons-material";
+import { QuestionType } from "../popup";
 
 const options = [
 	{ name: "Yes", value: true },
 	{ name: "No", value: false },
 ]
 
-const YesNoType = () => {
+interface YesNoTypeCProps {
+    onChange: (i: number) => void;
+}
+
+const YesNoType = ({ onChange }: YesNoTypeCProps) => {
 	
 	const [referenceImage, setReferenceImage] = useState(false)
 
@@ -16,8 +21,8 @@ const YesNoType = () => {
 			<div className="header">
 				<h5>Yes/No Type Question</h5>
 				<div className="right">
-					<OutlineButton startIcon={<DeleteRounded />}>
-						Delete
+					<OutlineButton onClick={() => onChange(QuestionType.SELECTQUESTION)} startIcon={<ChevronLeftRounded />}>
+						Cancel
 					</OutlineButton>
 					<Button startIcon={<DoneRounded />}>Save</Button>
 				</div>

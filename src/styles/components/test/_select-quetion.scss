@@ -1,4 +1,10 @@
 .selectQuestion__Wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    .selectQuestion__QuestionType {
+    }
     .questionType__Wrapper {
         display: flex;
         justify-content: center;
@@ -6,5 +12,8 @@
         flex-direction: column;
         margin-bottom: 20px;
         cursor: pointer;
+        p {
+            font-size: 14px;
+        }
     }
 }

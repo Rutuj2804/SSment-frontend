@@ -1,13 +1,18 @@
 import React, { useState } from "react";
 import { Button, Checkbox, Input, OutlineButton, Select } from "../../library";
-import { DeleteRounded, DoneRounded } from "@mui/icons-material";
+import { ChevronLeftRounded, DoneRounded } from "@mui/icons-material";
+import { QuestionType } from "../popup";
 
 const options = [
 	{ name: "True", value: true },
 	{ name: "False", value: false },
 ]
 
-const TrueFalseType = () => {
+interface TrueFalseTypeCProps {
+    onChange: (i: number) => void;
+}
+
+const TrueFalseType = ({ onChange }: TrueFalseTypeCProps) => {
 	
 	const [referenceImage, setReferenceImage] = useState(false)
 
@@ -16,8 +21,8 @@ const TrueFalseType = () => {
 			<div className="header">
 				<h5>True/False Type Question</h5>
 				<div className="right">
-					<OutlineButton startIcon={<DeleteRounded />}>
-						Delete
+					<OutlineButton onClick={() => onChange(QuestionType.SELECTQUESTION)} startIcon={<ChevronLeftRounded />}>
+					Cancel
 					</OutlineButton>
 					<Button startIcon={<DoneRounded />}>Save</Button>
 				</div>

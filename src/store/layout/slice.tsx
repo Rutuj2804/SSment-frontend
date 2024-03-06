@@ -17,7 +17,7 @@ const initialState: LayoutState = {
         callback: () => {},
         isActive: false,
         text: ""
-    }
+    },
 };
 
 export const layoutSlice = createSlice({

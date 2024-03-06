@@ -1,8 +1,13 @@
 import React, { useState } from "react";
 import { Button, Checkbox, Input, OutlineButton } from "../../library";
-import { DeleteRounded, DoneRounded } from "@mui/icons-material";
+import { ChevronLeftRounded, DoneRounded } from "@mui/icons-material";
+import { QuestionType } from "../popup";
 
-const ShortAnswer = () => {
+interface ShortAnswerCProps {
+    onChange: (i: number) => void;
+}
+
+const ShortAnswer = ({ onChange }: ShortAnswerCProps) => {
 	
 	const [referenceImage, setReferenceImage] = useState(false)
 
@@ -11,8 +16,8 @@ const ShortAnswer = () => {
 			<div className="header">
 				<h5>Short Answer Question</h5>
 				<div className="right">
-					<OutlineButton startIcon={<DeleteRounded />}>
-						Delete
+					<OutlineButton onClick={() => onChange(QuestionType.SELECTQUESTION)} startIcon={<ChevronLeftRounded />}>
+					Cancel
 					</OutlineButton>
 					<Button startIcon={<DoneRounded />}>Save</Button>
 				</div>

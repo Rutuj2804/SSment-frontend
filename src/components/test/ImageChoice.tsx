@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Button, Checkbox, Input, OutlineButton } from "../../library";
-import { AddRounded, DeleteRounded, DoneRounded } from "@mui/icons-material";
+import { AddRounded, ChevronLeftRounded, DoneRounded } from "@mui/icons-material";
+import { QuestionType } from "../popup";
 
 type Option = {
 	title: string;
@@ -8,7 +9,11 @@ type Option = {
 	isCorrect: boolean;
 };
 
-const ImageChoice = () => {
+interface ImageChoiceCProps {
+    onChange: (i: number) => void;
+}
+
+const ImageChoice = ({ onChange }: ImageChoiceCProps) => {
 	const [options, setOptions] = useState<Option[]>([]);
 	
 	const [referenceImage, setReferenceImage] = useState(false)
@@ -22,8 +27,8 @@ const ImageChoice = () => {
 			<div className="header">
 				<h5>Image Choice Question</h5>
 				<div className="right">
-					<OutlineButton startIcon={<DeleteRounded />}>
-						Delete
+					<OutlineButton onClick={() => onChange(QuestionType.SELECTQUESTION)} startIcon={<ChevronLeftRounded />}>
+						Cancel
 					</OutlineButton>
 					<Button startIcon={<DoneRounded />}>Save</Button>
 				</div>

@@ -1,8 +1,13 @@
 import React, { useState } from "react";
 import { Button, Checkbox, Input, OutlineButton } from "../../library";
-import { DeleteRounded, DoneRounded } from "@mui/icons-material";
+import { ChevronLeftRounded, DoneRounded } from "@mui/icons-material";
+import { QuestionType } from "../popup";
 
-const LongAnswer = () => {
+interface LongAnswerCProps {
+    onChange: (i: number) => void;
+}
+
+const LongAnswer = ({ onChange }: LongAnswerCProps) => {
 	
 	const [referenceImage, setReferenceImage] = useState(false)
 
@@ -11,8 +16,8 @@ const LongAnswer = () => {
 			<div className="header">
 				<h5>Long Answer Question</h5>
 				<div className="right">
-					<OutlineButton startIcon={<DeleteRounded />}>
-						Delete
+					<OutlineButton onClick={() => onChange(QuestionType.SELECTQUESTION)} startIcon={<ChevronLeftRounded />}>
+					Cancel
 					</OutlineButton>
 					<Button startIcon={<DoneRounded />}>Save</Button>
 				</div>
