@@ -18,6 +18,8 @@ const CodingType = ({ onChange }: CodingTypeCProps) => {
 	
 	const [referenceImage, setReferenceImage] = useState(false)
 
+	const questionType = 8;
+
     const onAddOption = () => {
 		setOptions((v) => [...v, { name: "A", title: "", isCorrect: false }]);
 	};

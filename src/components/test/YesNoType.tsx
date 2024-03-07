@@ -16,6 +16,8 @@ const YesNoType = ({ onChange }: YesNoTypeCProps) => {
 	
 	const [referenceImage, setReferenceImage] = useState(false)
 
+	const questionType = 5;
+
 	return (
 		<div className="shortAnswer__Wrapper">
 			<div className="header">

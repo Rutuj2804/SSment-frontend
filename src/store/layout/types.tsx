@@ -5,7 +5,7 @@ export interface LayoutState {
 	backdrop: boolean;
 	search: boolean;
 	popup: boolean;
-	question: boolean;
+	question: AddQuestionInterface;
 	delete: DeleteInterface;
 	section: AddSectionInterface;
 }
@@ -20,4 +20,11 @@ export interface AddSectionInterface {
 	testId: string;
 	isActive: boolean;
 	sectionId?: string;
+}
+
+export interface AddQuestionInterface {
+	testId: string;
+	isActive: boolean;
+	sectionId?: string;
+	questionId?: string;
 }

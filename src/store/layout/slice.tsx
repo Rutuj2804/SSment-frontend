@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import {
+    AddQuestionInterface,
     AddSectionInterface,
     DeleteInterface,
     LayoutState,
@@ -13,7 +14,11 @@ const initialState: LayoutState = {
     backdrop: false,
     popup: false,
     search: false,
-    question: false,
+    question: {
+        isActive: false,
+        testId: "",
+        sectionId: ""
+    },
     delete: {
         callback: () => {},
         isActive: false,
@@ -44,9 +49,9 @@ export const layoutSlice = createSlice({
             state.popup = action.payload;
             state.search = action.payload;
         },
-        setQuestion: (state, action: PayloadAction<boolean>) => {
-            state.backdrop = action.payload;
-            state.popup = action.payload;
+        setQuestion: (state, action: PayloadAction<AddQuestionInterface>) => {
+            state.backdrop = action.payload.isActive;
+            state.popup = action.payload.isActive;
             state.question = action.payload;
         },
         setDeleteConfirmation: (state, action: PayloadAction<DeleteInterface>) => {

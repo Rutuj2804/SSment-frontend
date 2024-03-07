@@ -14,7 +14,7 @@ const Popups = () => {
 			{layout.search ? <Search /> : null}
 			{layout.delete.isActive ? <DeleteConfirmation /> : null}
 			{layout.question ? <AddQuestion /> : null}
-			{layout.section ? <AddSection /> : null}
+			{layout.section.isActive ? <AddSection /> : null}
 		</div>
 	) : (
 		<></>

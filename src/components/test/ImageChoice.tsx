@@ -15,6 +15,8 @@ interface ImageChoiceCProps {
 
 const ImageChoice = ({ onChange }: ImageChoiceCProps) => {
 	const [options, setOptions] = useState<Option[]>([]);
+
+	const questionType = 2;
 	
 	const [referenceImage, setReferenceImage] = useState(false)
 

@@ -70,3 +70,30 @@ export interface DeleteSectionRequest extends BaseInterface {
 export interface GetQuestionsOfSectionRequest extends BaseInterface {
     sectionId: string;
 }
+
+export interface GetQuestionsOfTestRequest extends BaseInterface {
+    testId: string;
+}
+
+export interface OptionInterface {
+    title: string;
+    bullet: string;
+    isCorrectAnswer: boolean;
+    expectedResult: string;
+}
+
+export interface CreateQuestionRequest extends BaseInterface {
+    title: string;
+    questionType: number;
+    description?: string;
+    points: number;
+    addReferenceImage: boolean;
+    referenceImage?: string;
+    testId: string;
+    sectionId?: string;
+    options?: OptionInterface[]; 
+}
+
+export interface DeleteQuestionRequest extends BaseInterface {
+    questionId: string; 
+}

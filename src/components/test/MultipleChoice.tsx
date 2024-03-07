@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import { Button, Checkbox, Input, OutlineButton } from "../../library";
-import { AddRounded, ChevronLeftRounded, DoneRounded } from "@mui/icons-material";
+import {
+	AddRounded,
+	ChevronLeftRounded,
+	DoneRounded,
+} from "@mui/icons-material";
 import { QuestionType } from "../popup";
 
 type Option = {
@@ -10,13 +14,15 @@ type Option = {
 };
 
 interface MultipleChoiceCProps {
-    onChange: (i: number) => void;
+	onChange: (i: number) => void;
 }
 
 const MultipleChoice = ({ onChange }: MultipleChoiceCProps) => {
 	const [options, setOptions] = useState<Option[]>([]);
-	
-	const [referenceImage, setReferenceImage] = useState(false)
+
+	const questionType = 1;
+
+	const [referenceImage, setReferenceImage] = useState(false);
 
 	const onAddOption = () => {
 		setOptions((v) => [...v, { name: "A", title: "", isCorrect: false }]);
@@ -27,8 +33,11 @@ const MultipleChoice = ({ onChange }: MultipleChoiceCProps) => {
 			<div className="header">
 				<h5>Multiple Choice Question</h5>
 				<div className="right">
-					<OutlineButton onClick={() => onChange(QuestionType.SELECTQUESTION)} startIcon={<ChevronLeftRounded />}>
-					Cancel
+					<OutlineButton
+						onClick={() => onChange(QuestionType.SELECTQUESTION)}
+						startIcon={<ChevronLeftRounded />}
+					>
+						Cancel
 					</OutlineButton>
 					<Button startIcon={<DoneRounded />}>Save</Button>
 				</div>
@@ -53,16 +62,18 @@ const MultipleChoice = ({ onChange }: MultipleChoiceCProps) => {
 					id="add-reference-image"
 					label="Add Reference Image"
 					description="Displays a reference image for the question while attempting the test."
-					onChange={e=>setReferenceImage(e.target.checked)}
+					onChange={(e) => setReferenceImage(e.target.checked)}
 					checked={referenceImage}
 				/>
-				{referenceImage && <Input
-					type="file"
-					name="points"
-					placeholder="Reference Image"
-					label="Reference Image"
-					required
-				/>}
+				{referenceImage && (
+					<Input
+						type="file"
+						name="points"
+						placeholder="Reference Image"
+						label="Reference Image"
+						required
+					/>
+				)}
 				<div
 					className="multipleChoice__AddOption"
 					onClick={onAddOption}

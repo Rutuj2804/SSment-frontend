@@ -16,6 +16,8 @@ const TrueFalseType = ({ onChange }: TrueFalseTypeCProps) => {
 	
 	const [referenceImage, setReferenceImage] = useState(false)
 
+	const questionType = 6;
+
 	return (
 		<div className="shortAnswer__Wrapper">
 			<div className="header">

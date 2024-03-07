@@ -11,6 +11,8 @@ const OpinionCase = ({ onChange }: OpinionCaseCProps) => {
 	
 	const [referenceImage, setReferenceImage] = useState(false)
 
+	const questionType = 7;
+
 	return (
 		<div className="shortAnswer__Wrapper">
 			<div className="header">
