@@ -1,11 +1,15 @@
 import { UserInterface } from "./auth";
 import { BaseInterface } from "./base";
-import { BatchInterface } from "./batch";
 
 export interface GradeInterface extends BaseInterface {
     start: number;
     end: number;
     grade: string;
+}
+
+export interface SectionInterface extends BaseInterface {
+    name?: string;
+    testId?: string;
 }
 
 export interface TestInterface extends BaseInterface {

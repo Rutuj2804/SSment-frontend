@@ -1,10 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { TestState } from "./types";
-import { getAllTests, getTestDetails } from "./actions";
+import { createSection, getAllTests, getSectionsOfTest, getTestDetails, updateSection } from "./actions";
 
 const initialState: TestState = {
     tests: [],
     test: {},
+    sections: []
 }
 
 export const testSlice = createSlice({
@@ -17,6 +18,15 @@ export const testSlice = createSlice({
         })
         builder.addCase(getAllTests.fulfilled, (s, a) => {
             s.tests = a.payload
+        })
+        builder.addCase(createSection.fulfilled, (s, a) => {
+            s.sections = [...s.sections, a.payload]
+        })
+        builder.addCase(updateSection.fulfilled, (s, a) => {
+            s.sections = s.sections.filter(t=>t._id === a.payload._id ? a.payload : t)
+        })
+        builder.addCase(getSectionsOfTest.fulfilled, (s, a) => {
+            s.sections = a.payload
         })
     },
 })

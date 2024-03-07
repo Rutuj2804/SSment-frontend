@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import DeleteConfirmation from "./DeleteConfirmation";
 import AddQuestion from "./AddQuestion";
+import AddSection from "./AddSection";
 
 const Popups = () => {
 	const layout = useSelector((state: RootState) => state.layout);
@@ -13,6 +14,7 @@ const Popups = () => {
 			{layout.search ? <Search /> : null}
 			{layout.delete.isActive ? <DeleteConfirmation /> : null}
 			{layout.question ? <AddQuestion /> : null}
+			{layout.section ? <AddSection /> : null}
 		</div>
 	) : (
 		<></>

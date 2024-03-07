@@ -1,10 +1,11 @@
 import { BaseInterface } from "..";
 import { Grades } from "../../pages/test";
-import { TestInterface, UserInterface } from "../../utils/types";
+import { SectionInterface, TestInterface } from "../../utils/types";
 
 export interface TestState {
     tests: TestInterface[];
     test: TestInterface;
+    sections: SectionInterface[];
 }
 
 export interface CreateTestRequest extends BaseInterface {
@@ -44,4 +45,23 @@ export interface GetAllTestsRequest extends BaseInterface {
 export interface ChangeStatusRequest extends BaseInterface {
     status: number;
     testId: string;
+}
+
+export interface CreateSectionRequest extends BaseInterface {
+    name: string;
+    testId: string;
+}
+
+export interface UpdateSectionRequest extends BaseInterface {
+    name: string;
+    sectionId: string;
+    testId: string;
+}
+
+export interface GetSectionsOfTestSectionRequest extends BaseInterface {
+    testId: string;
+}
+
+export interface DeleteSectionRequest extends BaseInterface {
+    sectionId: string;
 }
