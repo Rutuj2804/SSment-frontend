@@ -12,6 +12,16 @@ export interface SectionInterface extends BaseInterface {
     testId?: string;
 }
 
+export interface QuestionInterface extends BaseInterface {
+    title?: string;
+    description?: string;
+    points?: number;
+    referenceImage?: string;
+    questionType?: number;
+    testId?: number;
+    sectionId?: number;
+}
+
 export interface TestInterface extends BaseInterface {
     title?:string;
     description?:string;

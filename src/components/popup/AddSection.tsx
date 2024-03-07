@@ -42,7 +42,7 @@ const AddSection = () => {
             const s = sections.filter((t: SectionInterface)=>t._id === section.sectionId)[0]
             setName(s.name!)
         }
-    }, [section.sectionId])
+    }, [section.sectionId, sections])
 
 	return (
 		<div ref={ref} className="addSection__Wrapper">

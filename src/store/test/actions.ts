@@ -3,7 +3,7 @@ import { AxiosError } from "axios";
 import { updateLoading } from "../loading/slice";
 import { setMessage } from "../messages/slice";
 import { errorType } from "../messages/types";
-import { ChangeStatusRequest, CreateSectionRequest, CreateTestRequest, DeleteSectionRequest, GetAllTestsRequest, GetSectionsOfTestSectionRequest, GetTestDetailsRequest, UpdateSectionRequest } from "./types";
+import { ChangeStatusRequest, CreateSectionRequest, CreateTestRequest, DeleteSectionRequest, GetAllTestsRequest, GetQuestionsOfSectionRequest, GetSectionsOfTestSectionRequest, GetTestDetailsRequest, UpdateSectionRequest } from "./types";
 import axios from "../axios"
 import { decrypt, userToken } from "../../utils/helpers";
 
@@ -373,6 +373,49 @@ export const deleteSection = createAsyncThunk( "deleteSection/Test", async (data
                     _id: Date.now().toString(),
                 })
             );
+
+            return res.data.data;
+        } catch (err) {
+            thunkAPI.dispatch(updateLoading(-1));
+
+            if (err instanceof AxiosError) {
+                if(Array.isArray(err?.response?.data.message)) {
+                    thunkAPI.dispatch(
+                        setMessage({
+                            text: err?.response?.data.message[0],
+                            type: errorType.ERROR,
+                            _id: Date.now().toString(),
+                        })
+                    );
+                } else {
+                    thunkAPI.dispatch(
+                        setMessage({
+                            text: err?.response?.data.message,
+                            type: errorType.ERROR,
+                            _id: Date.now().toString(),
+                        })
+                    );
+                }
+            }
+
+            return thunkAPI.rejectWithValue(err);
+        }
+    }
+);
+
+export const getQuestionsOfSection = createAsyncThunk( "getQuestionsOfSection/Test", async (data: GetQuestionsOfSectionRequest, thunkAPI) => {
+        thunkAPI.dispatch(updateLoading(1));
+        try {
+            const config = {
+                headers: {
+                    "Content-Type": "Application/json",
+                    "Authorization": `Bearer ${userToken()}`
+                },
+            };
+
+            const res = await axios.put(`/test/q/get/s/${data.sectionId}`, data, config);
+
+            thunkAPI.dispatch(updateLoading(-1));
 
             return res.data.data;
         } catch (err) {

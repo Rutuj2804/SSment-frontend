@@ -1,15 +1,17 @@
 import { IconButton } from "@mui/material";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { setAddSection } from "../../store/layout/slice";
 import { useDispatch, useSelector } from "react-redux";
 import { AddRounded } from "@mui/icons-material";
 import { useParams } from "react-router-dom";
 import { RootState } from "../../store";
 import { useAccessRole } from "../../utils/helpers";
-import { getSectionsOfTest } from "../../store/actions";
+import { getQuestionsOfSection, getSectionsOfTest } from "../../store/actions";
 import { setBreadcrumps } from "../../store/breadcrumps/slice";
+import { SectionCard } from "../../components/card";
 
 const Section = () => {
+    const [sectionSelected, setSectionSelected] = useState("")
 
     const { id } = useParams()
 
@@ -32,22 +34,29 @@ const Section = () => {
         if(instituteId && id) dispatch(getSectionsOfTest({ testId: id!, instituteId }))
     }, [dispatch, instituteId, id])
 
-	return <div className="section__Wrapper">
+    useEffect(() => {
+        if(sections.length) setSectionSelected(sections[0]._id!)
+        else setSectionSelected("")
+    }, [sections])
+
+    useEffect(() => {
+        if(sectionSelected) dispatch(getQuestionsOfSection({ instituteId, sectionId: sectionSelected }))
+    }, [sectionSelected, dispatch, instituteId])
+
+	return <div className="sectionPage__Wrapper">
         <div className="row">
-            <div className="col-lg-4 col-md-3 col-12">
+            <div className="col-lg-4 col-md-4 col-12">
                 <div className="section__SectionList">
-                    {
-                        sections.map(s=><h6 key={s._id} onClick={() => dispatch(setAddSection({ isActive: true, testId: id!, sectionId: s._id }))}>{s.name}</h6>)
-                    }
+                    {sections.map(s=><SectionCard onClick={setSectionSelected} key={s._id} section={s} testId={id!} sectionId={sectionSelected} />)}
                 </div>
             </div>
-            <div className="col-lg-8 col-md-9 col-12">
-                <div className="section__QuestionList">
+            <div className="col-lg-8 col-md-8 col-12">
+                <div className="sectionPage__QuestionList">
                     Right
                 </div>
             </div>
         </div>
-        <IconButton onClick={() => dispatch(setAddSection({ isActive: true, testId: id! }))} className="section__Button"><AddRounded fontSize="large" /></IconButton>
+        <IconButton onClick={() => dispatch(setAddSection({ isActive: true, testId: id! }))} className="sectionPage__Button"><AddRounded fontSize="large" /></IconButton>
     </div>;
 };
 

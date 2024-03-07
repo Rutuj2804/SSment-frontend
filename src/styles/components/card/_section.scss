@@ -1,0 +1,28 @@
+.sectionCard__Wrapper {
+    background-color: $white;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    box-shadow: $shadow-light;
+    &.sectionCard__Active {
+        border: 1px solid $blue;
+        box-shadow: $shadow;
+    }
+    .sectionCard__Left {
+        margin-bottom: 0%;
+        p {
+            font-size: 14px;
+            color: $gray;
+            margin-bottom: 10px;
+        }
+    }
+    .sectionCard__Right {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        button {
+            width: 48%;
+        }
+    }
+}
