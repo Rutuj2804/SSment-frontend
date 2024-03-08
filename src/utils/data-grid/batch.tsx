@@ -6,6 +6,7 @@ import { NavLink } from "react-router-dom";
 import { encrypt, useAccessRole } from "../helpers";
 import { useDispatch } from "react-redux";
 import { deleteBatch } from "../../store/actions";
+import { setDeleteConfirmation } from "../../store/layout/slice";
 
 const GetBatchColumns = () => {
 	const dispatch = useDispatch<any>();
@@ -70,9 +71,15 @@ const GetBatchColumns = () => {
 						size="small"
 						onClick={() =>
 							dispatch(
-								deleteBatch({
-									instituteId,
-									batchId: params.row._id,
+								setDeleteConfirmation({
+									isActive: true,
+									callback: () => dispatch(
+										deleteBatch({
+											batchId: params.row._id,
+											instituteId,
+										})
+									),
+									text: "This action is irreversible. Are you sure you want to delete this batch?",
 								})
 							)
 						}

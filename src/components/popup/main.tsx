@@ -13,7 +13,7 @@ const Popups = () => {
 		<div className="popup__Wrapper">
 			{layout.search ? <Search /> : null}
 			{layout.delete.isActive ? <DeleteConfirmation /> : null}
-			{layout.question ? <AddQuestion /> : null}
+			{layout.question.isActive ? <AddQuestion /> : null}
 			{layout.section.isActive ? <AddSection /> : null}
 		</div>
 	) : (

@@ -23,30 +23,19 @@ export enum QuestionType {
 const AddQuestion = () => {
 	const [activeState, setActiveState] = useState(QuestionType.SELECTQUESTION);
 
-	const [questionToEdit, setQuestionToEdit] = useState<QuestionInterface>()
-
 	const dispatch = useDispatch();
 
 	const question = useSelector((state: RootState) => state.layout.question)
-
-	const questions = useSelector((state: RootState) => state.test.questions)
 
 	const ref = useRef<HTMLDivElement>(null);
 
 	const close = () => dispatch(setQuestion({ isActive: false, testId: "", sectionId: "" }));
 
-	useEffect(() => {
-		if(question.questionId) {
-			var q = questions.filter(t=>t._id === question.questionId)[0]
-
-			if(q) {
-				setActiveState(q.questionType!)
-				setQuestionToEdit(q)
-			}
-		}
-	}, [question, questions])
-
 	useOutsideClick(ref, close);
+
+	useEffect(() => {
+		if(question.questionId?._id) setActiveState(question.questionId.questionType!)
+	}, [question])
 
 	return (
 		<div className="addQuestionPo__Wrapper" ref={ref}>
@@ -61,7 +50,7 @@ const AddQuestion = () => {
                 {activeState === QuestionType.SELECTQUESTION && <SelectQuestion onChange={(i) => setActiveState(i)} />}
                 {activeState === QuestionType.MULTIPLECHOICE && <MultipleChoice onChange={(i) => setActiveState(i)} />}
                 {activeState === QuestionType.IMADECHOICE && <ImageChoice onChange={(i) => setActiveState(i)}/>}
-                {activeState === QuestionType.SHORTANSWER && <ShortAnswer que={questionToEdit} onChange={(i) => setActiveState(i)}/>}
+                {activeState === QuestionType.SHORTANSWER && <ShortAnswer onChange={(i) => setActiveState(i)}/>}
                 {activeState === QuestionType.LONGANSWER && <LongAnswer onChange={(i) => setActiveState(i)}/>}
                 {activeState === QuestionType.YESNOTYPE && <YesNoType onChange={(i) => setActiveState(i)}/>}
                 {activeState === QuestionType.TRUEFALSETYPE && <TrueFalseType onChange={(i) => setActiveState(i)}/>}

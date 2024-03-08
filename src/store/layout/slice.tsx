@@ -17,7 +17,8 @@ const initialState: LayoutState = {
     question: {
         isActive: false,
         testId: "",
-        sectionId: ""
+        sectionId: "",
+        questionId: {}
     },
     delete: {
         callback: () => {},

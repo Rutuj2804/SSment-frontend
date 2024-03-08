@@ -1,24 +1,28 @@
 import React, { useEffect, useState } from "react";
 import { Button, Checkbox, Input, OutlineButton } from "../../library";
-import { ChevronLeftRounded, DeleteRounded, DoneRounded } from "@mui/icons-material";
+import {
+	ChevronLeftRounded,
+	DeleteRounded,
+	DoneRounded,
+} from "@mui/icons-material";
 import { QuestionType } from "../popup";
 import { useDispatch, useSelector } from "react-redux";
 import { createQuestion, deleteQuestion } from "../../store/actions";
 import { RootState } from "../../store";
 import { useAccessRole } from "../../utils/helpers";
-import { setQuestion } from "../../store/layout/slice";
-import { QuestionInterface } from "../../utils/types";
+import { setDeleteConfirmation, setQuestion } from "../../store/layout/slice";
 
 interface ShortAnswerCProps {
 	onChange: (i: number) => void;
-	que?: QuestionInterface;
 }
 
-const ShortAnswer = ({ onChange, que }: ShortAnswerCProps) => {
+const ShortAnswer = ({ onChange }: ShortAnswerCProps) => {
 	const [formData, setFormData] = useState({
 		title: "",
 		points: "",
 	});
+
+	const [isEditMode, setIsEditMode] = useState(false);
 
 	const questionType = 3;
 
@@ -34,13 +38,28 @@ const ShortAnswer = ({ onChange, que }: ShortAnswerCProps) => {
 	const instituteId = useAccessRole();
 
 	useEffect(() => {
-		if (que?.title || que?.points) {
+		if (question.questionId?._id) setIsEditMode(true);
+		else setIsEditMode(false);
+	}, [question]);
+
+	useEffect(() => {
+		if (isEditMode) {
 			setFormData({
-				title: que.title!,
-				points: que.points?.toString()!,
+				title: question.questionId?.title!,
+				points: question.questionId?.points?.toString()!,
 			});
 		}
-	}, [que]);
+	}, [isEditMode]);
+
+	const close = () =>
+		dispatch(
+			setQuestion({
+				isActive: false,
+				testId: "",
+				sectionId: "",
+				questionId: {},
+			})
+		);
 
 	const onSubmit = () => {
 		if (formData.title && formData.points) {
@@ -55,10 +74,25 @@ const ShortAnswer = ({ onChange, que }: ShortAnswerCProps) => {
 					instituteId,
 				})
 			);
-			dispatch(
-				setQuestion({ isActive: false, testId: "", sectionId: "" })
-			);
+			close();
 		}
+	};
+
+	const onDelete = () => {
+		close();
+		dispatch(
+			setDeleteConfirmation({
+				isActive: true,
+				callback: () =>
+					dispatch(
+						deleteQuestion({
+							questionId: question.questionId?._id!,
+							instituteId,
+						})
+					),
+				text: "This action is irreversible. Are you sure you want to delete this question?",
+			})
+		);
 	};
 
 	return (
@@ -66,14 +100,9 @@ const ShortAnswer = ({ onChange, que }: ShortAnswerCProps) => {
 			<div className="header">
 				<h5>Short Answer Question</h5>
 				<div className="right">
-					{que?.title ? (
+					{isEditMode ? (
 						<OutlineButton
-							onClick={dispatch(
-								deleteQuestion({
-									questionId: que._id!,
-									instituteId,
-								})
-							)}
+							onClick={onDelete}
 							startIcon={<DeleteRounded />}
 						>
 							Delete

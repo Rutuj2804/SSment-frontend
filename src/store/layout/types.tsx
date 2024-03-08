@@ -1,3 +1,5 @@
+import { QuestionInterface } from "../../utils/types";
+
 export interface LayoutState {
 	sidebar: boolean;
 	profile: boolean;
@@ -26,5 +28,5 @@ export interface AddQuestionInterface {
 	testId: string;
 	isActive: boolean;
 	sectionId?: string;
-	questionId?: string;
+	questionId?: QuestionInterface;
 }

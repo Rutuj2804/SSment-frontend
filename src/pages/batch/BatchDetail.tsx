@@ -63,7 +63,7 @@ const BatchDetail = () => {
 								dispatch(
 									setDeleteConfirmation({
 										isActive: true,
-										callback: dispatch(
+										callback: () => dispatch(
 											deleteBatch({
 												batchId: batch._id!,
 												instituteId,
