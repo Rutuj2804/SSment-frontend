@@ -70,7 +70,7 @@
 
     /* Handle on hover */
     &::-webkit-scrollbar-thumb:hover {
-        background: $blue;
+        background: $primary-color;
     }
     &.active {
         transform: translateY(0);
@@ -104,8 +104,8 @@
             padding: 10px 20px;
             cursor: pointer;
             &:hover {
-                color: $blue;
-                background-color: $light-blue;
+                color: $primary-color;
+                background-color: $white;
             }
             h6 {
                 margin-bottom: 0%;
@@ -119,8 +119,8 @@
             padding: 10px;
             cursor: pointer;
             &:hover {
-                color: $blue;
-                background-color: $light-blue;
+                color: $primary-color;
+                background-color: $white;
             }
             .details {
                 display: flex;

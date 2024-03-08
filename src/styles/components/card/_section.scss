@@ -6,7 +6,7 @@
     cursor: pointer;
     box-shadow: $shadow-light;
     &.sectionCard__Active {
-        border: 1px solid $blue;
+        border: 1px solid $primary-color;
         box-shadow: $shadow;
     }
     .sectionCard__Left {

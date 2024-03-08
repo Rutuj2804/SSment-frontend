@@ -20,7 +20,7 @@
             p {
                 margin-bottom: 0%;
                 font-weight: 600;
-                color: $blue;
+                color: $primary-color;
                 cursor: pointer;
             }
         }
@@ -51,7 +51,7 @@
                 cursor: pointer;
                 p {
                     margin-bottom: 2px;
-                    color: $blue;
+                    color: $primary-color;
                     font-size: 14px;
                     font-weight: 600;
                 }
@@ -73,7 +73,7 @@
                 font-weight: 500;
                 cursor: pointer;
                 span {
-                    color: $blue;
+                    color: $primary-color;
                 }
             }
         }

@@ -41,7 +41,7 @@
             hr {
                 margin-top: 0%;
                 margin-bottom: 0px;
-                border-top: $light-blue solid;
+                border-top: $primary-color solid;
             }
             .body {
                 padding: 20px;
@@ -68,14 +68,14 @@
             right: 0;
             width: 300px;
             height: 100vh;
-            border-left: 1px solid $light-blue;
+            border-left: 1px solid $primary-color;
             .top {
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 gap: 10px;
                 padding: 7px 0;
-                border-bottom: 1px solid $light-blue;
+                border-bottom: 1px solid $primary-color;
                 .details {
                     display: flex;
                     flex-direction: column;
@@ -101,7 +101,7 @@
                 align-items: center;
                 flex-wrap: wrap;
                 gap: 7px;
-                border-bottom: 1px solid $light-blue;
+                border-bottom: 1px solid $primary-color;
                 .question {
                     height: 35px;
                     width: 35px;

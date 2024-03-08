@@ -26,10 +26,10 @@
                     text-transform: capitalize!important;
                     padding: 7px 20px!important;
                     color: $light-background!important;
-                    background-color: $blue!important;
+                    background-color: $primary-color!important;
                     &.test__NotActiveTab {
                         background-color: $light-background!important;
-                        color: $blue!important;
+                        color: $primary-color!important;
                     }
                 }
             }
@@ -41,7 +41,7 @@
                     text-transform: capitalize!important;
                     padding: 7px 20px!important;
                     color: $light-background!important;
-                    background-color: $blue!important;
+                    background-color: $primary-color!important;
                 }
             }
         }
