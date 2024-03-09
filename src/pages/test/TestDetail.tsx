@@ -12,7 +12,7 @@ import { encrypt, useAccessRole } from "../../utils/helpers";
 
 const options = [
 	{ name: "Draft", value: 1 },
-	{ name: "Published", value: 2 },
+	{ name: "Publish", value: 2 },
 	{ name: "Cancelled", value: 3 },
 ];
 

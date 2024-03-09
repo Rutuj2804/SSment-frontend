@@ -1,15 +1,42 @@
 .sectionPage__Wrapper{
-    .sectionPage__Button{
-        background-color: $primary-color!important;
+    .sectionPage__FAB {
         position: fixed;
-        bottom: 50px;
-        height: 60px;
-        width: 60px;
+        bottom: 70px;
+        height: 50px;
+        width: 50px;
         right: 50px;
-        padding: 20px;
-        color: $white;
-        font-size: 30px;
-        border-radius: 50%;
-        cursor: pointer;
+        .sectionPage__Button{
+            height: 60px;
+            width: 60px;
+            background-color: $primary-color!important;
+            padding: 20px;
+            color: $white;
+            font-size: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        .sectionPage__FABOptions {
+            position: absolute;
+            bottom: 0;
+            left: 10px;
+            display: flex;
+            gap: 10px;
+            flex-direction: column;
+            align-items: center;
+            transition: all 0.2s linear;
+            display: none;
+            .sectionPage__ButtonOne {
+                color: $white;
+                background-color: $green;
+            }
+            .sectionPage__ButtonTwo {
+                color: $white;
+                background-color: $red;
+            }
+            &.sectionPage__Active {
+                transform: translateY(-70px);  
+                display: flex;              
+            }
+        }
     }
 }
