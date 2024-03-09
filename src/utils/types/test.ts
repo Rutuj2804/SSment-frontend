@@ -12,6 +12,13 @@ export interface SectionInterface extends BaseInterface {
     testId?: string;
 }
 
+export interface OptionInterface extends BaseInterface {
+    title?: string;
+    bullet?: string;
+    isCorrectAnswer?: boolean;
+    expectedResult?: string;
+}
+
 export interface QuestionInterface extends BaseInterface {
     title?: string;
     description?: string;
@@ -20,6 +27,9 @@ export interface QuestionInterface extends BaseInterface {
     questionType?: number;
     testId?: number;
     sectionId?: number;
+    yesNoTrueFalseAnswer?: boolean;
+    expectedResult?: string;
+    optionId?: OptionInterface;
 }
 
 export interface TestInterface extends BaseInterface {

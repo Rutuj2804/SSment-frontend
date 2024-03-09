@@ -7,7 +7,7 @@ import {
 } from "@mui/icons-material";
 import { QuestionType } from "../popup";
 import { useDispatch, useSelector } from "react-redux";
-import { createQuestion, deleteQuestion } from "../../store/actions";
+import { createQuestion, deleteQuestion, updateQuestion } from "../../store/actions";
 import { RootState } from "../../store";
 import { useAccessRole } from "../../utils/helpers";
 import { setDeleteConfirmation, setQuestion } from "../../store/layout/slice";
@@ -49,7 +49,7 @@ const ShortAnswer = ({ onChange }: ShortAnswerCProps) => {
 				points: question.questionId?.points?.toString()!,
 			});
 		}
-	}, [isEditMode]);
+	}, [isEditMode, question]);
 
 	const close = () =>
 		dispatch(
@@ -63,17 +63,32 @@ const ShortAnswer = ({ onChange }: ShortAnswerCProps) => {
 
 	const onSubmit = () => {
 		if (formData.title && formData.points) {
-			dispatch(
-				createQuestion({
-					addReferenceImage: false,
-					questionType,
-					points: parseInt(formData.points),
-					title: formData.title,
-					testId: question.testId,
-					sectionId: question.sectionId,
-					instituteId,
-				})
-			);
+			if(isEditMode) {
+				dispatch(
+					updateQuestion({
+						addReferenceImage: false,
+						questionType,
+						points: parseInt(formData.points),
+						title: formData.title,
+						testId: question.testId,
+						sectionId: question.sectionId,
+						instituteId,
+						questionId: question.questionId?._id!
+					})
+				);
+			} else {
+				dispatch(
+					createQuestion({
+						addReferenceImage: false,
+						questionType,
+						points: parseInt(formData.points),
+						title: formData.title,
+						testId: question.testId,
+						sectionId: question.sectionId,
+						instituteId,
+					})
+				);
+			}
 			close();
 		}
 	};

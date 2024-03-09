@@ -1,12 +1,17 @@
-import React, { useState } from "react";
-import { Button, Checkbox, Input, OutlineButton, Textarea } from "../../library";
-import { AddRounded, ChevronLeftRounded, DoneRounded } from "@mui/icons-material";
+import React, { useEffect, useState } from "react";
+import { Button, Checkbox, Input, OutlineButton, RichTextEditor, Textarea } from "../../library";
+import { AddRounded, ChevronLeftRounded, DeleteRounded, DoneRounded } from "@mui/icons-material";
 import { QuestionType } from "../popup";
+import { IconButton } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../store";
+import { setQuestion } from "../../store/layout/slice";
+import { createQuestion, updateQuestion } from "../../store/actions";
+import { useAccessRole } from "../../utils/helpers";
 
 type Option = {
 	title: string;
-	name: string;
-	isCorrect: boolean;
+	expectedResult: string;
 };
 
 interface CodingTypeCProps {
@@ -14,15 +19,106 @@ interface CodingTypeCProps {
 }
 
 const CodingType = ({ onChange }: CodingTypeCProps) => {
+	const [optionData, setOptionData] = useState({
+		title: "",
+		expectedResult: "",
+	});
+
+	const [formData, setFormData] = useState({
+		title: "",
+		description: "",
+		points: ""
+	})
+
+	const [isEditMode, setIsEditMode] = useState(false);
+
 	const [options, setOptions] = useState<Option[]>([]);
-	
-	const [referenceImage, setReferenceImage] = useState(false)
 
 	const questionType = 8;
 
-    const onAddOption = () => {
-		setOptions((v) => [...v, { name: "A", title: "", isCorrect: false }]);
+	const [referenceImage, setReferenceImage] = useState(false);
+
+	const question = useSelector((state: RootState) => state.layout.question);
+
+	const dispatch = useDispatch<any>();
+
+	useEffect(() => {
+		if (question.questionId?._id) setIsEditMode(true);
+		else setIsEditMode(false);
+	}, [question]);
+
+	useEffect(() => {
+		if (isEditMode) {
+			setFormData({
+				title: question.questionId?.title!,
+				description: question.questionId?.description!,
+				points: question.questionId?.points?.toString()!
+			});
+			setOptions(question.questionId?.optionId! as any)
+			console.log(question.questionId?.optionId)
+		}
+	}, [isEditMode, question]);
+
+	const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+		setFormData((f) => ({ ...f, [e.target.name]: e.target.value }));
+
+	const onOptionChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+		setOptionData((o) => ({ ...o, [e.target.name]: e.target.value }));
+
+	const onOptionSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		setOptions((o) => [...o, optionData]);
+		setOptionData({
+			expectedResult: "",
+			title: ""
+		})
 	};
+
+	const onOptionDelete = (i: number) => setOptions(o=>o.filter((_, x) => x !== i))
+
+	const instituteId = useAccessRole()
+
+	const close = () =>
+		dispatch(
+			setQuestion({
+				isActive: false,
+				testId: "",
+				sectionId: "",
+				questionId: {},
+			})
+		);
+
+	const onSubmit = () => {
+		if(isEditMode) {
+			dispatch(updateQuestion({
+				addReferenceImage: false,
+				questionType,
+				points: parseInt(formData.points),
+				title: formData.title,
+				testId: question.testId,
+				sectionId: question.sectionId,
+				instituteId,
+				questionId: question.questionId?._id!,
+				options: options,
+				description: formData.description
+			}))
+		} else {
+			dispatch(
+				createQuestion({
+					addReferenceImage: false,
+					questionType,
+					points: parseInt(formData.points),
+					title: formData.title,
+					testId: question.testId,
+					sectionId: question.sectionId,
+					instituteId,
+					options: options,
+					description: formData.description
+				})
+			);
+		}
+		close()
+	}
 
 	return (
 		<div className="multipleChoice__Wrapper">
@@ -32,7 +128,7 @@ const CodingType = ({ onChange }: CodingTypeCProps) => {
 					<OutlineButton onClick={() => onChange(QuestionType.SELECTQUESTION)} startIcon={<ChevronLeftRounded />}>
 						Cancel
 					</OutlineButton>
-					<Button startIcon={<DoneRounded />}>Save</Button>
+					<Button onClick={onSubmit} startIcon={<DoneRounded />}>Save</Button>
 				</div>
 			</div>
 			<div className="body">
@@ -41,14 +137,26 @@ const CodingType = ({ onChange }: CodingTypeCProps) => {
 					name="title"
 					placeholder="Title"
 					label="Title"
+					value={formData.title}
+					onChange={onInputChange}
 					required
 				/>
-				<Textarea
+				<RichTextEditor
 					name="description"
 					placeholder="Description"
 					label="Description"
+					value={formData.description}
+					onChange={c=>setFormData(f=>({ ...f, description: c }))}
+				/>
+				<Input 
+					type="number"
+					name="points"
+					placeholder="Points"
+					label="Points"
 					required
-                    rows={5}
+					value={formData.points}
+					onChange={onInputChange}
+					min={0}
 				/>
 				<Checkbox
 					id="add-reference-image"
@@ -64,45 +172,56 @@ const CodingType = ({ onChange }: CodingTypeCProps) => {
 					label="Reference Image"
 					required
 				/>}
-                <div
-					className="multipleChoice__AddOption"
-					onClick={onAddOption}
-				>
-					<AddRounded style={{ height: 30, width: 30 }} />
-					<h5>Add Option</h5>
-				</div>
 			</div>
-            {options.length ? <hr /> : null}
-			<div className="options">
-				{options.map((v, i) => (
-					<div className="options__Wrapper" key={i}>
-						<div className="options__Header">
-							<h6>Test Case {i + 1}</h6>
-							<Button>Remove</Button>
+            <div className="options">
+				<form onSubmit={onOptionSubmit} className="options__Wrapper">
+					<div className="options__Header">
+						<h5>Add Test Case</h5>
+					</div>
+					<div className="row">
+						<div className="col-lg-6 col-md-6 col-12">
+							<Input
+								type="text"
+								name="title"
+								placeholder="Input"
+								label="Input"
+								value={optionData.title}
+								onChange={onOptionChange}
+								required
+							/>
 						</div>
-						<div className="row">
-							<div className="col-lg-6 col-md-6 col-12">
-								<Input
-									type="text"
-									name="input"
-									placeholder="Your Input"
-									label="Your Input"
-									required
-								/>
-							</div>
-							<div className="col-lg-6 col-md-6 col-12">
-								<Input
-									type="text"
-									name="output"
-									placeholder="Expected Output"
-									label="Expected Output"
-									required
-								/>
-							</div>
+						<div className="col-lg-6 col-md-6 col-12">
+							<Input
+								type="text"
+								name="expectedResult"
+								placeholder="Expected Output"
+								label="Expected Output"
+								value={optionData.expectedResult}
+								onChange={onOptionChange}
+								required
+							/>
 						</div>
 					</div>
-				))}
+					<div className="d-flex justify-content-between">
+						<Button type="submit" startIcon={<AddRounded />}>
+							Add Option
+						</Button>
+					</div>
+				</form>
 			</div>
+			{options.map((o, i) => (
+				<div key={i} className="optionCreated__Wrapper">
+					<div className="testcase">
+						<p><span>Input</span>: {o.title}</p>
+						<p><span>Output</span>: {o.expectedResult}</p>
+					</div>
+					<div className="right">
+						<IconButton onClick={() => onOptionDelete(i)}>
+							<DeleteRounded />
+						</IconButton>
+					</div>
+				</div>
+			))}
 		</div>
 	);
 };

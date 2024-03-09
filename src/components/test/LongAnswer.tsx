@@ -1,24 +1,33 @@
 import React, { useEffect, useState } from "react";
 import { Button, Checkbox, Input, OutlineButton } from "../../library";
-import { ChevronLeftRounded, DeleteRounded, DoneRounded } from "@mui/icons-material";
+import {
+	ChevronLeftRounded,
+	DeleteRounded,
+	DoneRounded,
+} from "@mui/icons-material";
 import { QuestionType } from "../popup";
 import { useDispatch, useSelector } from "react-redux";
-import { createQuestion, deleteQuestion } from "../../store/actions";
+import {
+	createQuestion,
+	deleteQuestion,
+	updateQuestion,
+} from "../../store/actions";
 import { RootState } from "../../store";
 import { useAccessRole } from "../../utils/helpers";
-import { setQuestion } from "../../store/layout/slice";
+import { setDeleteConfirmation, setQuestion } from "../../store/layout/slice";
 import { QuestionInterface } from "../../utils/types";
 
 interface LongAnswerCProps {
 	onChange: (i: number) => void;
-	que?: QuestionInterface;
 }
 
-const LongAnswer = ({ onChange, que }: LongAnswerCProps) => {
+const LongAnswer = ({ onChange }: LongAnswerCProps) => {
 	const [formData, setFormData] = useState({
 		title: "",
 		points: "",
 	});
+
+	const [isEditMode, setIsEditMode] = useState(false);
 
 	const questionType = 4;
 
@@ -34,31 +43,76 @@ const LongAnswer = ({ onChange, que }: LongAnswerCProps) => {
 	const instituteId = useAccessRole();
 
 	useEffect(() => {
-		if (que?.title || que?.points) {
+		if (question.questionId?._id) setIsEditMode(true);
+		else setIsEditMode(false);
+	}, [question]);
+
+	useEffect(() => {
+		if (isEditMode) {
 			setFormData({
-				title: que.title!,
-				points: que.points?.toString()!,
+				title: question.questionId?.title!,
+				points: question.questionId?.points?.toString()!,
 			});
 		}
-	}, [que]);
+	}, [isEditMode, question]);
+
+	const close = () =>
+		dispatch(
+			setQuestion({
+				isActive: false,
+				testId: "",
+				sectionId: "",
+				questionId: {},
+			})
+		);
 
 	const onSubmit = () => {
 		if (formData.title && formData.points) {
-			dispatch(
-				createQuestion({
-					addReferenceImage: false,
-					questionType,
-					points: parseInt(formData.points),
-					title: formData.title,
-					testId: question.testId,
-					sectionId: question.sectionId,
-					instituteId,
-				})
-			);
-			dispatch(
-				setQuestion({ isActive: false, testId: "", sectionId: "" })
-			);
+			if (isEditMode) {
+				dispatch(
+					updateQuestion({
+						addReferenceImage: false,
+						questionType,
+						points: parseInt(formData.points),
+						title: formData.title,
+						testId: question.testId,
+						sectionId: question.sectionId,
+						instituteId,
+						questionId: question.questionId?._id!,
+					})
+				);
+			} else {
+				dispatch(
+					createQuestion({
+						addReferenceImage: false,
+						questionType,
+						points: parseInt(formData.points),
+						title: formData.title,
+						testId: question.testId,
+						sectionId: question.sectionId,
+						instituteId,
+					})
+				);
+			}
+			close();
 		}
+	};
+
+	const onDelete = () => {
+		close();
+		dispatch(
+			setDeleteConfirmation({
+				isActive: true,
+				callback: () =>
+					dispatch(
+						deleteQuestion({
+							questionId: question.questionId?._id!,
+							instituteId,
+						})
+					),
+				text: "This action is irreversible. Are you sure you want to delete this question?",
+			})
+		);
 	};
 
 	return (
@@ -66,9 +120,9 @@ const LongAnswer = ({ onChange, que }: LongAnswerCProps) => {
 			<div className="header">
 				<h5>Long Answer Question</h5>
 				<div className="right">
-					{que?.title ? (
+					{isEditMode ? (
 						<OutlineButton
-							onClick={dispatch(deleteQuestion({questionId: que._id!, instituteId}))}
+							onClick={onDelete}
 							startIcon={<DeleteRounded />}
 						>
 							Delete

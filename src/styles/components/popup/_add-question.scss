@@ -17,5 +17,6 @@
         overflow-y: auto;
         overflow-x: hidden;
         @include scroll-bar();
+        padding: 0 10px;
     }
 }

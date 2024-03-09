@@ -77,9 +77,9 @@ export interface GetQuestionsOfTestRequest extends BaseInterface {
 
 export interface OptionInterface {
     title: string;
-    bullet: string;
-    isCorrectAnswer: boolean;
-    expectedResult: string;
+    bullet?: string;
+    isCorrectAnswer?: boolean;
+    expectedResult?: string;
 }
 
 export interface CreateQuestionRequest extends BaseInterface {
@@ -92,8 +92,13 @@ export interface CreateQuestionRequest extends BaseInterface {
     testId: string;
     sectionId?: string;
     options?: OptionInterface[]; 
+    yesNoTrueFalseAnswer?: boolean;
 }
 
 export interface DeleteQuestionRequest extends BaseInterface {
     questionId: string; 
+}
+
+export interface UpdateQuestionRequest extends CreateQuestionRequest {
+    questionId: string;
 }

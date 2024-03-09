@@ -31,8 +31,8 @@
         margin-top: 20px;
         .options__Wrapper {
             // border: 1px solid $gray;
-            padding: 10px 20px;
-            box-shadow: $shadow-light;
+            padding: 10px 0px;
+            // box-shadow: $shadow-light;
             border-radius: 4px;
             margin-bottom: 10px;
             .options__Header {
@@ -40,6 +40,39 @@
                 justify-content: space-between;
                 align-items: center;
             }
+        }
+    }
+    .optionCreated__Wrapper {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border: 1px solid $gray;
+        border-radius: 4px;
+        padding: 5px 10px;
+        margin-bottom: 10px;
+        &.optionCreated__CorrectOption {
+            border: 2px solid $green;
+        }
+        .left {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            p {
+                margin: 0%;
+            }
+            h6 {
+                margin-bottom: 0%;
+            }
+        }
+        .testcase {
+            display: flex;
+            flex-direction: column;
+            span {
+                font-weight: 500;
+            }
+        }
+        .right button{
+            color: $red!important;
         }
     }
 }

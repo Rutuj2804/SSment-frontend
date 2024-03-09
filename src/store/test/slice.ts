@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { TestState } from "./types";
-import { createQuestion, createSection, deleteQuestion, deleteSection, getAllTests, getQuestionsOfSection, getQuestionsOfTest, getSectionsOfTest, getTestDetails, updateSection } from "./actions";
+import { createQuestion, createSection, deleteQuestion, deleteSection, getAllTests, getQuestionsOfSection, getQuestionsOfTest, getSectionsOfTest, getTestDetails, updateQuestion, updateSection } from "./actions";
 
 const initialState: TestState = {
     tests: [],
@@ -40,6 +40,14 @@ export const testSlice = createSlice({
         })
         builder.addCase(createQuestion.fulfilled, (s, a) => {
             s.questions = [...s.questions, a.payload]
+        })
+        builder.addCase(updateQuestion.fulfilled, (s, a) => {
+            s.questions = s.questions.map(question => {
+                if (question._id === a.payload._id) {
+                    return a.payload;
+                }
+                return question;
+            });
         })
         builder.addCase(deleteQuestion.fulfilled, (s, a) => {
             s.questions = s.questions.filter(t=>t._id !== a.payload._id)

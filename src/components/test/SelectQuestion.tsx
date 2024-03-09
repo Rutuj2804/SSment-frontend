@@ -40,21 +40,21 @@ const SelectQuestion = ({ onChange }: SelectQuestionProps) => {
 				<div className="col-lg-4 col-md-6 col-12" onClick={() => onChange(QuestionTypeEnum.IMADECHOICE)}>
                     <QuestionType type={2} />
                 </div>
-				<div className="col-lg-4 col-md-6 col-12" onClick={() => onChange(QuestionTypeEnum.SHORTANSWER)}>
+				{/* <div className="col-lg-4 col-md-6 col-12" onClick={() => onChange(QuestionTypeEnum.SHORTANSWER)}>
                     <QuestionType type={3} />
                 </div>
 				<div className="col-lg-4 col-md-6 col-12" onClick={() => onChange(QuestionTypeEnum.LONGANSWER)}>
                     <QuestionType type={4} />
-                </div>
+                </div> */}
 				<div className="col-lg-4 col-md-6 col-12" onClick={() => onChange(QuestionTypeEnum.YESNOTYPE)}>
                     <QuestionType type={5} />
                 </div>
 				<div className="col-lg-4 col-md-6 col-12" onClick={() => onChange(QuestionTypeEnum.TRUEFALSETYPE)}>
                     <QuestionType type={6} />
                 </div>
-				<div className="col-lg-4 col-md-6 col-12" onClick={() => onChange(QuestionTypeEnum.OPINIONCASE)}>
+				{/* <div className="col-lg-4 col-md-6 col-12" onClick={() => onChange(QuestionTypeEnum.OPINIONCASE)}>
                     <QuestionType type={7} />
-                </div>
+                </div> */}
 				<div className="col-lg-4 col-md-6 col-12" onClick={() => onChange(QuestionTypeEnum.CODINGTYPE)}>
                     <QuestionType type={8} />
                 </div>

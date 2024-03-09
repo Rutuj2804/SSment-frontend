@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { setQuestion } from "../../store/layout/slice";
 import { useOutsideClick } from "../../utils/hooks";
 import { RootState } from "../../store";
-import { QuestionInterface } from "../../utils/types";
 
 export enum QuestionType {
 	"MULTIPLECHOICE" = 1,
