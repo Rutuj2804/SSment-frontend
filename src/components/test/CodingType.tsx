@@ -1,12 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { Button, Checkbox, Input, OutlineButton, RichTextEditor, Textarea } from "../../library";
-import { AddRounded, ChevronLeftRounded, DeleteRounded, DoneRounded } from "@mui/icons-material";
+import {
+	Button,
+	Checkbox,
+	Input,
+	OutlineButton,
+	RichTextEditor,
+	Textarea,
+} from "../../library";
+import {
+	AddRounded,
+	ChevronLeftRounded,
+	DeleteRounded,
+	DoneRounded,
+} from "@mui/icons-material";
 import { QuestionType } from "../popup";
 import { IconButton } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
-import { setQuestion } from "../../store/layout/slice";
-import { createQuestion, updateQuestion } from "../../store/actions";
+import { setDeleteConfirmation, setQuestion } from "../../store/layout/slice";
+import { createQuestion, deleteQuestion, updateQuestion } from "../../store/actions";
 import { useAccessRole } from "../../utils/helpers";
 
 type Option = {
@@ -15,7 +27,7 @@ type Option = {
 };
 
 interface CodingTypeCProps {
-    onChange: (i: number) => void;
+	onChange: (i: number) => void;
 }
 
 const CodingType = ({ onChange }: CodingTypeCProps) => {
@@ -27,8 +39,8 @@ const CodingType = ({ onChange }: CodingTypeCProps) => {
 	const [formData, setFormData] = useState({
 		title: "",
 		description: "",
-		points: ""
-	})
+		points: "",
+	});
 
 	const [isEditMode, setIsEditMode] = useState(false);
 
@@ -52,10 +64,9 @@ const CodingType = ({ onChange }: CodingTypeCProps) => {
 			setFormData({
 				title: question.questionId?.title!,
 				description: question.questionId?.description!,
-				points: question.questionId?.points?.toString()!
+				points: question.questionId?.points?.toString()!,
 			});
-			setOptions(question.questionId?.optionId! as any)
-			console.log(question.questionId?.optionId)
+			setOptions(question.questionId?.optionId! as any);
 		}
 	}, [isEditMode, question]);
 
@@ -70,13 +81,14 @@ const CodingType = ({ onChange }: CodingTypeCProps) => {
 		setOptions((o) => [...o, optionData]);
 		setOptionData({
 			expectedResult: "",
-			title: ""
-		})
+			title: "",
+		});
 	};
 
-	const onOptionDelete = (i: number) => setOptions(o=>o.filter((_, x) => x !== i))
+	const onOptionDelete = (i: number) =>
+		setOptions((o) => o.filter((_, x) => x !== i));
 
-	const instituteId = useAccessRole()
+	const instituteId = useAccessRole();
 
 	const close = () =>
 		dispatch(
@@ -89,19 +101,21 @@ const CodingType = ({ onChange }: CodingTypeCProps) => {
 		);
 
 	const onSubmit = () => {
-		if(isEditMode) {
-			dispatch(updateQuestion({
-				addReferenceImage: false,
-				questionType,
-				points: parseInt(formData.points),
-				title: formData.title,
-				testId: question.testId,
-				sectionId: question.sectionId,
-				instituteId,
-				questionId: question.questionId?._id!,
-				options: options,
-				description: formData.description
-			}))
+		if (isEditMode) {
+			dispatch(
+				updateQuestion({
+					addReferenceImage: false,
+					questionType,
+					points: parseInt(formData.points),
+					title: formData.title,
+					testId: question.testId,
+					sectionId: question.sectionId,
+					instituteId,
+					questionId: question.questionId?._id!,
+					options: options,
+					description: formData.description,
+				})
+			);
 		} else {
 			dispatch(
 				createQuestion({
@@ -113,22 +127,55 @@ const CodingType = ({ onChange }: CodingTypeCProps) => {
 					sectionId: question.sectionId,
 					instituteId,
 					options: options,
-					description: formData.description
+					description: formData.description,
 				})
 			);
 		}
-		close()
-	}
+		close();
+	};
+
+	const onDelete = () => {
+		close();
+		dispatch(
+			setDeleteConfirmation({
+				isActive: true,
+				callback: () =>
+					dispatch(
+						deleteQuestion({
+							questionId: question.questionId?._id!,
+							instituteId,
+						})
+					),
+				text: "This action is irreversible. Are you sure you want to delete this question?",
+			})
+		);
+	};
 
 	return (
 		<div className="multipleChoice__Wrapper">
 			<div className="header">
 				<h5>Coding Type Question</h5>
 				<div className="right">
-					<OutlineButton onClick={() => onChange(QuestionType.SELECTQUESTION)} startIcon={<ChevronLeftRounded />}>
-						Cancel
-					</OutlineButton>
-					<Button onClick={onSubmit} startIcon={<DoneRounded />}>Save</Button>
+					{isEditMode ? (
+						<OutlineButton
+							onClick={onDelete}
+							startIcon={<DeleteRounded />}
+						>
+							Delete
+						</OutlineButton>
+					) : (
+						<OutlineButton
+							onClick={() =>
+								onChange(QuestionType.SELECTQUESTION)
+							}
+							startIcon={<ChevronLeftRounded />}
+						>
+							Cancel
+						</OutlineButton>
+					)}
+					<Button onClick={onSubmit} startIcon={<DoneRounded />}>
+						Save
+					</Button>
 				</div>
 			</div>
 			<div className="body">
@@ -146,9 +193,11 @@ const CodingType = ({ onChange }: CodingTypeCProps) => {
 					placeholder="Description"
 					label="Description"
 					value={formData.description}
-					onChange={c=>setFormData(f=>({ ...f, description: c }))}
+					onChange={(c) =>
+						setFormData((f) => ({ ...f, description: c }))
+					}
 				/>
-				<Input 
+				<Input
 					type="number"
 					name="points"
 					placeholder="Points"
@@ -162,18 +211,20 @@ const CodingType = ({ onChange }: CodingTypeCProps) => {
 					id="add-reference-image"
 					label="Add Reference Image"
 					description="Displays a reference image for the question while attempting the test."
-					onChange={e=>setReferenceImage(e.target.checked)}
+					onChange={(e) => setReferenceImage(e.target.checked)}
 					checked={referenceImage}
 				/>
-				{referenceImage && <Input
-					type="file"
-					name="points"
-					placeholder="Reference Image"
-					label="Reference Image"
-					required
-				/>}
+				{referenceImage && (
+					<Input
+						type="file"
+						name="points"
+						placeholder="Reference Image"
+						label="Reference Image"
+						required
+					/>
+				)}
 			</div>
-            <div className="options">
+			<div className="options">
 				<form onSubmit={onOptionSubmit} className="options__Wrapper">
 					<div className="options__Header">
 						<h5>Add Test Case</h5>
@@ -212,8 +263,12 @@ const CodingType = ({ onChange }: CodingTypeCProps) => {
 			{options.map((o, i) => (
 				<div key={i} className="optionCreated__Wrapper">
 					<div className="testcase">
-						<p><span>Input</span>: {o.title}</p>
-						<p><span>Output</span>: {o.expectedResult}</p>
+						<p>
+							<span>Input</span>: {o.title}
+						</p>
+						<p>
+							<span>Output</span>: {o.expectedResult}
+						</p>
 					</div>
 					<div className="right">
 						<IconButton onClick={() => onOptionDelete(i)}>

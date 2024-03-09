@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Checkbox, Input, OutlineButton } from "../../library";
 import {
 	AddRounded,
@@ -8,6 +8,15 @@ import {
 } from "@mui/icons-material";
 import { QuestionType } from "../popup";
 import { IconButton } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../store";
+import { useAccessRole } from "../../utils/helpers";
+import {
+	createQuestion,
+	deleteQuestion,
+	updateQuestion,
+} from "../../store/actions";
+import { setDeleteConfirmation, setQuestion } from "../../store/layout/slice";
 
 type Option = {
 	title: string;
@@ -26,11 +35,44 @@ const MultipleChoice = ({ onChange }: MultipleChoiceCProps) => {
 		isCorrectAnswer: false,
 	});
 
+	const [formData, setFormData] = useState({
+		title: "",
+		description: "",
+		points: "",
+	});
+
+	const [isEditMode, setIsEditMode] = useState(false);
+
 	const [options, setOptions] = useState<Option[]>([]);
 
 	const questionType = 1;
 
 	const [referenceImage, setReferenceImage] = useState(false);
+
+	const question = useSelector((state: RootState) => state.layout.question);
+
+	const dispatch = useDispatch<any>();
+
+	const instituteId = useAccessRole();
+
+	useEffect(() => {
+		if (question.questionId?._id) setIsEditMode(true);
+		else setIsEditMode(false);
+	}, [question]);
+
+	useEffect(() => {
+		if (isEditMode) {
+			setFormData({
+				title: question.questionId?.title!,
+				description: question.questionId?.description!,
+				points: question.questionId?.points?.toString()!,
+			});
+			setOptions(question.questionId?.optionId! as any);
+		}
+	}, [isEditMode, question]);
+
+	const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+		setFormData((f) => ({ ...f, [e.target.name]: e.target.value }));
 
 	const onOptionChange = (e: React.ChangeEvent<HTMLInputElement>) =>
 		setOptionData((o) => ({ ...o, [e.target.name]: e.target.value }));
@@ -38,22 +80,100 @@ const MultipleChoice = ({ onChange }: MultipleChoiceCProps) => {
 	const onOptionSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		setOptions((o) => [...o, optionData]);
+		setOptionData({
+			bullet: "",
+			isCorrectAnswer: false,
+			title: ""
+		})
 	};
 
-	const onOptionDelete = (i: number) => setOptions(o=>o.filter((_, x) => x !== i))
+	const onOptionDelete = (i: number) =>
+		setOptions((o) => o.filter((_, x) => x !== i));
+
+	const close = () =>
+		dispatch(
+			setQuestion({
+				isActive: false,
+				testId: "",
+				sectionId: "",
+				questionId: {},
+			})
+		);
+
+	const onSubmit = () => {
+		if (isEditMode) {
+			dispatch(
+				updateQuestion({
+					addReferenceImage: false,
+					questionType,
+					points: parseInt(formData.points),
+					title: formData.title,
+					testId: question.testId,
+					sectionId: question.sectionId,
+					instituteId,
+					questionId: question.questionId?._id!,
+					options: options,
+					description: formData.description,
+				})
+			);
+		} else {
+			dispatch(
+				createQuestion({
+					addReferenceImage: false,
+					questionType,
+					points: parseInt(formData.points),
+					title: formData.title,
+					testId: question.testId,
+					sectionId: question.sectionId,
+					instituteId,
+					options: options,
+					description: formData.description,
+				})
+			);
+		}
+		close();
+	};
+
+	const onDelete = () => {
+		close();
+		dispatch(
+			setDeleteConfirmation({
+				isActive: true,
+				callback: () =>
+					dispatch(
+						deleteQuestion({
+							questionId: question.questionId?._id!,
+							instituteId,
+						})
+					),
+				text: "This action is irreversible. Are you sure you want to delete this question?",
+			})
+		);
+	};
 
 	return (
 		<div className="multipleChoice__Wrapper">
 			<div className="header">
 				<h5>Multiple Choice Question</h5>
 				<div className="right">
-					<OutlineButton
-						onClick={() => onChange(QuestionType.SELECTQUESTION)}
-						startIcon={<ChevronLeftRounded />}
-					>
-						Cancel
-					</OutlineButton>
-					<Button startIcon={<DoneRounded />}>Save</Button>
+					{isEditMode ? (
+						<OutlineButton
+							onClick={onDelete}
+							startIcon={<DeleteRounded />}
+						>
+							Delete
+						</OutlineButton>
+					) : (
+						<OutlineButton
+							onClick={() =>
+								onChange(QuestionType.SELECTQUESTION)
+							}
+							startIcon={<ChevronLeftRounded />}
+						>
+							Cancel
+						</OutlineButton>
+					)}
+					<Button onClick={onSubmit} startIcon={<DoneRounded />}>Save</Button>
 				</div>
 			</div>
 			<div className="body">
@@ -62,6 +182,8 @@ const MultipleChoice = ({ onChange }: MultipleChoiceCProps) => {
 					name="title"
 					placeholder="Title"
 					label="Title"
+					value={formData.title}
+					onChange={onInputChange}
 					required
 				/>
 				<Input
@@ -69,6 +191,8 @@ const MultipleChoice = ({ onChange }: MultipleChoiceCProps) => {
 					name="points"
 					placeholder="Points"
 					label="Points"
+					value={formData.points}
+					onChange={onInputChange}
 					required
 					min={0}
 				/>
@@ -136,7 +260,14 @@ const MultipleChoice = ({ onChange }: MultipleChoiceCProps) => {
 				</form>
 			</div>
 			{options.map((o, i) => (
-				<div key={i} className={o.isCorrectAnswer ? "optionCreated__Wrapper optionCreated__CorrectOption": "optionCreated__Wrapper"}>
+				<div
+					key={i}
+					className={
+						o.isCorrectAnswer
+							? "optionCreated__Wrapper optionCreated__CorrectOption"
+							: "optionCreated__Wrapper"
+					}
+				>
 					<div className="left">
 						<h6>{o.bullet}&nbsp;&#41;</h6>
 						<p>{o.title}</p>

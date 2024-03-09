@@ -42,7 +42,7 @@ export const testSlice = createSlice({
             s.questions = [...s.questions, a.payload]
         })
         builder.addCase(updateQuestion.fulfilled, (s, a) => {
-            s.questions = s.questions.map(question => {
+            s.questions = s.questions.filter(question => {
                 if (question._id === a.payload._id) {
                     return a.payload;
                 }
