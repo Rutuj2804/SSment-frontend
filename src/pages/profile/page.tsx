@@ -56,7 +56,7 @@ const Profile = () => {
 						</div>
 						<div className="unit">
 							<h6>Created On</h6>
-							<p>{moment(user._createdAt).format("DD MMM, yyyy")}</p>
+							<p>{moment(user.createdAt).format("DD MMM, yyyy")}</p>
 						</div>
 						<div className="unit">
 							<h6>Institute</h6>

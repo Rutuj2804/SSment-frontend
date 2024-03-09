@@ -18,7 +18,7 @@ const Batch = ({ batch }: BatchCProps) => {
 			<div className="left">
 				<div className="userdetails">
 					<h6>{batch.name}</h6>
-					<p>Created on {moment(batch._createdAt).format("DD MMM, YYYY")}</p>
+					<p>Created on {moment(batch.createdAt).format("DD MMM, YYYY")}</p>
 				</div>
 			</div>
 			<div className="right">

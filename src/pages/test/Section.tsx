@@ -8,7 +8,7 @@ import { RootState } from "../../store";
 import { useAccessRole } from "../../utils/helpers";
 import { getQuestionsOfSection, getSectionsOfTest } from "../../store/actions";
 import { setBreadcrumps } from "../../store/breadcrumps/slice";
-import { SectionCard } from "../../components/card";
+import { QuestionCard, SectionCard } from "../../components/card";
 
 const Section = () => {
     const [sectionSelected, setSectionSelected] = useState("")
@@ -18,6 +18,8 @@ const Section = () => {
     const dispatch = useDispatch<any>()
 
     const sections = useSelector((state: RootState) => state.test.sections)
+
+    const questions = useSelector((state: RootState) => state.test.questions)
 
     const instituteId = useAccessRole()
 
@@ -47,12 +49,12 @@ const Section = () => {
         <div className="row">
             <div className="col-lg-4 col-md-4 col-12">
                 <div className="section__SectionList">
-                    {sections.map(s=><SectionCard onClick={setSectionSelected} key={s._id} section={s} testId={id!} sectionId={sectionSelected} />)}
+                    {sections.map(s => <SectionCard onClick={setSectionSelected} key={s._id} section={s} testId={id!} sectionId={sectionSelected} />)}
                 </div>
             </div>
             <div className="col-lg-8 col-md-8 col-12">
                 <div className="sectionPage__QuestionList">
-                    Right
+                    {questions.map(q => <QuestionCard key={q._id} question={q} testId={id!} sectionId={sectionSelected}  />)}
                 </div>
             </div>
         </div>

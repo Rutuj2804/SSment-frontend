@@ -73,7 +73,7 @@ const ShortAnswer = ({ onChange }: ShortAnswerCProps) => {
 						testId: question.testId,
 						sectionId: question.sectionId,
 						instituteId,
-						questionId: question.questionId?._id!
+						questionId: question.questionId?._id!,
 					})
 				);
 			} else {

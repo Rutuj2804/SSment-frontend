@@ -77,7 +77,8 @@ const TrueFalseType = ({ onChange }: TrueFalseTypeCProps) => {
 					addReferenceImage: referenceImage,
 					testId: question.testId!,
 					questionId: question.questionId?._id!,
-					yesNoTrueFalseAnswer: formData.yesNoTrueFalseAnswer === "true" ? true : false
+					yesNoTrueFalseAnswer: formData.yesNoTrueFalseAnswer === "true" ? true : false,
+					sectionId: question.sectionId!
 				})
 			);
 		} else {
@@ -89,7 +90,8 @@ const TrueFalseType = ({ onChange }: TrueFalseTypeCProps) => {
 					questionType,
 					addReferenceImage: referenceImage,
 					testId: question.testId!,
-					yesNoTrueFalseAnswer: formData.yesNoTrueFalseAnswer === "true" ? true : false
+					yesNoTrueFalseAnswer: formData.yesNoTrueFalseAnswer === "true" ? true : false,
+					sectionId: question.sectionId!
 				})
 			);
 		}
