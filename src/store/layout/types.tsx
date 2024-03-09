@@ -9,6 +9,7 @@ export interface LayoutState {
 	popup: boolean;
 	question: AddQuestionInterface;
 	delete: DeleteInterface;
+	confirmation: DeleteInterface;
 	section: AddSectionInterface;
 }
 

@@ -9,12 +9,12 @@ import { BatchRibbon, StudentRibbon } from "../../components/ribbon";
 import { RootState } from "../../store";
 import { changeStatus, getStudentsOfBatch, getTestDetails } from "../../store/actions";
 import { encrypt, useAccessRole } from "../../utils/helpers";
+import { setConfirmation } from "../../store/layout/slice";
 
-const options = [
-	{ name: "Draft", value: 1 },
-	{ name: "Publish", value: 2 },
-	{ name: "Cancelled", value: 3 },
-];
+interface Options {
+	name: string;
+	value: number;
+}
 
 export enum TestStyle {
 	"SECTIONED" = 1,
@@ -22,6 +22,9 @@ export enum TestStyle {
 }
 
 const TestDetail = () => {
+
+	const [options, setOptions] = useState<Options[]>([{ name: "Draft", value: 1 }, { name: "Publish", value: 2 }, { name: "Cancel", value: 3 }])
+
 	const [status, setStatus] = useState(1);
 
 	const [value, setValue] = useState(0);
@@ -58,7 +61,11 @@ const TestDetail = () => {
 	}, [id, instituteId, dispatch]);
 
 	useEffect(() => {
-		if (test._id) setStatus(test.status!);
+		if (test._id) {
+			setStatus(test.status!);
+			if(test.status === 2) setOptions([{ name: "Publish", value: 2 }, { name: "Cancel", value: 3 }])
+			else if(test.status === 3) setOptions([{ name: "Cancel", value: 3 }])
+		}
 	}, [test]);
 
 	useEffect(() => {
@@ -69,8 +76,19 @@ const TestDetail = () => {
 	}, [test, dispatch, instituteId]);
 
 	const onStatusChange = (i: number) => {
-		setStatus(i)
-		dispatch(changeStatus({ status: i, instituteId, testId: id!, navigate }))
+		if(i === 2) {
+			dispatch(setConfirmation({
+				isActive: true,
+				callback: () => dispatch(changeStatus({ status: i, instituteId, testId: id!, navigate })),
+				text: "This action is irreversible. Are you sure you want to publish this test?"
+			}))
+		} else if(i === 3) {
+			dispatch(setConfirmation({
+				isActive: true,
+				callback: () => dispatch(changeStatus({ status: i, instituteId, testId: id!, navigate })),
+				text: "This action is irreversible. Are you sure you want to cancel this test?"
+			}))
+		}
 	}
 
 	return (

@@ -1,36 +1,44 @@
-import { DeleteRounded, EditRounded } from "@mui/icons-material";
+import {
+	DeleteRounded,
+	EditRounded,
+	VisibilityRounded,
+} from "@mui/icons-material";
 import { IconButton } from "@mui/material";
 import { GridColDef } from "@mui/x-data-grid";
 import moment from "moment";
-import { useNavigate } from "react-router-dom";
-import { encrypt } from "../helpers";
+import { NavLink, useNavigate } from "react-router-dom";
+import { encrypt, useAccessRole } from "../helpers";
+import { useDispatch } from "react-redux";
+import { setDeleteConfirmation } from "../../store/layout/slice";
+import { deleteTest } from "../../store/actions";
 
 export enum TestStatus {
-    "DRAFT"=1,
-    "PUBLISHED"=2,
-    "CANCELLED"=3
+	"DRAFT" = 1,
+	"PUBLISHED" = 2,
+	"CANCELLED" = 3,
 }
 
 const getStatus = (i: number) => {
-    if(TestStatus.DRAFT === i) {
-        return <div className="warningtag">Draft</div>
-    } else if(TestStatus.PUBLISHED === i) {
-        return <div className="activetag">Published</div>
-    } else if(TestStatus.CANCELLED === i) {
-        return <div className="inactivetag">Cancelled</div>
-    }
-}
+	if (TestStatus.DRAFT === i) {
+		return <div className="warningtag">Draft</div>;
+	} else if (TestStatus.PUBLISHED === i) {
+		return <div className="activetag">Published</div>;
+	} else if (TestStatus.CANCELLED === i) {
+		return <div className="inactivetag">Cancelled</div>;
+	}
+};
 
 const GetTestColumns = () => {
+	const dispatch = useDispatch<any>();
 
-    const navigate = useNavigate()
+	const instituteId = useAccessRole();
 
 	const columns: GridColDef[] = [
 		{
 			field: "testName",
 			headerName: "Title",
 			flex: 1,
-			renderCell: (params) => <div onClick={() => navigate(`/test/${encrypt(params.row._id)}`)}>{params.row.title}</div>
+			renderCell: (params) => <div>{params.row.title}</div>,
 		},
 		{
 			field: "batches",
@@ -38,7 +46,7 @@ const GetTestColumns = () => {
 			width: 150,
 			align: "center",
 			headerAlign: "center",
-			renderCell: (params) => <div>{params.row.batchId.length}</div>
+			renderCell: (params) => <div>{params.row.batchId.length}</div>,
 		},
 		{
 			field: "status",
@@ -46,7 +54,7 @@ const GetTestColumns = () => {
 			width: 110,
 			align: "center",
 			headerAlign: "center",
-			renderCell: (params) => (getStatus(params.row.status))
+			renderCell: (params) => getStatus(params.row.status),
 		},
 		{
 			field: "date",
@@ -55,8 +63,10 @@ const GetTestColumns = () => {
 			width: 110,
 			align: "center",
 			renderCell: (params) => (
-				<div>{moment(params.row.startDateTime).format("DD MMM, YYYY")}</div>
-			)
+				<div>
+					{moment(params.row.startDateTime).format("DD MMM, YYYY")}
+				</div>
+			),
 		},
 		{
 			field: "time",
@@ -66,7 +76,7 @@ const GetTestColumns = () => {
 			align: "center",
 			renderCell: (params) => (
 				<div>{moment(params.row.startDateTime).format("HH:mm")}</div>
-			)
+			),
 		},
 		{
 			field: "actions",
@@ -76,10 +86,33 @@ const GetTestColumns = () => {
 			align: "center",
 			renderCell: (params) => (
 				<div className="d-flex gap-2">
-					<IconButton size="small"><EditRounded /></IconButton>
-					<IconButton size="small"><DeleteRounded /></IconButton>
+					<NavLink to={`/test/${encrypt(params.row._id)}`}>
+						<IconButton size="small">
+							<VisibilityRounded />
+						</IconButton>
+					</NavLink>
+					<IconButton
+						size="small"
+						onClick={() =>
+							dispatch(
+								setDeleteConfirmation({
+									isActive: true,
+									text: "This action is irreversible. Are you sure you want to delete this test?",
+									callback: () =>
+										dispatch(
+											deleteTest({
+												testId: params.row._id,
+												instituteId,
+											})
+										),
+								})
+							)
+						}
+					>
+						<DeleteRounded />
+					</IconButton>
 				</div>
-			)
+			),
 		},
 	];
 

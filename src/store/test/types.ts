@@ -35,7 +35,15 @@ export interface CreateTestRequest extends BaseInterface {
     releaseGradesOnceCompleted: boolean;
 }
 
+export interface UpdateTestRequest extends CreateTestRequest {
+    testId: string;
+}
+
 export interface GetTestDetailsRequest extends BaseInterface {
+    testId: string;
+}
+
+export interface DeleteTestRequest extends BaseInterface {
     testId: string;
 }
 

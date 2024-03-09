@@ -25,6 +25,11 @@ const initialState: LayoutState = {
         isActive: false,
         text: ""
     },
+    confirmation: {
+        callback: () => {},
+        isActive: false,
+        text: ""
+    },
     section: {
         isActive: false,
         testId: "",
@@ -60,6 +65,11 @@ export const layoutSlice = createSlice({
             state.popup = action.payload.isActive;
             state.delete = action.payload;
         },
+        setConfirmation: (state, action: PayloadAction<DeleteInterface>) => {
+            state.backdrop = action.payload.isActive;
+            state.popup = action.payload.isActive;
+            state.confirmation = action.payload;
+        },
         setAddSection: (state, action: PayloadAction<AddSectionInterface>) => {
             state.backdrop = action.payload.isActive;
             state.popup = action.payload.isActive;
@@ -75,7 +85,8 @@ export const {
     setSearch,
     setQuestion,
     setDeleteConfirmation,
-    setAddSection
+    setAddSection,
+    setConfirmation
 } = layoutSlice.actions;
 
 export default layoutSlice.reducer;

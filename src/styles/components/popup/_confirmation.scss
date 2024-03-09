@@ -1,0 +1,30 @@
+.confirmation__Wrapper {
+    width: 400px;
+    background-color: $white;
+    padding: 7px;
+    border-radius: 4px;
+    .confirmation__Header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        h5 {
+            margin: 0%;
+        }
+    }
+    .confirmation__Body {
+        margin: 10px 0;
+    }
+    .confirmation__Footer {
+        display: flex;
+        justify-content: flex-end;
+        gap: 7px;
+        .confirmation__Outline {
+            font-size: 12px;
+            border-color: $primary-color!important;
+            color: $primary-color!important;
+        }
+        .confirmation__Fill {
+            background-color: $primary-color!important;
+        }
+    }
+}

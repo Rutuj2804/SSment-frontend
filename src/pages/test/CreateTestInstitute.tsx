@@ -13,7 +13,7 @@ import {
 	Grading,
 	TermsAndCondition,
 } from "../../components/test";
-import { createTest, getTestDetails } from "../../store/actions";
+import { createTest, getTestDetails, updateTest } from "../../store/actions";
 import { useAccessRole } from "../../utils/helpers";
 import moment from "moment";
 import { RootState } from "../../store";
@@ -164,20 +164,38 @@ const CreateTest = () => {
 
 	const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		dispatch(
-			createTest({
-				navigate,
-				...formData,
-				instituteId,
-				testStyle,
-				testImage: testImage!,
-				batchId: batches,
-				startDateTime: moment(startDate + "T" + startTime).format("YYYY-MM-DDTHH:mm"),
-				grading: grades,
-				termsAndConditionsDescription,
-				termId
-			})
-		);
+		if(id) {
+			dispatch(
+				updateTest({
+					testId: id,
+					navigate,
+					...formData,
+					instituteId,
+					testStyle,
+					testImage: testImage!,
+					batchId: batches,
+					startDateTime: moment(startDate + "T" + startTime).format("YYYY-MM-DDTHH:mm"),
+					grading: grades,
+					termsAndConditionsDescription,
+					termId
+				})
+			);
+		} else {
+			dispatch(
+				createTest({
+					navigate,
+					...formData,
+					instituteId,
+					testStyle,
+					testImage: testImage!,
+					batchId: batches,
+					startDateTime: moment(startDate + "T" + startTime).format("YYYY-MM-DDTHH:mm"),
+					grading: grades,
+					termsAndConditionsDescription,
+					termId
+				})
+			);
+		}
 	};
 
 	const controller = (i: number) => {
