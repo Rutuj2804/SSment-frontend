@@ -5,7 +5,7 @@ import { AdminBatch, Batch, BatchDetail, CreateBatch, EditBatch, RenewBatch } fr
 import { Result } from "../pages/result";
 import { AddQuestion, CreateTest, CreateTestInstitute, Section, Test, TestDetail } from "../pages/test";
 import { ContactUs, ForgotPassword, Login } from "../pages/authentication";
-import { CreateRole, Assignments, Roles, AddAssignment } from "../pages/role";
+import { Assignments, Roles, AddAssignment } from "../pages/role";
 import { CreateTerm, CreateTermInstitute, Term } from "../pages/term";
 import { EditProfile, Logout, Profile, ResetPassword } from "../pages/profile";
 import { AttemptTest, EndTest, StartTest, TermsAndCondition } from "../pages/attempt";
@@ -36,8 +36,6 @@ export const regularRoutes = [
     { path: "/a/terms/edit/:id", element: <CreateTermInstitute /> },
 
     { path: "/roles", element: <Roles /> },
-    { path: "/roles/create", element: <CreateRole /> },
-    { path: "/role/edit/:id", element: <CreateRole /> },
     { path: "/assignments", element: <Assignments /> },
     { path: "/assignments/create", element: <AddAssignment /> },
     { path: "/a/assignments/create", element: <AddAssignment /> },

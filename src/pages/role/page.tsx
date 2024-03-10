@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setBreadcrumps } from "../../store/breadcrumps/slice";
 import { Button } from "../../library";
@@ -9,10 +9,8 @@ import {
 	AddRounded,
 	CloudDownloadRounded,
 } from "@mui/icons-material";
-import { RootState } from "../../store";
-import { getAllRoleDefinitions } from "../../store/actions";
-import { useAccessRole } from "../../utils/helpers";
 import { GetRoleDefinitionColumns } from "../../utils/data-grid";
+import { ACCESS_ROLES } from "../../assets/data/roles";
 
 enum Tabs {
 	"ACTIVE" = 2,
@@ -26,10 +24,6 @@ const Roles = () => {
 
 	const navigate = useNavigate();
 
-	const roles = useSelector((state: RootState) => state.role.roles);
-
-	const instituteId = useAccessRole()
-
 	const columns = GetRoleDefinitionColumns()
 
 	useEffect(() => {
@@ -40,10 +34,6 @@ const Roles = () => {
 			})
 		);
 	}, [dispatch]);
-
-	useEffect(() => {
-		if (instituteId) dispatch(getAllRoleDefinitions({ instituteId, status: activeTab - 1 }));
-	}, [dispatch, activeTab, instituteId]);
 
 	return (
 		<div className="test__Wrapper mt-2">
@@ -89,7 +79,7 @@ const Roles = () => {
 					</div>
 					<div className="test__Grid mt-3">
 						<DataGrid
-							rows={roles}
+							rows={ACCESS_ROLES}
 							columns={columns}
 							initialState={{
 								pagination: {
@@ -101,7 +91,7 @@ const Roles = () => {
 							pageSizeOptions={[5]}
 							checkboxSelection
 							disableRowSelectionOnClick
-							getRowId={(row) => row._id}
+							getRowId={(row) => row.value}
 						/>
 					</div>
 				</div>

@@ -5,12 +5,13 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setBreadcrumps } from "../../store/breadcrumps/slice";
 import { RootState } from "../../store";
-import { createRoleAssignment, getAllInstitutes, getAllRoleDefinitions, getRoleAssignment, updateRoleAssignment } from "../../store/actions";
+import { getAllInstitutes, getRoleAssignment, getUserProfile, updateRoleAssignment } from "../../store/actions";
 import { useAccessRole } from "../../utils/helpers";
+import { ACCESS_ROLES } from "../../assets/data/roles";
 
 const AddAssignment = () => {
 
-	const [role, setRole] = useState("")
+	const [role, setRole] = useState(1)
 	const [institute, setInstitute] = useState("")
 	const [email, setEmail] = useState("")
 
@@ -22,8 +23,7 @@ const AddAssignment = () => {
 
 	const instituteId = useAccessRole()
 	const institutes = useSelector((state: RootState) => state.institute.institutes)
-	const roles = useSelector((state: RootState) => state.role.roles)
-	const assignment = useSelector((state: RootState) => state.role.assignment)
+	const assignment = useSelector((state: RootState) => state.profile.display)
 
 	useEffect(() => {
 		dispatch(
@@ -37,30 +37,26 @@ const AddAssignment = () => {
 	useEffect(() => {
 		if(instituteId) {
 			dispatch(getAllInstitutes({ instituteId }))
-			dispatch(getAllRoleDefinitions({ instituteId, status: 1 }));
 		}
 	} ,[instituteId, dispatch])
 
 	useEffect(() => {
 		if(id) {
-			dispatch(getRoleAssignment({ roleId: id, instituteId }))
+			dispatch(getUserProfile({ email: id }))
 		}
 	}, [dispatch, id, instituteId]);
 
 	useEffect(() => {
 		if(id) {
-			setRole(assignment.roleId!)
-			setInstitute(assignment.instituteId!)
-			setEmail(assignment.userId?.email!)
+			setRole(assignment.role!)
+			setInstitute(assignment.instituteId?._id!)
+			setEmail(assignment.email!)
 		}
 	}, [assignment, id])
 
 	const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		if(id)
-			dispatch(updateRoleAssignment({ instituteId, roleId: role, navigate, institute, assignmentId: id }))
-		else
-			dispatch(createRoleAssignment({ instituteId, roleId: role, email, navigate, institute }))
+		dispatch(updateRoleAssignment({ instituteId, roleId: role, navigate, institute, email }))
 	};
 
 	return (
@@ -83,9 +79,9 @@ const AddAssignment = () => {
 						</div>
 						<div className="col-lg-6 col-md-6 col-12">
 							<Select
-								name="alias"
-								value="_id"
-								options={roles}
+								name="name"
+								value="value"
+								options={ACCESS_ROLES}
 								selected={role}
 								onChange={c=>setRole(c)}
 								label="Select Role"

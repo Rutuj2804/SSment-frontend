@@ -1,12 +1,10 @@
 import { BaseInterface } from "..";
+import { UserInterface } from "../../utils/types";
 import { RoleAssignment, RoleDefinition } from "../../utils/types/role";
 
 export interface RoleState {
-    roles: RoleDefinition[],
-    assignments: RoleAssignment[],
-    role: RoleDefinition;
-    roleOnMount: RoleDefinition;
-    assignment: RoleAssignment;
+    assignments: UserInterface[],
+    assignment: UserInterface;
 }
 
 export interface CreateRoleDefinitionRequest extends BaseInterface {
@@ -34,16 +32,10 @@ export interface DeleteRoleDefinitionRequest extends BaseInterface {
     roleId: string;
 }
 
-export interface CreateRoleAssignmentRequest extends BaseInterface {
-    roleId: string;
+export interface UpdateRoleAssignmentRequest extends BaseInterface {
+    roleId: number;
     institute: string;
     email: string
-}
-
-export interface UpdateRoleAssignmentRequest extends BaseInterface {
-    roleId: string;
-    institute: string;
-    assignmentId: string
 }
 
 export interface DeleteRoleAssignmentRequest extends BaseInterface {

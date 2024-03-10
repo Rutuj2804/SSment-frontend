@@ -11,4 +11,5 @@ export interface UserInterface extends BaseInterface {
     dob?: any;
     country?: string;
     state?: string;
+    role?: number;
 }

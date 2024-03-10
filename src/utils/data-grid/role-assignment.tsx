@@ -1,24 +1,19 @@
 import { GridColDef } from "@mui/x-data-grid";
-import { encrypt, useAccessRole, username } from "../helpers";
+import { encrypt, username } from "../helpers";
 import moment from "moment";
 import { NavLink } from "react-router-dom";
 import { IconButton } from "@mui/material";
-import { DeleteRounded, EditRounded } from "@mui/icons-material";
+import { EditRounded } from "@mui/icons-material";
 import { useDispatch } from "react-redux";
-import { deleteRoleAssignment } from "../../store/actions";
 
 export const GetRoleAssignmentColumns = () => {
-
-    const dispatch = useDispatch<any>()
-
-    const instituteId = useAccessRole()
 
 	const columns: GridColDef[] = [
 		{
 			field: "testName",
 			headerName: "Name",
 			flex: 1,
-			renderCell: (params) => username(params.row.userId),
+			renderCell: (params) => username(params.row),
 		},
 		{
 			field: "status",
@@ -42,7 +37,7 @@ export const GetRoleAssignmentColumns = () => {
 			width: 110,
 			align: "center",
 			headerAlign: "center",
-			renderCell: (params) => <div>{params.row.roleId.name}</div>,
+			renderCell: (params) => <div>{params.row.role}</div>,
 		},
 		{
 			field: "date",
@@ -64,14 +59,11 @@ export const GetRoleAssignmentColumns = () => {
 			align: "center",
 			renderCell: (params) => (
 				<div className="d-flex gap-2">
-					<NavLink to={`/assignment/edit/${encrypt(params.row._id)}`}>
+					<NavLink to={`/assignment/edit/${params.row.email}`}>
 						<IconButton size="small">
 							<EditRounded />
 						</IconButton>
 					</NavLink>
-					<IconButton size="small" onClick={() => dispatch(deleteRoleAssignment({ assignmentId: params.row._id, instituteId }))}>
-						<DeleteRounded />
-					</IconButton>
 				</div>
 			),
 		},
