@@ -3,13 +3,18 @@ import { IconButton } from "@mui/material";
 import { GridColDef } from "@mui/x-data-grid";
 import moment from "moment";
 import { NavLink } from "react-router-dom";
-import { encrypt } from "../helpers";
-import { useDispatch } from "react-redux";
+import { encrypt, getTermRoute } from "../helpers";
+import { useDispatch, useSelector } from "react-redux";
 import { deleteTerms } from "../../store/actions";
+import { RootState } from "../../store";
 
 export const GetTermColumns = () => {
 
 	const dispatch = useDispatch<any>()
+
+	const userRole = useSelector((state: RootState) => state.profile.user.role)
+
+	const role = getTermRoute(userRole!)
 
 	const columns: GridColDef[] = [
 		{
@@ -64,12 +69,12 @@ export const GetTermColumns = () => {
 			align: "center",
 			renderCell: (params) => (
 				<div className="d-flex gap-2">
-					<NavLink to={`/terms/edit/${encrypt(params.row._id)}`}>
+					{role.hasVisibility ? <NavLink to={`${role.link}/edit/${encrypt(params.row._id)}`}>
 						<IconButton size="small">
 							<EditRounded />
 						</IconButton>
-					</NavLink>
-					<IconButton size="small" onClick={() => dispatch(deleteTerms({ termId: params.row._id }))}>
+					</NavLink> : null}
+					<IconButton size="small" disabled={!role.hasVisibility} onClick={() => dispatch(deleteTerms({ termId: params.row._id }))}>
 						<DeleteRounded />
 					</IconButton>
 				</div>

@@ -5,7 +5,7 @@ import { AdminBatch, Batch, BatchDetail, CreateBatch, EditBatch, RenewBatch } fr
 import { Result } from "../pages/result";
 import { AddQuestion, CreateTest, CreateTestInstitute, Section, Test, TestDetail } from "../pages/test";
 import { ContactUs, ForgotPassword, Login } from "../pages/authentication";
-import { Assignments, Roles, AddAssignment } from "../pages/role";
+import { Assignments, Roles, AddAssignment, AddAssignmentInstitute } from "../pages/role";
 import { CreateTerm, CreateTermInstitute, Term } from "../pages/term";
 import { EditProfile, Logout, Profile, ResetPassword } from "../pages/profile";
 import { AttemptTest, EndTest, StartTest, TermsAndCondition } from "../pages/attempt";
@@ -32,14 +32,14 @@ export const regularRoutes = [
     { path: "/terms", element: <Term /> },
     { path: "/terms/create", element: <CreateTermInstitute /> },
     { path: "/a/terms/create", element: <CreateTerm /> },
-    { path: "/terms/edit/:id", element: <CreateTerm /> },
-    { path: "/a/terms/edit/:id", element: <CreateTermInstitute /> },
+    { path: "/terms/edit/:id", element: <CreateTermInstitute /> },
+    { path: "/a/terms/edit/:id", element: <CreateTerm /> },
 
     { path: "/roles", element: <Roles /> },
     { path: "/assignments", element: <Assignments /> },
-    { path: "/assignments/create", element: <AddAssignment /> },
+    { path: "/assignments/create", element: <AddAssignmentInstitute /> },
     { path: "/a/assignments/create", element: <AddAssignment /> },
-    { path: "/assignment/edit/:id", element: <AddAssignment /> },
+    { path: "/assignment/edit/:id", element: <AddAssignmentInstitute /> },
     { path: "/a/assignment/edit/:id", element: <AddAssignment /> },
 
     { path: "/tests", element: <Test /> },

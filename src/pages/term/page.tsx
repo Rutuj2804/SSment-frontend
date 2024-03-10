@@ -9,6 +9,7 @@ import { AddRounded, CloudDownloadRounded } from "@mui/icons-material";
 import { RootState } from "../../store";
 import { getAllTerms } from "../../store/actions";
 import { GetTermColumns } from "../../utils/data-grid";
+import { getTermRoute } from "../../utils/helpers";
 
 enum Tabs {
 	"ACTIVE" = 2,
@@ -24,7 +25,11 @@ const Term = () => {
 
 	const terms = useSelector((state: RootState) => state.term.terms)
 
+	const userRole = useSelector((state: RootState) => state.profile.user.role)
+
 	const columns = GetTermColumns()
+
+	const role = getTermRoute(userRole!)
 
 	useEffect(() => {
 		dispatch(
@@ -70,9 +75,9 @@ const Term = () => {
 							</Button>
 						</div>
 						<div className="right">
-							<Button startIcon={<AddRounded />} onClick={() => navigate("/terms/create")}>
+							{role.hasVisibility ? <Button startIcon={<AddRounded />} onClick={() => navigate(role.link + '/create')}>
 								Add
-							</Button>
+							</Button> : null}
 							<Button startIcon={<CloudDownloadRounded />}>Download</Button>
 						</div>
 					</div>

@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import GetTestColumns from "../../utils/data-grid/test";
 import { RootState } from "../../store";
 import { getAllTests } from "../../store/actions";
+import { getTestRoute } from "../../utils/helpers";
 
 enum Tabs {
 	"COMPLETED" = 1,
@@ -24,6 +25,10 @@ const Test = () => {
 	const navigate = useNavigate()
 
 	const tests = useSelector((state: RootState) => state.test.tests)
+
+	const userRole = useSelector((state: RootState) => state.profile.user.role)
+
+	const role = getTestRoute(userRole!)
 
 	useEffect(() => {
 		dispatch(
@@ -81,7 +86,7 @@ const Test = () => {
 							</Button>
 						</div>
 						<div className="right">
-							<Button startIcon={<AddRounded />} onClick={()=>navigate('/tests/create')}>Add</Button>
+							{role.hasVisibility ? <Button startIcon={<AddRounded />} onClick={()=>navigate(role.link + '/create')}>Add</Button> : null}
 							<Button startIcon={<CloudDownloadRounded />} >Download</Button>
 						</div>
 					</div>

@@ -9,6 +9,8 @@ import { setBreadcrumps } from "../../store/breadcrumps/slice";
 import { RootState } from "../../store";
 import { getAllBatches } from "../../store/actions";
 import GetBatchColumns from "../../utils/data-grid/batch";
+import { getBatchRoute } from "../../utils/helpers";
+import { useUnAuthorizedRoute, ModuleType } from "../../utils/hooks";
 
 enum Tabs {
 	"ONGOING" = 2,
@@ -31,7 +33,11 @@ const AdminBatch = () => {
 
 	const batches = useSelector((state: RootState) => state.batch.batches)
 
+	const role = useSelector((state: RootState) => state.profile.user.role)
+
 	const columns = GetBatchColumns()
+
+	const routes = getBatchRoute(role!)
 
 	useEffect(() => {
 		dispatch(
@@ -41,6 +47,8 @@ const AdminBatch = () => {
 			})
 		);
 	}, [dispatch]);
+
+	useUnAuthorizedRoute(role!, ModuleType.Batch, navigate)
 
 	useEffect(() => {
 		dispatch(getAllBatches({ status: activeTab - 1 }))
@@ -85,7 +93,9 @@ const AdminBatch = () => {
 							</Button>
 						</div>
 						<div className="right">
-							<Button startIcon={<AddRounded />} onClick={()=>navigate('/batches/create')}>Add</Button>
+							{
+								routes?.hasVisibility ? <Button startIcon={<AddRounded />} onClick={()=>navigate(routes.link + '/create')}>Add</Button> : null
+							}
 							<Button startIcon={<CloudDownloadRounded />}>Download</Button>
 						</div>
 					</div>

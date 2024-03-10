@@ -5,13 +5,11 @@ import { setBreadcrumps } from "../../store/breadcrumps/slice";
 import { Paper } from "../../components/paper";
 import { Button } from "../../library";
 import { DataGrid } from "@mui/x-data-grid";
-import {
-	AddRounded,
-	CloudDownloadRounded,
-} from "@mui/icons-material";
+import { AddRounded, CloudDownloadRounded } from "@mui/icons-material";
 import { getAllRoleAssignments } from "../../store/actions";
 import { RootState } from "../../store";
 import { GetRoleAssignmentColumns } from "../../utils/data-grid";
+import { getRoleAssignmentRoute } from "../../utils/helpers";
 
 enum Tabs {
 	"ACTIVE" = 2,
@@ -29,7 +27,11 @@ const Assignments = () => {
 		(state: RootState) => state.role.assignments
 	);
 
-	const columns = GetRoleAssignmentColumns()
+	const columns = GetRoleAssignmentColumns();
+
+	const userRole = useSelector((state: RootState) => state.profile.user.role);
+
+	const role = getRoleAssignmentRoute(userRole!);
 
 	useEffect(() => {
 		dispatch(
@@ -75,12 +77,16 @@ const Assignments = () => {
 							</Button>
 						</div>
 						<div className="right">
-							<Button
-								startIcon={<AddRounded />}
-								onClick={() => navigate("/assignments/create")}
-							>
-								Add
-							</Button>
+							{role.hasVisibility ? (
+								<Button
+									startIcon={<AddRounded />}
+									onClick={() =>
+										navigate(role.link + "/create")
+									}
+								>
+									Add
+								</Button>
+							) : null}
 							<Button startIcon={<CloudDownloadRounded />}>
 								Download
 							</Button>

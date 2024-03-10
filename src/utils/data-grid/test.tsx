@@ -6,10 +6,11 @@ import { IconButton } from "@mui/material";
 import { GridColDef } from "@mui/x-data-grid";
 import moment from "moment";
 import { NavLink } from "react-router-dom";
-import { encrypt } from "../helpers";
-import { useDispatch } from "react-redux";
+import { encrypt, getTestRoute } from "../helpers";
+import { useDispatch, useSelector } from "react-redux";
 import { setDeleteConfirmation } from "../../store/layout/slice";
 import { deleteTest } from "../../store/actions";
+import { RootState } from "../../store";
 
 export enum TestStatus {
 	"DRAFT" = 1,
@@ -29,6 +30,10 @@ const getStatus = (i: number) => {
 
 const GetTestColumns = () => {
 	const dispatch = useDispatch<any>();
+
+	const usrRole = useSelector((state: RootState) => state.profile.user.role)
+
+	const role = getTestRoute(usrRole!)
 
 	const columns: GridColDef[] = [
 		{
@@ -83,13 +88,14 @@ const GetTestColumns = () => {
 			align: "center",
 			renderCell: (params) => (
 				<div className="d-flex gap-2">
-					<NavLink to={`/test/${encrypt(params.row._id)}`}>
+					{role.hasVisibility ? <NavLink to={`/test/${encrypt(params.row._id)}`}>
 						<IconButton size="small">
 							<VisibilityRounded />
 						</IconButton>
-					</NavLink>
+					</NavLink> : null}
 					<IconButton
 						size="small"
+						disabled={!role.hasVisibility}
 						onClick={() =>
 							dispatch(
 								setDeleteConfirmation({
