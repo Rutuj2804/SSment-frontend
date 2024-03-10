@@ -3,15 +3,13 @@ import { IconButton } from "@mui/material";
 import { GridColDef } from "@mui/x-data-grid";
 import moment from "moment";
 import { NavLink } from "react-router-dom";
-import { encrypt, useAccessRole } from "../helpers";
+import { encrypt, } from "../helpers";
 import { useDispatch } from "react-redux";
 import { deleteBatch } from "../../store/actions";
 import { setDeleteConfirmation } from "../../store/layout/slice";
 
 const GetBatchColumns = () => {
 	const dispatch = useDispatch<any>();
-
-	const instituteId = useAccessRole();
 
 	const columns: GridColDef[] = [
 		{
@@ -76,7 +74,6 @@ const GetBatchColumns = () => {
 									callback: () => dispatch(
 										deleteBatch({
 											batchId: params.row._id,
-											instituteId,
 										})
 									),
 									text: "This action is irreversible. Are you sure you want to delete this batch?",

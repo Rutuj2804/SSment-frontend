@@ -3,15 +3,13 @@ import { IconButton } from "@mui/material";
 import { GridColDef } from "@mui/x-data-grid";
 import moment from "moment";
 import { NavLink } from "react-router-dom";
-import { encrypt, useAccessRole } from "../helpers";
+import { encrypt } from "../helpers";
 import { useDispatch } from "react-redux";
 import { deleteTerms } from "../../store/actions";
 
 export const GetTermColumns = () => {
 
 	const dispatch = useDispatch<any>()
-
-	const instituteId = useAccessRole()
 
 	const columns: GridColDef[] = [
 		{
@@ -71,7 +69,7 @@ export const GetTermColumns = () => {
 							<EditRounded />
 						</IconButton>
 					</NavLink>
-					<IconButton size="small" onClick={() => dispatch(deleteTerms({ termId: params.row._id, instituteId }))}>
+					<IconButton size="small" onClick={() => dispatch(deleteTerms({ termId: params.row._id }))}>
 						<DeleteRounded />
 					</IconButton>
 				</div>

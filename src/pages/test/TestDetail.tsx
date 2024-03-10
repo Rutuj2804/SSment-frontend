@@ -8,7 +8,7 @@ import { Button, Select, OutlineButton } from "../../library";
 import { BatchRibbon, StudentRibbon } from "../../components/ribbon";
 import { RootState } from "../../store";
 import { changeStatus, getStudentsOfBatch, getTestDetails } from "../../store/actions";
-import { encrypt, useAccessRole } from "../../utils/helpers";
+import { encrypt } from "../../utils/helpers";
 import { setConfirmation } from "../../store/layout/slice";
 
 interface Options {
@@ -37,8 +37,6 @@ const TestDetail = () => {
 
 	const dispatch = useDispatch<any>();
 
-	const instituteId = useAccessRole();
-
 	const test = useSelector((state: RootState) => state.test.test);
 
 	const batch = useSelector((state: RootState) => state.batch);
@@ -55,10 +53,10 @@ const TestDetail = () => {
 	}, [dispatch]);
 
 	useEffect(() => {
-		if (id && instituteId) {
-			dispatch(getTestDetails({ testId: id, instituteId }));
+		if (id) {
+			dispatch(getTestDetails({ testId: id }));
 		}
-	}, [id, instituteId, dispatch]);
+	}, [id, dispatch]);
 
 	useEffect(() => {
 		if (test._id) {
@@ -71,21 +69,21 @@ const TestDetail = () => {
 	useEffect(() => {
 		if (test.batchId)
 			dispatch(
-				getStudentsOfBatch({ instituteId, batchId: test.batchId })
+				getStudentsOfBatch({ batchId: test.batchId })
 			);
-	}, [test, dispatch, instituteId]);
+	}, [test, dispatch]);
 
 	const onStatusChange = (i: number) => {
 		if(i === 2) {
 			dispatch(setConfirmation({
 				isActive: true,
-				callback: () => dispatch(changeStatus({ status: i, instituteId, testId: id!, navigate })),
+				callback: () => dispatch(changeStatus({ status: i, testId: id!, navigate })),
 				text: "This action is irreversible. Are you sure you want to publish this test?"
 			}))
 		} else if(i === 3) {
 			dispatch(setConfirmation({
 				isActive: true,
-				callback: () => dispatch(changeStatus({ status: i, instituteId, testId: id!, navigate })),
+				callback: () => dispatch(changeStatus({ status: i, testId: id!, navigate })),
 				text: "This action is irreversible. Are you sure you want to cancel this test?"
 			}))
 		}

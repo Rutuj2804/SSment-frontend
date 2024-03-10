@@ -3,7 +3,6 @@ import { Button, Checkbox, Input, OutlineButton, Select } from "../../library";
 import { ChevronLeftRounded, DeleteRounded, DoneRounded } from "@mui/icons-material";
 import { QuestionType } from "../popup";
 import { useDispatch, useSelector } from "react-redux";
-import { useAccessRole } from "../../utils/helpers";
 import { RootState } from "../../store";
 import { setDeleteConfirmation, setQuestion } from "../../store/layout/slice";
 import { createQuestion, deleteQuestion, updateQuestion } from "../../store/actions";
@@ -29,8 +28,6 @@ const TrueFalseType = ({ onChange }: TrueFalseTypeCProps) => {
 	const [isEditMode, setIsEditMode] = useState(false);
 
 	const dispatch = useDispatch<any>();
-
-	const instituteId = useAccessRole();
 
 	const question = useSelector((state: RootState) => state.layout.question);
 
@@ -70,7 +67,6 @@ const TrueFalseType = ({ onChange }: TrueFalseTypeCProps) => {
 		if(isEditMode) {
 			dispatch(
 				updateQuestion({
-					instituteId,
 					...formData,
 					points: parseInt(formData.points),
 					questionType,
@@ -84,7 +80,6 @@ const TrueFalseType = ({ onChange }: TrueFalseTypeCProps) => {
 		} else {
 			dispatch(
 				createQuestion({
-					instituteId,
 					...formData,
 					points: parseInt(formData.points),
 					questionType,
@@ -107,7 +102,6 @@ const TrueFalseType = ({ onChange }: TrueFalseTypeCProps) => {
 					dispatch(
 						deleteQuestion({
 							questionId: question.questionId?._id!,
-							instituteId,
 						})
 					),
 				text: "This action is irreversible. Are you sure you want to delete this question?",

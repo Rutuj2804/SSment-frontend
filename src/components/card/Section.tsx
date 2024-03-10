@@ -6,7 +6,6 @@ import moment from "moment";
 import { DeleteRounded, EditRounded } from "@mui/icons-material";
 import { Button, OutlineButton } from "../../library";
 import { deleteSection } from "../../store/actions";
-import { useAccessRole } from "../../utils/helpers";
 
 interface SectionCProps {
 	section: SectionInterface;
@@ -18,12 +17,10 @@ interface SectionCProps {
 const Section = ({ section, testId, sectionId, onClick }: SectionCProps) => {
 	const dispatch = useDispatch<any>();
 
-    const instituteId = useAccessRole();
-
 	const onDelete = () => {
 		dispatch(setDeleteConfirmation({
 			isActive: true,
-			callback: () => dispatch(deleteSection({ sectionId: section._id!, instituteId })),
+			callback: () => dispatch(deleteSection({ sectionId: section._id! })),
 			text: "This action is irreversible. Are you sure you want to delete this section?"
 		}))
 	}

@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { GoCheckCircleFill, GoCircle } from "react-icons/go";
 import { useDispatch, useSelector } from "react-redux";
-import { useAccessRole } from "../../utils/helpers";
 import { getAllBatches } from "../../store/actions";
 import { RootState } from "../../store";
 import moment from "moment";
@@ -14,13 +13,11 @@ interface BatchesCProps {
 const Batches = ({ setBatches, batches: batchesSelected }: BatchesCProps) => {
 	const dispatch = useDispatch<any>();
 
-	const instituteId = useAccessRole();
-
 	const batches = useSelector((state: RootState) => state.batch.batches);
 
 	useEffect(() => {
-		if (instituteId) dispatch(getAllBatches({ instituteId, status: 1 }));
-	}, [dispatch, instituteId]);
+		dispatch(getAllBatches({ status: 1 }));
+	}, [dispatch]);
 
 	const onClick = (id: string) => {
 		if (batchesSelected.includes(id))

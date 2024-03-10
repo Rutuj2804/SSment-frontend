@@ -7,6 +7,7 @@ import { ResetPasswordRequest, UpdateProfileRequest } from "./types";
 import axios from "../axios"
 import { userToken } from "../../utils/helpers";
 import { updateAuthenticationState } from "../authentication/slice";
+import { getMyRole } from "../actions";
 
 export const getProfile = createAsyncThunk( "getProfile/Profile", async (_, thunkAPI) => {
         thunkAPI.dispatch(updateLoading(1));
@@ -23,6 +24,8 @@ export const getProfile = createAsyncThunk( "getProfile/Profile", async (_, thun
             thunkAPI.dispatch(updateLoading(-1));
 
             thunkAPI.dispatch(updateAuthenticationState(true))
+
+            thunkAPI.dispatch(getMyRole({}))
 
             return res.data;
         } catch (err) {

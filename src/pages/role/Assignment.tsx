@@ -11,7 +11,6 @@ import {
 } from "@mui/icons-material";
 import { getAllRoleAssignments } from "../../store/actions";
 import { RootState } from "../../store";
-import { useAccessRole } from "../../utils/helpers";
 import { GetRoleAssignmentColumns } from "../../utils/data-grid";
 
 enum Tabs {
@@ -30,8 +29,6 @@ const Assignments = () => {
 		(state: RootState) => state.role.assignments
 	);
 
-	const instituteId = useAccessRole()
-
 	const columns = GetRoleAssignmentColumns()
 
 	useEffect(() => {
@@ -44,9 +41,8 @@ const Assignments = () => {
 	}, [dispatch]);
 
 	useEffect(() => {
-		if (instituteId)
-			dispatch(getAllRoleAssignments({ instituteId, status: activeTab - 1 }));
-	}, [dispatch, activeTab, instituteId]);
+		dispatch(getAllRoleAssignments({ status: activeTab - 1 }));
+	}, [dispatch, activeTab]);
 
 	return (
 		<div className="test__Wrapper mt-2">

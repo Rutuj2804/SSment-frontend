@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { Input, Select, Textarea } from "../../library";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
-import { useAccessRole } from "../../utils/helpers";
 import { getAllInstitutes, getTermsOfInstitute } from "../../store/actions";
 
 interface BasicInformationProps {
@@ -20,21 +19,18 @@ const BasicInformation = ({ title, description, setTitle, setDescription, instit
 
 	const dispatch = useDispatch<any>();
 
-	const instituteId = useAccessRole()
-
 	const institutes = useSelector((state: RootState) => state.institute.institutes)
 
 	const terms = useSelector((state: RootState) => state.term.terms)
 
 	useEffect(() => {
-		if(instituteId)
-			dispatch(getAllInstitutes({ instituteId }))
-	}, [instituteId, dispatch])
+			dispatch(getAllInstitutes({}))
+	}, [dispatch])
 
 	useEffect(() => {
 		if(institute)
-			dispatch(getTermsOfInstitute({ instituteId, institute }))
-	}, [institute, instituteId, dispatch])
+			dispatch(getTermsOfInstitute({ institute }))
+	}, [institute, dispatch])
 
 	return (
 		<div>

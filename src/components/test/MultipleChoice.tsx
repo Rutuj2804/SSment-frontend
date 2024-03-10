@@ -10,7 +10,6 @@ import { QuestionType } from "../popup";
 import { IconButton } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
-import { useAccessRole } from "../../utils/helpers";
 import {
 	createQuestion,
 	deleteQuestion,
@@ -52,8 +51,6 @@ const MultipleChoice = ({ onChange }: MultipleChoiceCProps) => {
 	const question = useSelector((state: RootState) => state.layout.question);
 
 	const dispatch = useDispatch<any>();
-
-	const instituteId = useAccessRole();
 
 	useEffect(() => {
 		if (question.questionId?._id) setIsEditMode(true);
@@ -110,7 +107,6 @@ const MultipleChoice = ({ onChange }: MultipleChoiceCProps) => {
 					title: formData.title,
 					testId: question.testId,
 					sectionId: question.sectionId,
-					instituteId,
 					questionId: question.questionId?._id!,
 					options: options,
 					description: formData.description,
@@ -125,7 +121,6 @@ const MultipleChoice = ({ onChange }: MultipleChoiceCProps) => {
 					title: formData.title,
 					testId: question.testId,
 					sectionId: question.sectionId,
-					instituteId,
 					options: options,
 					description: formData.description,
 				})
@@ -143,7 +138,6 @@ const MultipleChoice = ({ onChange }: MultipleChoiceCProps) => {
 					dispatch(
 						deleteQuestion({
 							questionId: question.questionId?._id!,
-							instituteId,
 						})
 					),
 				text: "This action is irreversible. Are you sure you want to delete this question?",

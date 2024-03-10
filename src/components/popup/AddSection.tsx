@@ -7,7 +7,6 @@ import { AddRounded, CloseRounded } from "@mui/icons-material";
 import { Button, Input } from "../../library";
 import { createSection, updateSection } from "../../store/actions";
 import { RootState } from "../../store";
-import { useAccessRole } from "../../utils/helpers";
 import { SectionInterface } from "../../utils/types";
 
 const AddSection = () => {
@@ -23,8 +22,6 @@ const AddSection = () => {
 
     const sections = useSelector((state: RootState) => state.test.sections)
 
-	const instituteId = useAccessRole();
-
 	const close = () =>
 		dispatch(setAddSection({ isActive: false, testId: "" }));
 
@@ -32,8 +29,8 @@ const AddSection = () => {
 
 	const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-        if(section.sectionId)  dispatch(updateSection({ name, testId: section.testId, instituteId, sectionId: section.sectionId }));
-		else dispatch(createSection({ name, testId: section.testId, instituteId }));
+        if(section.sectionId)  dispatch(updateSection({ name, testId: section.testId, sectionId: section.sectionId }));
+		else dispatch(createSection({ name, testId: section.testId }));
 		close();
 	};
 

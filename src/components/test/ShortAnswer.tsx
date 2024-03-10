@@ -9,7 +9,6 @@ import { QuestionType } from "../popup";
 import { useDispatch, useSelector } from "react-redux";
 import { createQuestion, deleteQuestion, updateQuestion } from "../../store/actions";
 import { RootState } from "../../store";
-import { useAccessRole } from "../../utils/helpers";
 import { setDeleteConfirmation, setQuestion } from "../../store/layout/slice";
 
 interface ShortAnswerCProps {
@@ -34,8 +33,6 @@ const ShortAnswer = ({ onChange }: ShortAnswerCProps) => {
 
 	const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) =>
 		setFormData((f) => ({ ...f, [e.target.name]: e.target.value }));
-
-	const instituteId = useAccessRole();
 
 	useEffect(() => {
 		if (question.questionId?._id) setIsEditMode(true);
@@ -72,7 +69,6 @@ const ShortAnswer = ({ onChange }: ShortAnswerCProps) => {
 						title: formData.title,
 						testId: question.testId,
 						sectionId: question.sectionId,
-						instituteId,
 						questionId: question.questionId?._id!,
 					})
 				);
@@ -85,7 +81,6 @@ const ShortAnswer = ({ onChange }: ShortAnswerCProps) => {
 						title: formData.title,
 						testId: question.testId,
 						sectionId: question.sectionId,
-						instituteId,
 					})
 				);
 			}
@@ -102,7 +97,6 @@ const ShortAnswer = ({ onChange }: ShortAnswerCProps) => {
 					dispatch(
 						deleteQuestion({
 							questionId: question.questionId?._id!,
-							instituteId,
 						})
 					),
 				text: "This action is irreversible. Are you sure you want to delete this question?",

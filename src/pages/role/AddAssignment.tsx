@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { setBreadcrumps } from "../../store/breadcrumps/slice";
 import { RootState } from "../../store";
 import { getAllInstitutes, getUserProfile, updateRoleAssignment } from "../../store/actions";
-import { useAccessRole } from "../../utils/helpers";
 import { ACCESS_ROLES } from "../../assets/data/roles";
 
 const AddAssignment = () => {
@@ -21,7 +20,6 @@ const AddAssignment = () => {
 
 	const { id } = useParams()
 
-	const instituteId = useAccessRole()
 	const institutes = useSelector((state: RootState) => state.institute.institutes)
 	const assignment = useSelector((state: RootState) => state.profile.display)
 
@@ -35,16 +33,14 @@ const AddAssignment = () => {
 	}, [dispatch]);
 
 	useEffect(() => {
-		if(instituteId) {
-			dispatch(getAllInstitutes({ instituteId }))
-		}
-	} ,[instituteId, dispatch])
+			dispatch(getAllInstitutes({}))
+	} ,[dispatch])
 
 	useEffect(() => {
 		if(id) {
 			dispatch(getUserProfile({ email: id }))
 		}
-	}, [dispatch, id, instituteId]);
+	}, [dispatch, id]);
 
 	useEffect(() => {
 		if(id) {
@@ -56,7 +52,7 @@ const AddAssignment = () => {
 
 	const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		dispatch(updateRoleAssignment({ instituteId, roleId: role, navigate, institute, email }))
+		dispatch(updateRoleAssignment({ roleId: role, navigate, institute, email }))
 	};
 
 	return (

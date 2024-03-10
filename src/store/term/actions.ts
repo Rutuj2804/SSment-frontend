@@ -265,7 +265,7 @@ export const deleteTerms = createAsyncThunk( "deleteTerms/Term", async (data: Ge
 
             thunkAPI.dispatch(updateLoading(-1));
 
-            thunkAPI.dispatch(getAllTerms({ status: 1, instituteId: data.instituteId }))
+            thunkAPI.dispatch(getAllTerms({ status: 1 }))
 
             return res.data.data;
         } catch (err) {

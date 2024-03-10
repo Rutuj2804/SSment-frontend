@@ -9,7 +9,6 @@ import {
 } from "../../components/term";
 import { Stepper } from "../../components/stepper";
 import { createTerm, getTerms, updateTerm } from "../../store/actions";
-import { useAccessRole } from "../../utils/helpers";
 import { RootState } from "../../store";
 
 const steps = ["Basic Information", "Confirmation"];
@@ -22,7 +21,7 @@ const CreateTermInstitute = () => {
 
 	const { id } = useParams()
 
-	const instituteId = useAccessRole()
+	const instituteId = useSelector((state: RootState) => state.profile.user.instituteId?._id)
 
 	const fetchedTerm = useSelector((state: RootState) => state.term.term)
 
@@ -39,8 +38,8 @@ const CreateTermInstitute = () => {
 
 	useEffect(() => {
 		if(id)
-			dispatch(getTerms({ termId: id, instituteId }))
-	}, [id, dispatch, instituteId])
+			dispatch(getTerms({ termId: id }))
+	}, [id, dispatch])
 
 	useEffect(() => {
 		if(fetchedTerm._id) {
@@ -52,9 +51,9 @@ const CreateTermInstitute = () => {
 	const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		if(id)
-			dispatch(updateTerm({ navigate, instituteId, name: term, institute, termId: id }))
+			dispatch(updateTerm({ navigate, name: term, institute, termId: id }))
 		else
-			dispatch(createTerm({ navigate, instituteId, name: term, institute: instituteId!  }))
+			dispatch(createTerm({ navigate, name: term, institute: instituteId!  }))
 	};
 
 	const controller = () => {

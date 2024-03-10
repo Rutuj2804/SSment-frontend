@@ -14,7 +14,6 @@ import {
 	TermsAndCondition,
 } from "../../components/test";
 import { createTest, getTestDetails, updateTest } from "../../store/actions";
-import { useAccessRole } from "../../utils/helpers";
 import moment from "moment";
 import { RootState } from "../../store";
 
@@ -113,8 +112,6 @@ const CreateTest = () => {
 
 	const navigate = useNavigate();
 
-	const instituteId = useAccessRole();
-
 	const termId = useSelector((state: RootState) => state.term.current)
 
 	const test = useSelector((state: RootState) => state.test.test)
@@ -129,9 +126,8 @@ const CreateTest = () => {
 	}, [dispatch]);
 
 	useEffect(() => {
-		console.log(id , instituteId)
-		if(id && instituteId) dispatch(getTestDetails({ testId: id, instituteId }))
-	}, [id, dispatch, instituteId])
+		if(id) dispatch(getTestDetails({ testId: id }))
+	}, [id, dispatch])
 
 	useEffect(() => {
 		if(test._id && id) {
@@ -170,7 +166,6 @@ const CreateTest = () => {
 					testId: id,
 					navigate,
 					...formData,
-					instituteId,
 					testStyle,
 					testImage: testImage!,
 					batchId: batches,
@@ -185,7 +180,6 @@ const CreateTest = () => {
 				createTest({
 					navigate,
 					...formData,
-					instituteId,
 					testStyle,
 					testImage: testImage!,
 					batchId: batches,

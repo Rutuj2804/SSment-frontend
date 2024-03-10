@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { AddRounded, ClearAllRounded, FormatListBulletedRounded } from "@mui/icons-material";
 import { useParams } from "react-router-dom";
 import { RootState } from "../../store";
-import { useAccessRole } from "../../utils/helpers";
 import { getQuestionsOfSection, getSectionsOfTest } from "../../store/actions";
 import { setBreadcrumps } from "../../store/breadcrumps/slice";
 import { QuestionCard, SectionCard } from "../../components/card";
@@ -23,8 +22,6 @@ const Section = () => {
 
     const questions = useSelector((state: RootState) => state.test.questions)
 
-    const instituteId = useAccessRole()
-
     useEffect(() => {
 		dispatch(
 			setBreadcrumps({
@@ -35,8 +32,8 @@ const Section = () => {
 	}, [dispatch]);
 
     useEffect(() => {
-        if(instituteId && id) dispatch(getSectionsOfTest({ testId: id!, instituteId }))
-    }, [dispatch, instituteId, id])
+        if(id) dispatch(getSectionsOfTest({ testId: id! }))
+    }, [dispatch, id])
 
     useEffect(() => {
         if(sections.length) setSectionSelected(sections[0]._id!)
@@ -44,8 +41,8 @@ const Section = () => {
     }, [sections])
 
     useEffect(() => {
-        if(sectionSelected) dispatch(getQuestionsOfSection({ instituteId, sectionId: sectionSelected }))
-    }, [sectionSelected, dispatch, instituteId])
+        if(sectionSelected) dispatch(getQuestionsOfSection({ sectionId: sectionSelected }))
+    }, [sectionSelected, dispatch])
 
 	return <div className="sectionPage__Wrapper">
         <div className="row">

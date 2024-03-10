@@ -14,7 +14,6 @@ import {
 	TermsAndCondition,
 } from "../../components/test";
 import { createTest } from "../../store/actions";
-import { useAccessRole } from "../../utils/helpers";
 import moment from "moment";
 
 const steps = [
@@ -110,8 +109,6 @@ const CreateTest = () => {
 
 	const navigate = useNavigate();
 
-	const instituteId = useAccessRole();
-
 	useEffect(() => {
 		dispatch(
 			setBreadcrumps({
@@ -127,7 +124,6 @@ const CreateTest = () => {
 			createTest({
 				navigate,
 				...formData,
-				instituteId,
 				testStyle,
 				testImage: testImage!,
 				batchId: batches,

@@ -19,7 +19,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { setDeleteConfirmation, setQuestion } from "../../store/layout/slice";
 import { createQuestion, deleteQuestion, updateQuestion } from "../../store/actions";
-import { useAccessRole } from "../../utils/helpers";
 
 type Option = {
 	title: string;
@@ -88,8 +87,6 @@ const CodingType = ({ onChange }: CodingTypeCProps) => {
 	const onOptionDelete = (i: number) =>
 		setOptions((o) => o.filter((_, x) => x !== i));
 
-	const instituteId = useAccessRole();
-
 	const close = () =>
 		dispatch(
 			setQuestion({
@@ -110,7 +107,6 @@ const CodingType = ({ onChange }: CodingTypeCProps) => {
 					title: formData.title,
 					testId: question.testId,
 					sectionId: question.sectionId,
-					instituteId,
 					questionId: question.questionId?._id!,
 					options: options,
 					description: formData.description,
@@ -125,7 +121,6 @@ const CodingType = ({ onChange }: CodingTypeCProps) => {
 					title: formData.title,
 					testId: question.testId,
 					sectionId: question.sectionId,
-					instituteId,
 					options: options,
 					description: formData.description,
 				})
@@ -143,7 +138,6 @@ const CodingType = ({ onChange }: CodingTypeCProps) => {
 					dispatch(
 						deleteQuestion({
 							questionId: question.questionId?._id!,
-							instituteId,
 						})
 					),
 				text: "This action is irreversible. Are you sure you want to delete this question?",

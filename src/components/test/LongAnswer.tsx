@@ -13,7 +13,6 @@ import {
 	updateQuestion,
 } from "../../store/actions";
 import { RootState } from "../../store";
-import { useAccessRole } from "../../utils/helpers";
 import { setDeleteConfirmation, setQuestion } from "../../store/layout/slice";
 import { QuestionInterface } from "../../utils/types";
 
@@ -39,8 +38,6 @@ const LongAnswer = ({ onChange }: LongAnswerCProps) => {
 
 	const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) =>
 		setFormData((f) => ({ ...f, [e.target.name]: e.target.value }));
-
-	const instituteId = useAccessRole();
 
 	useEffect(() => {
 		if (question.questionId?._id) setIsEditMode(true);
@@ -77,7 +74,6 @@ const LongAnswer = ({ onChange }: LongAnswerCProps) => {
 						title: formData.title,
 						testId: question.testId,
 						sectionId: question.sectionId,
-						instituteId,
 						questionId: question.questionId?._id!,
 					})
 				);
@@ -90,7 +86,6 @@ const LongAnswer = ({ onChange }: LongAnswerCProps) => {
 						title: formData.title,
 						testId: question.testId,
 						sectionId: question.sectionId,
-						instituteId,
 					})
 				);
 			}
@@ -107,7 +102,6 @@ const LongAnswer = ({ onChange }: LongAnswerCProps) => {
 					dispatch(
 						deleteQuestion({
 							questionId: question.questionId?._id!,
-							instituteId,
 						})
 					),
 				text: "This action is irreversible. Are you sure you want to delete this question?",

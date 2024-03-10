@@ -12,7 +12,6 @@ import { useDispatch } from "react-redux";
 import { setMessage } from "../../store/messages/slice";
 import { setBreadcrumps } from "../../store/breadcrumps/slice";
 import { createBatch } from "../../store/actions";
-import { useAccessRole } from "../../utils/helpers";
 import moment from "moment";
 
 const steps = [
@@ -43,8 +42,6 @@ const CreateBatch = () => {
 
 	const navigate = useNavigate();
 
-	const instituteId = useAccessRole()
-
 	const dispatch = useDispatch<any>();
 
 	const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -52,7 +49,7 @@ const CreateBatch = () => {
 
 		const expiryDate = moment().add(plan, "M").subtract(1, "day").toString()
 
-		dispatch(createBatch({ description, name: title, expiryDate, participants, termId: term, navigate, instituteId, navigation: "/a/batches" }))
+		dispatch(createBatch({ description, name: title, expiryDate, participants, termId: term, navigate, navigation: "/a/batches" }))
 	};
 
 	useEffect(() => {

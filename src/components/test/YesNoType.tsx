@@ -8,7 +8,6 @@ import {
 import { QuestionType } from "../popup";
 import { useDispatch, useSelector } from "react-redux";
 import { createQuestion, deleteQuestion, updateQuestion } from "../../store/actions";
-import { useAccessRole } from "../../utils/helpers";
 import { RootState } from "../../store";
 import { setDeleteConfirmation, setQuestion } from "../../store/layout/slice";
 
@@ -33,8 +32,6 @@ const YesNoType = ({ onChange }: YesNoTypeCProps) => {
 	const [isEditMode, setIsEditMode] = useState(false);
 
 	const dispatch = useDispatch<any>();
-
-	const instituteId = useAccessRole();
 
 	const question = useSelector((state: RootState) => state.layout.question);
 
@@ -74,7 +71,6 @@ const YesNoType = ({ onChange }: YesNoTypeCProps) => {
 		if(isEditMode) {
 			dispatch(
 				updateQuestion({
-					instituteId,
 					...formData,
 					points: parseInt(formData.points),
 					questionType,
@@ -88,7 +84,6 @@ const YesNoType = ({ onChange }: YesNoTypeCProps) => {
 		} else {
 			dispatch(
 				createQuestion({
-					instituteId,
 					...formData,
 					points: parseInt(formData.points),
 					questionType,
@@ -111,7 +106,6 @@ const YesNoType = ({ onChange }: YesNoTypeCProps) => {
 					dispatch(
 						deleteQuestion({
 							questionId: question.questionId?._id!,
-							instituteId,
 						})
 					),
 				text: "This action is irreversible. Are you sure you want to delete this question?",

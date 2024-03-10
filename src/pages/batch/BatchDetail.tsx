@@ -7,7 +7,7 @@ import { Button, OutlineButton } from "../../library";
 import { Tab, Tabs } from "@mui/material";
 import { StudentRibbon, TestRibbon } from "../../components/ribbon";
 import { deleteBatch, getBatchDetails } from "../../store/actions";
-import { encrypt, useAccessRole } from "../../utils/helpers";
+import { encrypt } from "../../utils/helpers";
 import { RootState } from "../../store";
 import { setDeleteConfirmation } from "../../store/layout/slice";
 
@@ -21,8 +21,6 @@ const BatchDetail = () => {
 	const dispatch = useDispatch<any>();
 
 	const { id } = useParams();
-
-	const instituteId = useAccessRole();
 
 	const batch = useSelector((state: RootState) => state.batch.batch);
 
@@ -38,8 +36,8 @@ const BatchDetail = () => {
 	}, [dispatch]);
 
 	useEffect(() => {
-		if (id && instituteId) dispatch(getBatchDetails({ batchId: id, instituteId }));
-	}, [id, instituteId, dispatch]);
+		if (id) dispatch(getBatchDetails({ batchId: id }));
+	}, [id, dispatch]);
 
 	return (
 		<Paper className="p-3">
@@ -66,7 +64,6 @@ const BatchDetail = () => {
 										callback: () => dispatch(
 											deleteBatch({
 												batchId: batch._id!,
-												instituteId,
 											})
 										),
 										text: "This action is irreversible. Are you sure you want to delete this batch?",

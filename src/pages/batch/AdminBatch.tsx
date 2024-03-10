@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setBreadcrumps } from "../../store/breadcrumps/slice";
 import { RootState } from "../../store";
-import { useAccessRole } from "../../utils/helpers";
 import { getAllBatches } from "../../store/actions";
 import GetBatchColumns from "../../utils/data-grid/batch";
 
@@ -32,8 +31,6 @@ const AdminBatch = () => {
 
 	const batches = useSelector((state: RootState) => state.batch.batches)
 
-	const instituteId = useAccessRole()
-
 	const columns = GetBatchColumns()
 
 	useEffect(() => {
@@ -46,9 +43,8 @@ const AdminBatch = () => {
 	}, [dispatch]);
 
 	useEffect(() => {
-		if(instituteId)
-			dispatch(getAllBatches({ instituteId, status: activeTab - 1 }))
-	}, [instituteId, dispatch, activeTab])
+		dispatch(getAllBatches({ status: activeTab - 1 }))
+	}, [dispatch, activeTab])
 
 	return (
 		<div className="test__Wrapper">

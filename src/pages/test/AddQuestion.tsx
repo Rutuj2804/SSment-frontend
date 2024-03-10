@@ -4,7 +4,6 @@ import { AddRounded } from "@mui/icons-material";
 import { setBreadcrumps } from "../../store/breadcrumps/slice";
 import { useDispatch, useSelector } from "react-redux";
 import { setQuestion } from "../../store/layout/slice";
-import { useAccessRole } from "../../utils/helpers";
 import { useParams } from "react-router-dom";
 import { getQuestionsOfTest } from "../../store/actions";
 import { RootState } from "../../store";
@@ -13,8 +12,6 @@ import { QuestionCard } from "../../components/card";
 const AddQuestion = () => {
 
 	const dispatch = useDispatch<any>();
-
-	const instituteId = useAccessRole();
 
 	const questions = useSelector((state: RootState) => state.test.questions)
 
@@ -30,8 +27,8 @@ const AddQuestion = () => {
 	}, [dispatch]);
 
 	useEffect(() => {
-		if(instituteId && id) dispatch(getQuestionsOfTest({ testId: id, instituteId }))
-	}, [id, instituteId, dispatch])
+		if(id) dispatch(getQuestionsOfTest({ testId: id }))
+	}, [id, dispatch])
 
 	return (
 		<div className="addQuestion__Wrapper">

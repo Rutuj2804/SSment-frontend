@@ -3,15 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { setBreadcrumps } from "../../store/breadcrumps/slice";
 import { BatchCard } from "../../components/card";
 import { RootState } from "../../store";
-import { useAccessRole } from "../../utils/helpers";
 import { getAllBatches } from "../../store/actions";
 
 const Batch = () => {
 	const dispatch = useDispatch<any>();
 
 	const batches = useSelector((state: RootState) => state.batch.batches);
-
-	const instituteId = useAccessRole();
 
 	useEffect(() => {
 		dispatch(
@@ -23,8 +20,8 @@ const Batch = () => {
 	}, [dispatch]);
 
 	useEffect(() => {
-		if (instituteId) dispatch(getAllBatches({ instituteId, status: 1 }));
-	}, [instituteId, dispatch]);
+		dispatch(getAllBatches({ status: 1 }));
+	}, [dispatch]);
 
 	return (
 		<div className="">

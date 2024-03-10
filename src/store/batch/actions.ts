@@ -262,7 +262,7 @@ export const deleteBatch = createAsyncThunk( "deleteBatch/Batch", async (data: G
 
             thunkAPI.dispatch(updateLoading(-1));
 
-            thunkAPI.dispatch(getAllBatches({ status: 1, instituteId: data.instituteId }))
+            thunkAPI.dispatch(getAllBatches({ status: 1 }))
 
             return res.data.data;
         } catch (err) {

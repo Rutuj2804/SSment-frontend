@@ -3,7 +3,6 @@ import { Input, Select } from "../../library";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { getAllInstitutes } from "../../store/actions";
-import { useAccessRole } from "../../utils/helpers";
 
 interface BasicInformationCProps {
     setInstitute: Function;
@@ -18,12 +17,9 @@ const BasicInformation = ({ setInstitute, institute, setTerm, term }: BasicInfor
 
     const institutes = useSelector((state: RootState) => state.institute.institutes)
 
-    const instituteId = useAccessRole()
-
 	useEffect(() => {
-        if(instituteId)
-		    dispatch(getAllInstitutes({ instituteId }));
-	}, [dispatch, instituteId]);
+        dispatch(getAllInstitutes({  }));
+	}, [dispatch]);
 
 	return (
 		<div className="row">

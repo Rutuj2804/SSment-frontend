@@ -16,6 +16,4 @@ export type AppDispatch = typeof store.dispatch;
 
 export interface BaseInterface {
     navigate?: NavigateFunction;
-    instituteId?: string;
-    vendorId?: string;
 }

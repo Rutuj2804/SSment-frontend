@@ -8,7 +8,6 @@ import { AddRounded, CloudDownloadRounded } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import GetTestColumns from "../../utils/data-grid/test";
 import { RootState } from "../../store";
-import { useAccessRole } from "../../utils/helpers";
 import { getAllTests } from "../../store/actions";
 
 enum Tabs {
@@ -26,8 +25,6 @@ const Test = () => {
 
 	const tests = useSelector((state: RootState) => state.test.tests)
 
-	const instituteId = useAccessRole()
-
 	useEffect(() => {
 		dispatch(
 			setBreadcrumps({
@@ -40,8 +37,8 @@ const Test = () => {
 	const columns = GetTestColumns()
 
 	useEffect(() => {
-		if(instituteId) dispatch(getAllTests({ instituteId, status: activeTab - 1 }))
-	}, [dispatch, instituteId, activeTab])
+		dispatch(getAllTests({ status: activeTab - 1 }))
+	}, [dispatch, activeTab])
 
 	return (
 		<div className="test__Wrapper">

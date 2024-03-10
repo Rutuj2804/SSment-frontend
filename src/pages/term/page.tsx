@@ -8,7 +8,6 @@ import { DataGrid } from "@mui/x-data-grid";
 import { AddRounded, CloudDownloadRounded } from "@mui/icons-material";
 import { RootState } from "../../store";
 import { getAllTerms } from "../../store/actions";
-import { useAccessRole } from "../../utils/helpers";
 import { GetTermColumns } from "../../utils/data-grid";
 
 enum Tabs {
@@ -22,8 +21,6 @@ const Term = () => {
 	const dispatch = useDispatch<any>();
 
 	const navigate = useNavigate();
-
-	const instituteId = useAccessRole()
 
 	const terms = useSelector((state: RootState) => state.term.terms)
 
@@ -39,9 +36,8 @@ const Term = () => {
 	}, [dispatch]);
 
 	useEffect(() => {
-		if(instituteId)
-			dispatch(getAllTerms({ instituteId, status: activeTab - 1 }))
-	}, [instituteId, dispatch, activeTab])
+		dispatch(getAllTerms({ status: activeTab - 1 }))
+	}, [dispatch, activeTab])
 
 	return (
 		<div className="test__Wrapper">

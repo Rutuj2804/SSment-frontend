@@ -1,13 +1,12 @@
 import {
 	DeleteRounded,
-	EditRounded,
 	VisibilityRounded,
 } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
 import { GridColDef } from "@mui/x-data-grid";
 import moment from "moment";
-import { NavLink, useNavigate } from "react-router-dom";
-import { encrypt, useAccessRole } from "../helpers";
+import { NavLink } from "react-router-dom";
+import { encrypt } from "../helpers";
 import { useDispatch } from "react-redux";
 import { setDeleteConfirmation } from "../../store/layout/slice";
 import { deleteTest } from "../../store/actions";
@@ -30,8 +29,6 @@ const getStatus = (i: number) => {
 
 const GetTestColumns = () => {
 	const dispatch = useDispatch<any>();
-
-	const instituteId = useAccessRole();
 
 	const columns: GridColDef[] = [
 		{
@@ -102,7 +99,6 @@ const GetTestColumns = () => {
 										dispatch(
 											deleteTest({
 												testId: params.row._id,
-												instituteId,
 											})
 										),
 								})

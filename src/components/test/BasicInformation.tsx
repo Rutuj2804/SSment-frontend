@@ -3,7 +3,6 @@ import { Input, Select, Textarea } from "../../library";
 import { CreateTestFormDataInterface } from "../../pages/test";
 import { RootState } from "../../store";
 import { useEffect, useState } from "react";
-import { useAccessRole } from "../../utils/helpers";
 import { getAllInstitutes, getTermsOfInstitute } from "../../store/actions";
 
 interface BasicInformationProps {
@@ -22,17 +21,13 @@ const BasicInformation = ({ formData, onChange, setTermId, termId }: BasicInform
 
 	const dispatch = useDispatch<any>();
 
-	const instituteId = useAccessRole()
-
 	useEffect(() => {
-		if(instituteId) {
-			dispatch(getAllInstitutes({ instituteId }))
-		}
-	}, [dispatch, instituteId])
+			dispatch(getAllInstitutes({ }))
+	}, [dispatch])
 
 	useEffect(() => {
 		if(selectedInstitute) {
-			dispatch(getTermsOfInstitute({ instituteId, institute: selectedInstitute }))
+			dispatch(getTermsOfInstitute({ institute: selectedInstitute }))
 		}
 	}, [selectedInstitute])
 

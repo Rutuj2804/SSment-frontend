@@ -12,7 +12,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { setMessage } from "../../store/messages/slice";
 import { setBreadcrumps } from "../../store/breadcrumps/slice";
 import { createBatch } from "../../store/actions";
-import { useAccessRole } from "../../utils/helpers";
 import moment from "moment";
 import { RootState } from "../../store";
 
@@ -42,8 +41,6 @@ const CreateBatchInstitute = () => {
 
 	const navigate = useNavigate();
 
-	const instituteId = useAccessRole()
-
 	const termId = useSelector((state: RootState) => state.term.current)
 
 	const dispatch = useDispatch<any>();
@@ -53,7 +50,7 @@ const CreateBatchInstitute = () => {
 
 		const expiryDate = moment().add(plan, "M").subtract(1, "day").toString()
 
-		dispatch(createBatch({ description, name: title, expiryDate, participants, termId: termId, navigate, instituteId, navigation: "/batches" }))
+		dispatch(createBatch({ description, name: title, expiryDate, participants, termId: termId, navigate, navigation: "/batches" }))
 	};
 
 	useEffect(() => {

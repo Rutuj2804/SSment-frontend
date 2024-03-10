@@ -4,7 +4,6 @@ import { Button, Input, Textarea } from "../../library";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setBreadcrumps } from "../../store/breadcrumps/slice";
-import { useAccessRole } from "../../utils/helpers";
 import { getBatch, updateBatch } from "../../store/actions";
 import { RootState } from "../../store";
 
@@ -16,8 +15,6 @@ const EditBatch = () => {
 	const navigate = useNavigate();
 
 	const dispatch = useDispatch<any>();
-
-	const instituteId = useAccessRole()
 
 	const { id } = useParams()
 
@@ -33,9 +30,9 @@ const EditBatch = () => {
 	}, [dispatch]);
 
 	useEffect(() => {
-		if(instituteId && id)
-			dispatch(getBatch({ batchId: id, instituteId }))
-	}, [instituteId, id, dispatch])
+		if(id)
+			dispatch(getBatch({ batchId: id }))
+	}, [id, dispatch])
 
 	useEffect(() => {
 		if(batch._id) {
@@ -46,7 +43,7 @@ const EditBatch = () => {
 
 	const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		dispatch(updateBatch({ batchId: id!, name, description, navigate, instituteId }))
+		dispatch(updateBatch({ batchId: id!, name, description, navigate }))
 	};
 
 	return (
