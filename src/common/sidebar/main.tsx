@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { sidebarLayout } from "../../store/settings/types";
 import { Logo } from "../logo";
-import { sideBarData } from "../../assets/data/sidebar";
+import { getSideBarData } from "../../utils/helpers";
 import { useNavigate } from "react-router-dom";
 import { IconButton } from "@mui/material";
 import { CloseRounded } from "@mui/icons-material";
@@ -54,11 +54,14 @@ const SectionNavigation = ({ links, title }: SectionNavigationCProps) => {
 
 const Sidebar = () => {
     const sidebar = useSelector((state: RootState) => state.layout.sidebar);
+    const userRole = useSelector((state: RootState) => state.profile.user.role)
     const sidebarStyle = useSelector(
         (state: RootState) => state.settings.sidebar
     );
 
     const dispatch = useDispatch();
+
+    const sideBarData = getSideBarData(userRole)
 
     return (
         <div
