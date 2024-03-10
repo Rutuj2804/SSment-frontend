@@ -5,7 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setBreadcrumps } from "../../store/breadcrumps/slice";
 import { RootState } from "../../store";
-import { getAllInstitutes, getRoleAssignment, getUserProfile, updateRoleAssignment } from "../../store/actions";
+import { getAllInstitutes, getUserProfile, updateRoleAssignment } from "../../store/actions";
 import { useAccessRole } from "../../utils/helpers";
 import { ACCESS_ROLES } from "../../assets/data/roles";
 
