@@ -21,4 +21,20 @@
         .multipleChoiceQuestion__Option {
         }
     }
+    .multipleChoiceQuestion__ChoiceType {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-top: 10px;
+        .multipleChoiceQuestion__Choice {
+            border: 1px solid $gray;
+            width: 200px;
+            padding: 10px;
+            border-radius: 4px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+    }
 }

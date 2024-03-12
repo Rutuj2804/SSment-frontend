@@ -1,8 +1,18 @@
 import { Avatar } from "@mui/material";
 import { Logo } from "../../common/logo";
 import { Paper } from "../../components/paper";
-import { MultipleChoice } from "../../components/attempt";
-import { BookmarkAddRounded, ChevronLeftRounded, ChevronRightRounded } from "@mui/icons-material";
+import {
+	LongAnswer,
+	MultipleChoice,
+	ShortAnswer,
+	YesNoType,
+	TrueFalseType,
+} from "../../components/attempt";
+import {
+	BookmarkAddRounded,
+	ChevronLeftRounded,
+	ChevronRightRounded,
+} from "@mui/icons-material";
 import { Button } from "../../library";
 
 const AttemptTest = () => {
@@ -20,13 +30,11 @@ const AttemptTest = () => {
 					</div>
 				</div>
 				<div className="attemptTest__Ribbon">
-					<div className="left">
-
-					</div>
+					<div className="left"></div>
 				</div>
 				<div className="attemptTest__Body">
 					<div className="container">
-						<MultipleChoice />
+						<TrueFalseType />
 					</div>
 				</div>
 				<div className="attemptTest__Sidebar">
@@ -151,7 +159,9 @@ const AttemptTest = () => {
 				</div>
 				<div className="attemptTest__Buttons">
 					<div className="left">
-						<Button startIcon={<BookmarkAddRounded />}>Mark For Review</Button>
+						<Button startIcon={<BookmarkAddRounded />}>
+							Mark For Review
+						</Button>
 						<Button startIcon={<ChevronLeftRounded />}>Prev</Button>
 						<Button endIcon={<ChevronRightRounded />}>Next</Button>
 					</div>

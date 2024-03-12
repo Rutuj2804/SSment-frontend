@@ -1,2 +1,6 @@
 export { default as MultipleChoice } from "./MultipleChoice"
 export { default as ImageChoice } from "./ImageChoice"
+export { default as ShortAnswer } from "./ShortAnswer"
+export { default as LongAnswer } from "./LongAnswer"
+export { default as YesNoType } from "./YesNoType"
+export { default as TrueFalseType } from "./TrueFalseType"
