@@ -36,7 +36,7 @@ const Confirmation = () => {
 			className="confirmation__Wrapper"
 		>
 			<div className="confirmation__Header">
-				<h5>Delete</h5>
+				<h5>Confirmation</h5>
 				<IconButton size="small" onClick={close}>
 					<CloseRounded />
 				</IconButton>

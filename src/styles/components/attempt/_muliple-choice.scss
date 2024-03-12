@@ -1,7 +1,13 @@
 .multipleChoiceQuestion__Wrapper {
     .multipleChoiceQuestion__Left {
+        .referenceSection {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-top: 20px;
+        }
         img {
-            height: 300px;
+            height: 250px;
             width: auto;
             border-radius: 4px;
         }
@@ -11,13 +17,8 @@
         }
     }
     .multipleChoiceQuestion__Right {
-        // border-left: 1px solid $gray;
+        margin-top: 10px;
         .multipleChoiceQuestion__Option {
-            padding: 7px;
-            border: 1px solid $gray;
-            border-radius: 4px;
-            margin-bottom: 7px;
-            font-size: 14px;
         }
     }
 }

@@ -5,167 +5,141 @@
         left: 0%;
         height: 100vh;
         width: 100%;
-        .attemptTest__MainArea {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: calc(100% - 300px);
-            height: 100vh;
-            .top {
+        .attemptTest__Header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            .user {
+                width: 300px;
                 display: flex;
-                justify-content: space-between;
                 align-items: center;
-                padding: 5px 10px;
+                justify-content: center;
+                gap: 10px;
+                .details {
+                    p {
+                        margin-bottom: 0%;
+                        font-size: 14px;
+                    }
+                    h6 {
+                        margin-bottom: 0%;
+                    }
+                }
+            }
+        }
+        .attemptTest__Body {
+            position: absolute;
+            top: 60px;
+            left: 0%;
+            width: calc(100% - 320px);
+            height: calc(100vh - 160px);
+            overflow-y: auto;
+            @include scroll-bar();
+        }
+        .attemptTest__Sidebar {
+            position: absolute;
+            top: 60px;
+            right: 0;
+            width: 300px;
+            height: calc(100vh - 60px);
+            .timeLeft__Section {
+                .ribbon {
+                    text-align: center;
+                    background-color: $primary-color-light;
+                    padding: 5px 7px;
+                    font-weight: 500;
+                }
                 .timer {
                     display: flex;
                     align-items: center;
-                    gap: 7px;
-                    span {
-                        font-weight: 500;
+                    justify-content: space-evenly;
+                    font-size: 20px;
+                    margin: 10px 0;
+                    .element {
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        p {
+                            margin-bottom: 0%;
+                        }
+                        span {
+                            font-size: 14px;
+                        }
                     }
-                    .timertab {
+                }
+            }
+            .questions__Section {
+                .ribbon {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    background-color: $primary-color-light;
+                    padding: 5px 7px;
+                    font-weight: 500;
+                }
+                .questions__Grid {
+                    height: calc(100vh - 260px);
+                    overflow-y: auto;
+                    @include scroll-bar();
+                    display: flex;
+                    flex-wrap: wrap;
+                    justify-content: center;
+                    align-items: center;
+                    margin: 10px 0;
+                    gap: 7px;
+                    .question {
+                        height: 35px;
+                        width: 35px;
+                        border: 1px solid $gray;
+                        border-radius: 4px;
                         display: flex;
                         justify-content: center;
                         align-items: center;
-                        height: 35px;
-                        width: 35px;
-                        border-radius: 4px;
-                        padding: 7px;
-                        border: 1px solid $gray;
-                        font-weight: 500;
                         font-size: 14px;
-                        margin: 0%;
+                        cursor: pointer;
                     }
                 }
-            }
-            hr {
-                margin-top: 0%;
-                margin-bottom: 0px;
-                border-top: $primary-color solid;
-            }
-            .body {
-                padding: 20px;
-                height: calc(100vh - 115px);
-                overflow-y: auto;
-                @include scroll-bar();
-            }
-            .footer {
-                position: fixed;
-                bottom: 0%;
-                left: 0;
-                height: 60px;
-                width: calc(100% - 300px);
-                display: flex;
-                justify-content: flex-end;
-                align-items: center;
-                gap: 10px;
-                padding-right: 10px;
             }
         }
-        .attemptTest__Navigation {
+        .attemptTest__Buttons {
             position: absolute;
-            top: 0;
-            right: 0;
-            width: 300px;
-            height: 100vh;
-            border-left: 1px solid $primary-color;
-            .top {
+            bottom: 45px;
+            left: 0%;
+            width: calc(100% - 300px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 10px;
+            .left {
                 display: flex;
                 align-items: center;
-                justify-content: center;
                 gap: 10px;
-                padding: 7px 0;
-                border-bottom: 1px solid $primary-color;
-                .details {
-                    display: flex;
-                    flex-direction: column;
-                    align-items: flex-start;
-                }
-                h6 {
-                    margin-bottom: 0%;
-                }
-                p {
-                    margin-bottom: 0%;
-                    font-size: 12px;
-                    color: $gray;
-                }
             }
-            .middle {
-                height: calc(100vh - 250px);
-                overflow-y: auto;
-                @include scroll-bar();
-                padding: 20px 20px;
+        }
+        .attemptTest__Footer {
+            position: absolute;
+            bottom: 0%;
+            left: 0%;
+            width: 100%;
+            background-color: $primary-color-light;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding-left: 10px;
+            .attemptTest__DisplayElement {
                 display: flex;
-                align-content: flex-start;
-                justify-content: center;
                 align-items: center;
-                flex-wrap: wrap;
-                gap: 7px;
-                border-bottom: 1px solid $primary-color;
+                gap: 10px;
                 .question {
                     height: 35px;
                     width: 35px;
+                    border: 1px solid $gray;
                     border-radius: 4px;
                     display: flex;
                     justify-content: center;
                     align-items: center;
-                    border: 1px solid $gray;
-                    font-weight: 500;
+                    font-size: 14px;
                     cursor: pointer;
-                    &.completed {
-                        background-color: $green;
-                        color: $white;
-                        border: 1px solid $green;
-                    }
-                    &.marked {
-                        background-color: $purple;
-                        color: $white;
-                        border: 1px solid $purple;
-                    }
-                    &.markedcompleted {
-                        background-color: $cyan;
-                        border: 1px solid $cyan;
-                        color: $white;
-                    }
-                }
-            }
-            .bottom {
-                padding: 10px 20px;
-                display: flex;
-                flex-direction: column;
-                gap: 7px;
-                .unit {
-                    display: flex;
-                    align-items: center;
-                    gap: 7px;
-                    span {
-                        font-size: 12px;
-                    }
-                }
-                .question {
-                    height: 35px;
-                    width: 35px;
-                    border-radius: 4px;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    border: 1px solid $gray;
-                    font-weight: 500;
-                    &.completed {
-                        background-color: $green;
-                        color: $white;
-                        border: 1px solid $green;
-                    }
-                    &.marked {
-                        background-color: $purple;
-                        color: $white;
-                        border: 1px solid $purple;
-                    }
-                    &.markedcompleted {
-                        background-color: $cyan;
-                        border: 1px solid $cyan;
-                        color: $white;
-                    }
                 }
             }
         }
