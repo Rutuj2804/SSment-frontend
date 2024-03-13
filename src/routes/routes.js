@@ -50,7 +50,7 @@ export const regularRoutes = [
     { path: "/test/sections/:id", element: <Section /> },
     { path: "/test/questions/:id", element: <AddQuestion /> },
 
-    { path: "/:email", element: <Profile /> },
+    { path: "/c/:email", element: <Profile /> },
     { path: "/edit/:email", element: <EditProfile /> },
     { path: "/reset-password", element: <ResetPassword /> },
     { path: "/logout", element: <Logout /> },
@@ -70,4 +70,6 @@ export const authRoutes = [
     { path: "/start-test/:id", element: <StartTest /> },
     { path: "/terms-and-conditions/:id", element: <TermsAndCondition /> },
     { path: "/end-test/:id", element: <EndTest /> },
+
+    { path: "/404", element: <h1>404 Not Found</h1> },
 ]

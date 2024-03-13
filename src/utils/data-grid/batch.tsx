@@ -1,16 +1,11 @@
-import { DeleteRounded, EditRounded } from "@mui/icons-material";
+import { VisibilityRounded } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
 import { GridColDef } from "@mui/x-data-grid";
 import moment from "moment";
 import { NavLink } from "react-router-dom";
 import { encrypt, } from "../helpers";
-import { useDispatch } from "react-redux";
-import { deleteBatch } from "../../store/actions";
-import { setDeleteConfirmation } from "../../store/layout/slice";
 
 const GetBatchColumns = () => {
-	const dispatch = useDispatch<any>();
-
 	const columns: GridColDef[] = [
 		{
 			field: "testName",
@@ -60,29 +55,11 @@ const GetBatchColumns = () => {
 			align: "center",
 			renderCell: (params) => (
 				<div className="d-flex gap-2">
-					<NavLink to={`/batch/edit/${encrypt(params.row._id)}`}>
+					<NavLink to={`/batch/${encrypt(params.row._id)}`}>
 						<IconButton size="small">
-							<EditRounded />
+							<VisibilityRounded />
 						</IconButton>
 					</NavLink>
-					<IconButton
-						size="small"
-						onClick={() =>
-							dispatch(
-								setDeleteConfirmation({
-									isActive: true,
-									callback: () => dispatch(
-										deleteBatch({
-											batchId: params.row._id,
-										})
-									),
-									text: "This action is irreversible. Are you sure you want to delete this batch?",
-								})
-							)
-						}
-					>
-						<DeleteRounded />
-					</IconButton>
 				</div>
 			),
 		},

@@ -60,7 +60,6 @@ export const createTest = createAsyncThunk( "createTest/Test", async (data: Crea
 }
 );
 
-
 export const updateTest = createAsyncThunk( "updateTest/Test", async (data: UpdateTestRequest, thunkAPI) => {
         thunkAPI.dispatch(updateLoading(1));
         try {
@@ -137,6 +136,54 @@ export const getTestDetails = createAsyncThunk( "getTestDetails/Test", async (da
             thunkAPI.dispatch(updateLoading(-1));
 
             if (err instanceof AxiosError) {
+                if(Array.isArray(err?.response?.data.message)) {
+                    thunkAPI.dispatch(
+                        setMessage({
+                            text: err?.response?.data.message[0],
+                            type: errorType.ERROR,
+                            _id: Date.now().toString(),
+                        })
+                    );
+                } else {
+                    thunkAPI.dispatch(
+                        setMessage({
+                            text: err?.response?.data.message,
+                            type: errorType.ERROR,
+                            _id: Date.now().toString(),
+                        })
+                    );
+                }
+            }
+
+            return thunkAPI.rejectWithValue(err);
+        }
+    }
+);
+
+export const getTestRegistrationDetails = createAsyncThunk( "getTestRegistrationDetails/Test", async (data: GetTestDetailsRequest, thunkAPI) => {
+        thunkAPI.dispatch(updateLoading(1));
+        try {
+            const config = {
+                headers: {
+                    "Content-Type": "Application/json",
+                    "Authorization": `Bearer ${userToken()}`
+                },
+            };
+
+            data.testId = decrypt(data.testId)!
+
+            const res = await axios.put(`/test/t/get-reg/${data.testId}`, data, config);
+
+            thunkAPI.dispatch(updateLoading(-1));
+            
+            return res.data.data;
+        } catch (err) {
+            thunkAPI.dispatch(updateLoading(-1));
+
+            if (err instanceof AxiosError) {
+
+                // if(err?.response?.data.statusCode === 404) data.navigate!("/404")
+
                 if(Array.isArray(err?.response?.data.message)) {
                     thunkAPI.dispatch(
                         setMessage({

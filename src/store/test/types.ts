@@ -7,6 +7,10 @@ export interface TestState {
     test: TestInterface;
     sections: SectionInterface[];
     questions: QuestionInterface[];
+    counts: {
+        sections: number;
+        questions: number;
+    }
 }
 
 export interface CreateTestRequest extends BaseInterface {
