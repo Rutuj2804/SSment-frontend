@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Paper } from "../../components/paper";
 import { Button, Checkbox } from "../../library";
 import { PlayArrowRounded } from "@mui/icons-material";
@@ -6,9 +6,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { getTestRegistrationDetails } from "../../store/actions";
-import { decrypt, encrypt } from "../../utils/helpers";
+import { decrypt, encrypt, goFullScreen } from "../../utils/helpers";
 
 const TermsAndCondition = () => {
+
+	const [agreed, setAgreed] = useState(false)
 
 	const { id } = useParams()
 
@@ -23,6 +25,15 @@ const TermsAndCondition = () => {
 			dispatch(getTestRegistrationDetails({ testId: id, navigate }))
 	}, [dispatch, id])
 
+	const onStartTestClick = () => {
+		if(agreed) {
+			goFullScreen()
+			setTimeout(() => {
+				navigate(`/attempt-test/${encrypt(decrypt(id!)!)}`)
+			}, 200)
+		}
+	}
+
 	return (
 		<div className="termsAndCondition__Wrapper container mt-5">
 			<Paper className="p-3">
@@ -31,9 +42,11 @@ const TermsAndCondition = () => {
 				<Checkbox
 					id="terms-and-conditions"
 					label={test.termsAndConditionsCheckboxLabel}
+					checked={agreed}
+					onChange={(_,c) => setAgreed(c)}
 				/>
 				<div className="d-flex justify-content-end">
-					<Button onClick={() => navigate(`/attempt-test/${encrypt(decrypt(id!)!)}`)} startIcon={<PlayArrowRounded />}>{test.startTestButton}</Button>
+					<Button onClick={onStartTestClick} startIcon={<PlayArrowRounded />}>{test.startTestButton}</Button>
 				</div>
 			</Paper>
 		</div>

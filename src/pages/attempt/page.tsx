@@ -14,8 +14,18 @@ import {
 	ChevronRightRounded,
 } from "@mui/icons-material";
 import { Button } from "../../library";
+import { useFullScreenChange, useUserActivity } from "../../utils/hooks";
+import { useEffect } from "react";
 
 const AttemptTest = () => {
+
+	const isFullScreen = useFullScreenChange()
+	const isActive = useUserActivity()
+
+	useEffect(() => {
+		console.log(isFullScreen, isActive)
+	}, [isFullScreen, isActive])
+
 	return (
 		<div className="attemptTest__Wrapper">
 			<Paper className="attemptTest__Body">
