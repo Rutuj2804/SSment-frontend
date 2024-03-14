@@ -8,7 +8,8 @@ import {
 	YesNoType,
 	TrueFalseType,
 	ImageChoice,
-	CodingType
+	CodingType,
+	Timer
 } from "../../components/attempt";
 import {
 	BookmarkAddRounded,
@@ -125,22 +126,7 @@ const AttemptTest = () => {
 				<div className="attemptTest__Sidebar">
 					<div className="timeLeft__Section">
 						<div className="ribbon">Time Left</div>
-						<div className="timer">
-							<div className="element">
-								<p>00</p>
-								<span>hour</span>
-							</div>
-							:
-							<div className="element">
-								<p>01</p>
-								<span>minute</span>
-							</div>
-							:
-							<div className="element">
-								<p>40</p>
-								<span>seconds</span>
-							</div>
-						</div>
+						<Timer minutes={61} />
 					</div>
 					<div className="questions__Section">
 						<div className="ribbon">
