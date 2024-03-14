@@ -7,6 +7,8 @@ import {
 	ShortAnswer,
 	YesNoType,
 	TrueFalseType,
+	ImageChoice,
+	CodingType
 } from "../../components/attempt";
 import {
 	BookmarkAddRounded,
@@ -15,16 +17,89 @@ import {
 } from "@mui/icons-material";
 import { Button } from "../../library";
 import { useFullScreenChange, useUserActivity } from "../../utils/hooks";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
+import { QuestionInterface } from "../../utils/types";
+
+enum QuestionTypeEnum {
+	"MULTIPLECHOICE" = 1,
+	"IMAGECHOICE" = 2,
+	"SHORTANSWER" = 3,
+	"LONGANSWER" = 4,
+	"YESNOTYPE" = 5,
+	"TRUEFALSETYPE" = 6,
+	"OPINIONCASE" = 7,
+	"CODINGTYPE" = 8,
+}
 
 const AttemptTest = () => {
+	const [activeSection, setActiveSection] = useState(0);
 
-	const isFullScreen = useFullScreenChange()
-	const isActive = useUserActivity()
+	const [activeQuestionIndex, setActiveQuestionIndex] = useState(0)
+
+	const [activeQuestion, setActiveQuestion] =
+		useState<QuestionInterface | null>(null);
+
+	const isFullScreen = useFullScreenChange();
+	const isActive = useUserActivity();
+
+	const loadTest = useSelector((state: RootState) => state.test.loadTest);
 
 	useEffect(() => {
-		console.log(isFullScreen, isActive)
-	}, [isFullScreen, isActive])
+		console.log(isFullScreen, isActive);
+	}, [isFullScreen, isActive]);
+
+	useEffect(() => {
+		if(loadTest.sections.length) {
+			setActiveQuestion(loadTest[loadTest.sections[activeSection]][0])
+			setActiveQuestionIndex(0)
+		}
+	}, [loadTest, activeSection])
+
+	const onSectionNavigate = (i: number) => {
+		if (i === -1 && 0 < activeSection) {
+			setActiveSection((s) => s - 1);
+			setActiveQuestionIndex(0)
+		} else if (i === 1 && loadTest.sections.length - 1 > activeSection) {
+			setActiveSection((s) => s + 1);
+			setActiveQuestionIndex(0)
+		}
+	};
+
+	const getCurrentQuestion = () => {
+		switch (activeQuestion?.questionType) {
+			case QuestionTypeEnum.MULTIPLECHOICE:
+				return <MultipleChoice question={activeQuestion} serialNumber={activeQuestionIndex + 1} />;
+			case QuestionTypeEnum.IMAGECHOICE:
+				return <ImageChoice />;
+			case QuestionTypeEnum.SHORTANSWER:
+				return <ShortAnswer />;
+			case QuestionTypeEnum.LONGANSWER:
+				return <LongAnswer />;
+			case QuestionTypeEnum.YESNOTYPE:
+				return <YesNoType question={activeQuestion} serialNumber={activeQuestionIndex + 1} />;
+			case QuestionTypeEnum.TRUEFALSETYPE:
+				return <TrueFalseType question={activeQuestion} serialNumber={activeQuestionIndex + 1} />;
+			case QuestionTypeEnum.CODINGTYPE:
+				return <CodingType />;
+			default:
+				return null;
+		}
+	};
+
+	const onQuestionNavigate = (i: number) => {
+		setActiveQuestion(loadTest[loadTest.sections[activeSection]][i])
+		setActiveQuestionIndex(i)
+	}
+
+	const onButtonNavigation = (i: number) => {
+		if(i === -1 && 0 < activeQuestionIndex) {
+			onQuestionNavigate(activeQuestionIndex - 1)
+		} else if(i === 1 && loadTest[loadTest.sections[activeSection]].length - 1 > activeQuestionIndex) {
+			onQuestionNavigate(activeQuestionIndex + 1)
+		}
+	}
 
 	return (
 		<div className="attemptTest__Wrapper">
@@ -44,7 +119,7 @@ const AttemptTest = () => {
 				</div>
 				<div className="attemptTest__Body">
 					<div className="container">
-						<TrueFalseType />
+						{getCurrentQuestion()}
 					</div>
 				</div>
 				<div className="attemptTest__Sidebar">
@@ -69,101 +144,25 @@ const AttemptTest = () => {
 					</div>
 					<div className="questions__Section">
 						<div className="ribbon">
-							<ChevronLeftRounded />
-							Coding
-							<ChevronRightRounded />
+							<div onClick={() => onSectionNavigate(-1)}>
+								<ChevronLeftRounded />
+							</div>
+							{loadTest.sections.length
+								? loadTest.sections[activeSection]
+								: ""}
+							<div onClick={() => onSectionNavigate(1)}>
+								<ChevronRightRounded />
+							</div>
 						</div>
 						<div className="questions__Grid">
-							<div className="question">1</div>
-							<div className="question">2</div>
-							<div className="question">3</div>
-							<div className="question">4</div>
-							<div className="question">5</div>
-							<div className="question">6</div>
-							<div className="question">7</div>
-							<div className="question">8</div>
-							<div className="question">9</div>
-							<div className="question">10</div>
-							<div className="question">11</div>
-							<div className="question">12</div>
-							<div className="question">13</div>
-							<div className="question">14</div>
-							<div className="question">15</div>
-							<div className="question">16</div>
-							<div className="question">17</div>
-							<div className="question">18</div>
-							<div className="question">1</div>
-							<div className="question">2</div>
-							<div className="question">3</div>
-							<div className="question">4</div>
-							<div className="question">5</div>
-							<div className="question">6</div>
-							<div className="question">7</div>
-							<div className="question">8</div>
-							<div className="question">9</div>
-							<div className="question">10</div>
-							<div className="question">11</div>
-							<div className="question">12</div>
-							<div className="question">13</div>
-							<div className="question">14</div>
-							<div className="question">15</div>
-							<div className="question">16</div>
-							<div className="question">17</div>
-							<div className="question">18</div>
-							<div className="question">1</div>
-							<div className="question">2</div>
-							<div className="question">3</div>
-							<div className="question">4</div>
-							<div className="question">5</div>
-							<div className="question">6</div>
-							<div className="question">7</div>
-							<div className="question">8</div>
-							<div className="question">9</div>
-							<div className="question">10</div>
-							<div className="question">11</div>
-							<div className="question">12</div>
-							<div className="question">13</div>
-							<div className="question">14</div>
-							<div className="question">15</div>
-							<div className="question">16</div>
-							<div className="question">17</div>
-							<div className="question">18</div>
-							<div className="question">1</div>
-							<div className="question">2</div>
-							<div className="question">3</div>
-							<div className="question">4</div>
-							<div className="question">5</div>
-							<div className="question">6</div>
-							<div className="question">7</div>
-							<div className="question">8</div>
-							<div className="question">9</div>
-							<div className="question">10</div>
-							<div className="question">11</div>
-							<div className="question">12</div>
-							<div className="question">13</div>
-							<div className="question">14</div>
-							<div className="question">15</div>
-							<div className="question">16</div>
-							<div className="question">17</div>
-							<div className="question">18</div>
-							<div className="question">1</div>
-							<div className="question">2</div>
-							<div className="question">3</div>
-							<div className="question">4</div>
-							<div className="question">5</div>
-							<div className="question">6</div>
-							<div className="question">7</div>
-							<div className="question">8</div>
-							<div className="question">9</div>
-							<div className="question">10</div>
-							<div className="question">11</div>
-							<div className="question">12</div>
-							<div className="question">13</div>
-							<div className="question">14</div>
-							<div className="question">15</div>
-							<div className="question">16</div>
-							<div className="question">17</div>
-							<div className="question">18</div>
+							{loadTest[loadTest.sections[activeSection]] &&
+								loadTest[loadTest.sections[activeSection]].map(
+									(_: any, i: number) => (
+										<div key={i} className="question" onClick={() => onQuestionNavigate(i)}>
+											{i + 1}
+										</div>
+									)
+								)}
 						</div>
 					</div>
 				</div>
@@ -172,8 +171,8 @@ const AttemptTest = () => {
 						<Button startIcon={<BookmarkAddRounded />}>
 							Mark For Review
 						</Button>
-						<Button startIcon={<ChevronLeftRounded />}>Prev</Button>
-						<Button endIcon={<ChevronRightRounded />}>Next</Button>
+						<Button onClick={() => onButtonNavigation(-1)} startIcon={<ChevronLeftRounded />}>Prev</Button>
+						<Button onClick={() => onButtonNavigation(1)} endIcon={<ChevronRightRounded />}>Next</Button>
 					</div>
 					<div className="right">
 						<Button>Submit</Button>

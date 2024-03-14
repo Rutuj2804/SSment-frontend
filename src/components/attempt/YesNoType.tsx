@@ -1,27 +1,26 @@
 import React from "react";
+import { QuestionInterface } from "../../utils/types";
 
-const YesNoType = () => {
+interface YesNoTypeInterface {
+	question: QuestionInterface;
+	serialNumber: number;
+}
+
+const YesNoType = ({ question, serialNumber }: YesNoTypeInterface) => {
 	return (
 		<div className="multipleChoiceQuestion__Wrapper">
 			<div className="multipleChoiceQuestion__Left">
-				<h5>Q1) Who will cook meth for me?</h5>
-				<div className="referenceSection">
-					<img
-						alt="reference-img"
-						src="https://positivechoices.org.au/pic/iLtr5JK8R7/4/methamphetamine"
-					/>
-					<p>
-						Browse through the icons below to find the one you need.
-						The search field supports synonyms—for example, try
-						searching for "hamburger" or "logout." Browse through
-						the icons below to find the one you need. The search
-						field supports synonyms—for example, try searching for
-						"hamburger" or "logout." Browse through the icons below
-						to find the one you need. The search field supports
-						synonyms—for example, try searching for "hamburger" or
-						"logout."
-					</p>
-				</div>
+				<h5>
+					{serialNumber}.&nbsp;{question.title}
+				</h5>
+				{question.addReferenceImage ? (
+					<div className="referenceSection">
+						<img
+							alt="reference-img"
+							src="https://positivechoices.org.au/pic/iLtr5JK8R7/4/methamphetamine"
+						/>
+					</div>
+				) : null}
 			</div>
 			<div className="multipleChoiceQuestion__ChoiceType">
 				<div className="multipleChoiceQuestion__Choice">Yes</div>

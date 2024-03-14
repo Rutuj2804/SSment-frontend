@@ -5,8 +5,8 @@ import { PlayArrowRounded } from "@mui/icons-material";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
-import { getTestRegistrationDetails } from "../../store/actions";
-import { decrypt, encrypt, goFullScreen } from "../../utils/helpers";
+import { getTestRegistrationDetails, loadTest } from "../../store/actions";
+import { goFullScreen } from "../../utils/helpers";
 
 const TermsAndCondition = () => {
 
@@ -28,9 +28,7 @@ const TermsAndCondition = () => {
 	const onStartTestClick = () => {
 		if(agreed) {
 			goFullScreen()
-			setTimeout(() => {
-				navigate(`/attempt-test/${encrypt(decrypt(id!)!)}`)
-			}, 200)
+			dispatch(loadTest({ testId: id!, navigate }))
 		}
 	}
 

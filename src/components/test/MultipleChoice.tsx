@@ -244,6 +244,7 @@ const MultipleChoice = ({ onChange }: MultipleChoiceCProps) => {
 									isCorrectAnswer: e.target.checked,
 								}))
 							}
+							checked={optionData.isCorrectAnswer}
 							className="mb-0"
 							label="This is correct option"
 						/>

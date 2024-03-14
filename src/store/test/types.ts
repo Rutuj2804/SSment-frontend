@@ -10,7 +10,8 @@ export interface TestState {
     counts: {
         sections: number;
         questions: number;
-    }
+    },
+    loadTest: any
 }
 
 export interface CreateTestRequest extends BaseInterface {
@@ -48,6 +49,10 @@ export interface GetTestDetailsRequest extends BaseInterface {
 }
 
 export interface DeleteTestRequest extends BaseInterface {
+    testId: string;
+}
+
+export interface LoadTestRequest extends BaseInterface {
     testId: string;
 }
 

@@ -23,13 +23,14 @@ export interface QuestionInterface extends BaseInterface {
     title?: string;
     description?: string;
     points?: number;
+    addReferenceImage?: boolean;
     referenceImage?: string;
     questionType?: number;
     testId?: number;
     sectionId?: number;
     yesNoTrueFalseAnswer?: boolean;
     expectedResult?: string;
-    optionId?: OptionInterface;
+    optionId?: OptionInterface[];
 }
 
 export interface TestInterface extends BaseInterface {
