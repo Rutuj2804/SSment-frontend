@@ -22,6 +22,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { QuestionInterface } from "../../utils/types";
+import { username } from "../../utils/helpers";
 
 enum QuestionTypeEnum {
 	"MULTIPLECHOICE" = 1,
@@ -32,6 +33,13 @@ enum QuestionTypeEnum {
 	"TRUEFALSETYPE" = 6,
 	"OPINIONCASE" = 7,
 	"CODINGTYPE" = 8,
+}
+
+enum QuestionResponseType {
+	"NOT_ATTEMPTED" = 0,
+	"ATTEMPTED" = 1,
+	"MARKED_FOR_REVIEW" = 2,
+	"ATTEMPTED_AND_MARKED_FOR_REVIEW" = 3,
 }
 
 const AttemptTest = () => {
@@ -46,6 +54,7 @@ const AttemptTest = () => {
 	const isActive = useUserActivity();
 
 	const loadTest = useSelector((state: RootState) => state.test.loadTest);
+	const storedResponse = useSelector((state: RootState) => state.test.storedResponse);
 
 	useEffect(() => {
 		console.log(isFullScreen, isActive);
@@ -102,6 +111,16 @@ const AttemptTest = () => {
 		}
 	}
 
+	const getAdditionalQuestionClass = (id: string) => {
+		if(storedResponse.attempts[id] === QuestionResponseType.ATTEMPTED) {
+			return "attempted"
+		} else if(storedResponse.attempts[id] === QuestionResponseType.MARKED_FOR_REVIEW) {
+			return "marked"
+		} else if(storedResponse.attempts[id] === QuestionResponseType.ATTEMPTED_AND_MARKED_FOR_REVIEW) {
+			return "attempt_marked"
+		} else return;
+	}
+
 	return (
 		<div className="attemptTest__Wrapper">
 			<Paper className="attemptTest__Body">
@@ -110,8 +129,8 @@ const AttemptTest = () => {
 					<div className="user">
 						<Avatar />
 						<div className="details">
-							<h6>Rutuj Jeevan Bokade</h6>
-							<p>rutuj.bokade@ssment.in</p>
+							<h6>{username(loadTest.user)}</h6>
+							<p>{loadTest.user.email}</p>
 						</div>
 					</div>
 				</div>
@@ -126,7 +145,7 @@ const AttemptTest = () => {
 				<div className="attemptTest__Sidebar">
 					<div className="timeLeft__Section">
 						<div className="ribbon">Time Left</div>
-						<Timer minutes={61} />
+						<Timer minutes={loadTest.test.timeLimit} />
 					</div>
 					<div className="questions__Section">
 						<div className="ribbon">
@@ -143,8 +162,8 @@ const AttemptTest = () => {
 						<div className="questions__Grid">
 							{loadTest[loadTest.sections[activeSection]] &&
 								loadTest[loadTest.sections[activeSection]].map(
-									(_: any, i: number) => (
-										<div key={i} className="question" onClick={() => onQuestionNavigate(i)}>
+									(_: QuestionInterface, i: number) => (
+										<div key={i} className={`question ${getAdditionalQuestionClass(_._id!)}`} onClick={() => onQuestionNavigate(i)}>
 											{i + 1}
 										</div>
 									)

@@ -1,5 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { TestState } from "./types";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { QuestionResponseInterface, TestState } from "./types";
 import { createQuestion, createSection, deleteQuestion, deleteSection, deleteTest, getAllTests, getQuestionsOfSection, getQuestionsOfTest, getSectionsOfTest, getTestDetails, getTestRegistrationDetails, loadTest, updateQuestion, updateSection } from "./actions";
 
 const initialState: TestState = {
@@ -13,13 +13,22 @@ const initialState: TestState = {
     },
     loadTest: {
         sections: []
+    },
+    storedResponse: {
+        response: [],
+        attempts: {}
     }
 }
 
 export const testSlice = createSlice({
     name: "test",
     initialState,
-    reducers: {},
+    reducers: {
+        setQuestionResponse: (s, a: PayloadAction<QuestionResponseInterface>) => {
+            s.storedResponse.response = s.storedResponse.response.map(s => s.questionId === a.payload.questionId ? a.payload : s)
+            s.storedResponse.attempts[a.payload.questionId] = 1
+        }
+    },
     extraReducers(builder) {
         builder.addCase(getTestDetails.fulfilled, (s, a) => {
             s.test = a.payload
@@ -33,7 +42,8 @@ export const testSlice = createSlice({
             s.tests = s.tests.filter(t=>t._id !== a.payload._id)
         })
         builder.addCase(loadTest.fulfilled, (s, a) => {
-            s.loadTest = a.payload
+            s.loadTest = a.payload.response
+            s.storedResponse = a.payload.storedResponse
         })
         builder.addCase(getAllTests.fulfilled, (s, a) => {
             s.tests = a.payload
@@ -72,5 +82,7 @@ export const testSlice = createSlice({
         })
     },
 })
+
+export const { setQuestionResponse } = testSlice.actions
 
 export default testSlice.reducer;

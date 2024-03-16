@@ -1,12 +1,40 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { QuestionInterface } from "../../utils/types";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../store";
+import { setQuestionResponse } from "../../store/test/slice";
 
 interface TrueFalseTypeInterface {
 	question: QuestionInterface;
 	serialNumber: number;
 }
 
+enum QuestionResponseType {
+	"NOT_ATTEMPTED" = 0,
+	"ATTEMPTED" = 1,
+	"MARKED_FOR_REVIEW" = 2,
+	"ATTEMPTED_AND_MARKED_FOR_REVIEW" = 3,
+}
+
 const TrueFalseType = ({ question, serialNumber }: TrueFalseTypeInterface) => {
+	const [optionSelected, setOptionSelected] = useState<boolean | null>(null)
+
+	const storedResponse = useSelector((state: RootState) => state.test.storedResponse)
+
+	const dispatch = useDispatch<any>();
+
+	useEffect(() => {
+		if(storedResponse.attempts[question._id!] !== QuestionResponseType.NOT_ATTEMPTED) {
+			const queResponse = storedResponse.response.filter(q=> q.questionId === question._id)
+
+			if(queResponse.length && typeof queResponse[0].response === "boolean") setOptionSelected(queResponse[0].response as boolean) 
+		}
+	}, [storedResponse, question._id])
+
+	const onOptionClick = (value: boolean) => {
+		dispatch(setQuestionResponse({ questionId: question._id!, questionType: question.questionType!, response: value }))
+	}
+
 	return (
 		<div className="multipleChoiceQuestion__Wrapper">
 			<div className="multipleChoiceQuestion__Left">
@@ -23,8 +51,8 @@ const TrueFalseType = ({ question, serialNumber }: TrueFalseTypeInterface) => {
 				) : null}
 			</div>
 			<div className="multipleChoiceQuestion__ChoiceType">
-				<div className="multipleChoiceQuestion__Choice">True</div>
-				<div className="multipleChoiceQuestion__Choice">False</div>
+				<div onClick={() => onOptionClick(true)} className={optionSelected === true ? "multipleChoiceQuestion__Choice multipleChoiceQuestion__Selected" : "multipleChoiceQuestion__Choice" }>True</div>
+				<div onClick={() => onOptionClick(false)} className={optionSelected === false ? "multipleChoiceQuestion__Choice multipleChoiceQuestion__Selected" : "multipleChoiceQuestion__Choice" }>False</div>
 			</div>
 		</div>
 	);
