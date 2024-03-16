@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { QuestionResponseInterface, TestState } from "./types";
-import { createQuestion, createSection, deleteQuestion, deleteSection, deleteTest, getAllTests, getQuestionsOfSection, getQuestionsOfTest, getSectionsOfTest, getTestDetails, getTestRegistrationDetails, loadTest, updateQuestion, updateSection } from "./actions";
+import { createQuestion, createSection, deleteQuestion, deleteSection, deleteTest, getAllTests, getQuestionsOfSection, getQuestionsOfTest, getSectionsOfTest, getTestDetails, getTestRegistrationDetails, loadTest, updateQuestion, updateSection, updateTestResponse } from "./actions";
 
 const initialState: TestState = {
     tests: [],
@@ -17,7 +17,8 @@ const initialState: TestState = {
     storedResponse: {
         response: [],
         attempts: {}
-    }
+    },
+    failedResponses: []
 }
 
 export const testSlice = createSlice({
@@ -27,6 +28,9 @@ export const testSlice = createSlice({
         setQuestionResponse: (s, a: PayloadAction<QuestionResponseInterface>) => {
             s.storedResponse.response = s.storedResponse.response.map(s => s.questionId === a.payload.questionId ? a.payload : s)
             s.storedResponse.attempts[a.payload.questionId] = 1
+        },
+        setFailedResponse: (s, a: PayloadAction<QuestionResponseInterface[]>) => {
+            s.failedResponses = a.payload
         }
     },
     extraReducers(builder) {
@@ -44,6 +48,10 @@ export const testSlice = createSlice({
         builder.addCase(loadTest.fulfilled, (s, a) => {
             s.loadTest = a.payload.response
             s.storedResponse = a.payload.storedResponse
+        })
+        builder.addCase(updateTestResponse.fulfilled, (s, a) => {
+            if(a.payload)
+                s.failedResponses = []
         })
         builder.addCase(getAllTests.fulfilled, (s, a) => {
             s.tests = a.payload
@@ -83,6 +91,6 @@ export const testSlice = createSlice({
     },
 })
 
-export const { setQuestionResponse } = testSlice.actions
+export const { setQuestionResponse, setFailedResponse } = testSlice.actions
 
 export default testSlice.reducer;

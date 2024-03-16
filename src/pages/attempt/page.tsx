@@ -23,6 +23,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { QuestionInterface } from "../../utils/types";
 import { username } from "../../utils/helpers";
+import { useParams } from "react-router-dom";
 
 enum QuestionTypeEnum {
 	"MULTIPLECHOICE" = 1,
@@ -53,6 +54,8 @@ const AttemptTest = () => {
 	const isFullScreen = useFullScreenChange();
 	const isActive = useUserActivity();
 
+	const { id } = useParams()
+
 	const loadTest = useSelector((state: RootState) => state.test.loadTest);
 	const storedResponse = useSelector((state: RootState) => state.test.storedResponse);
 
@@ -80,7 +83,7 @@ const AttemptTest = () => {
 	const getCurrentQuestion = () => {
 		switch (activeQuestion?.questionType) {
 			case QuestionTypeEnum.MULTIPLECHOICE:
-				return <MultipleChoice question={activeQuestion} serialNumber={activeQuestionIndex + 1} />;
+				return <MultipleChoice testId={id!} question={activeQuestion} serialNumber={activeQuestionIndex + 1} />;
 			case QuestionTypeEnum.IMAGECHOICE:
 				return <ImageChoice />;
 			case QuestionTypeEnum.SHORTANSWER:
@@ -88,9 +91,9 @@ const AttemptTest = () => {
 			case QuestionTypeEnum.LONGANSWER:
 				return <LongAnswer />;
 			case QuestionTypeEnum.YESNOTYPE:
-				return <YesNoType question={activeQuestion} serialNumber={activeQuestionIndex + 1} />;
+				return <YesNoType testId={id!} question={activeQuestion} serialNumber={activeQuestionIndex + 1} />;
 			case QuestionTypeEnum.TRUEFALSETYPE:
-				return <TrueFalseType question={activeQuestion} serialNumber={activeQuestionIndex + 1} />;
+				return <TrueFalseType testId={id!} question={activeQuestion} serialNumber={activeQuestionIndex + 1} />;
 			case QuestionTypeEnum.CODINGTYPE:
 				return <CodingType />;
 			default:

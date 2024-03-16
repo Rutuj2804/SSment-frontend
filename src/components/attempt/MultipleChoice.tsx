@@ -4,10 +4,12 @@ import { QuestionInterface } from "../../utils/types";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { setQuestionResponse } from "../../store/test/slice";
+import { updateTestResponse } from "../../store/actions";
 
 interface MultipleChoiceInterface {
 	question: QuestionInterface;
 	serialNumber: number;
+	testId: string;
 }
 
 enum QuestionResponseType {
@@ -17,11 +19,12 @@ enum QuestionResponseType {
 	"ATTEMPTED_AND_MARKED_FOR_REVIEW" = 3,
 }
 
-const MultipleChoice = ({ question, serialNumber }: MultipleChoiceInterface) => {
+const MultipleChoice = ({ question, serialNumber, testId }: MultipleChoiceInterface) => {
 
 	const [optionSelected, setOptionSelected] = useState("")
 
 	const storedResponse = useSelector((state: RootState) => state.test.storedResponse)
+	const failedResponses = useSelector((state: RootState) => state.test.failedResponses)
 
 	const dispatch = useDispatch<any>();
 
@@ -35,6 +38,8 @@ const MultipleChoice = ({ question, serialNumber }: MultipleChoiceInterface) => 
 
 	const onOptionClick = (id: string) => {
 		dispatch(setQuestionResponse({ questionId: question._id!, questionType: question.questionType!, response: id }))
+		dispatch(updateTestResponse({ testId: testId, response: [{ questionId: question._id!, questionType: question.questionType!, response: id }] }))
+		dispatch(updateTestResponse({ testId: testId, response: failedResponses }))
 	}
 
 	return (

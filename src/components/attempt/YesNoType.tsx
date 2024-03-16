@@ -7,6 +7,7 @@ import { RootState } from "../../store";
 interface YesNoTypeInterface {
 	question: QuestionInterface;
 	serialNumber: number;
+	testId: string
 }
 
 enum QuestionResponseType {
@@ -16,7 +17,7 @@ enum QuestionResponseType {
 	"ATTEMPTED_AND_MARKED_FOR_REVIEW" = 3,
 }
 
-const YesNoType = ({ question, serialNumber }: YesNoTypeInterface) => {
+const YesNoType = ({ question, serialNumber, testId }: YesNoTypeInterface) => {
 	const [optionSelected, setOptionSelected] = useState<boolean | null>(null)
 
 	const storedResponse = useSelector((state: RootState) => state.test.storedResponse)

@@ -22,6 +22,7 @@ export interface TestState {
             [key: string]: number;
         }
     }
+	failedResponses: QuestionResponseInterface[]
 }
 
 export interface QuestionResponseInterface {
@@ -70,6 +71,11 @@ export interface DeleteTestRequest extends BaseInterface {
 
 export interface LoadTestRequest extends BaseInterface {
 	testId: string;
+}
+
+export interface UpdateTestResponseRequest extends BaseInterface {
+	testId: string;
+	response: QuestionResponseInterface[]
 }
 
 export interface GetAllTestsRequest extends BaseInterface {

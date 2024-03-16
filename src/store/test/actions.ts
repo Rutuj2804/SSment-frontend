@@ -3,9 +3,10 @@ import { AxiosError } from "axios";
 import { updateLoading } from "../loading/slice";
 import { setMessage } from "../messages/slice";
 import { errorType } from "../messages/types";
-import { ChangeStatusRequest, CreateQuestionRequest, CreateSectionRequest, CreateTestRequest, DeleteQuestionRequest, DeleteSectionRequest, DeleteTestRequest, GetAllTestsRequest, GetQuestionsOfSectionRequest, GetQuestionsOfTestRequest, GetSectionsOfTestSectionRequest, GetTestDetailsRequest, LoadTestRequest, UpdateQuestionRequest, UpdateSectionRequest, UpdateTestRequest } from "./types";
+import { ChangeStatusRequest, CreateQuestionRequest, CreateSectionRequest, CreateTestRequest, DeleteQuestionRequest, DeleteSectionRequest, DeleteTestRequest, GetAllTestsRequest, GetQuestionsOfSectionRequest, GetQuestionsOfTestRequest, GetSectionsOfTestSectionRequest, GetTestDetailsRequest, LoadTestRequest, UpdateQuestionRequest, UpdateSectionRequest, UpdateTestRequest, UpdateTestResponseRequest } from "./types";
 import axios from "../axios"
-import { decrypt, userToken } from "../../utils/helpers";
+import { decrypt, encrypt, userToken } from "../../utils/helpers";
+import { setFailedResponse } from "./slice";
 
 export const createTest = createAsyncThunk( "createTest/Test", async (data: CreateTestRequest, thunkAPI) => {
     thunkAPI.dispatch(updateLoading(1));
@@ -310,7 +311,7 @@ export const loadTest = createAsyncThunk( "loadTest/Test", async (data: LoadTest
 
             thunkAPI.dispatch(updateLoading(-1));
 
-            if(data.navigate) data.navigate(`/attempt-test/${data.testId}`)
+            if(data.navigate) data.navigate(`/attempt-test/${encrypt(data.testId)}`)
             
             return res.data.data;
         } catch (err) {
@@ -335,6 +336,36 @@ export const loadTest = createAsyncThunk( "loadTest/Test", async (data: LoadTest
                     );
                 }
             }
+
+            return thunkAPI.rejectWithValue(err);
+        }
+    }
+);
+
+export const updateTestResponse = createAsyncThunk( "updateTestResponse/Test", async (data: UpdateTestResponseRequest, thunkAPI) => {
+        thunkAPI.dispatch(updateLoading(1));
+        try {
+            const config = {
+                headers: {
+                    "Content-Type": "Application/json",
+                    "Authorization": `Bearer ${userToken()}`
+                },
+            };
+
+            if(data.response.length === 0) return null;
+
+            data.testId = decrypt(data.testId)!
+
+            const res = await axios.put(`/test/t/update-test-response`, data, config);
+
+            thunkAPI.dispatch(updateLoading(-1));
+            
+            if(data.response.length > 1) return true;
+            else return false;
+        } catch (err) {
+            thunkAPI.dispatch(updateLoading(-1));
+
+            thunkAPI.dispatch(setFailedResponse(data.response))
 
             return thunkAPI.rejectWithValue(err);
         }

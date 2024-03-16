@@ -7,6 +7,7 @@ import { setQuestionResponse } from "../../store/test/slice";
 interface TrueFalseTypeInterface {
 	question: QuestionInterface;
 	serialNumber: number;
+	testId: string;
 }
 
 enum QuestionResponseType {
@@ -16,7 +17,7 @@ enum QuestionResponseType {
 	"ATTEMPTED_AND_MARKED_FOR_REVIEW" = 3,
 }
 
-const TrueFalseType = ({ question, serialNumber }: TrueFalseTypeInterface) => {
+const TrueFalseType = ({ question, serialNumber, testId }: TrueFalseTypeInterface) => {
 	const [optionSelected, setOptionSelected] = useState<boolean | null>(null)
 
 	const storedResponse = useSelector((state: RootState) => state.test.storedResponse)
