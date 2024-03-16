@@ -3,6 +3,7 @@ import { QuestionInterface } from "../../utils/types";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { setQuestionResponse } from "../../store/test/slice";
+import { updateTestResponse } from "../../store/actions";
 
 interface TrueFalseTypeInterface {
 	question: QuestionInterface;
@@ -21,6 +22,7 @@ const TrueFalseType = ({ question, serialNumber, testId }: TrueFalseTypeInterfac
 	const [optionSelected, setOptionSelected] = useState<boolean | null>(null)
 
 	const storedResponse = useSelector((state: RootState) => state.test.storedResponse)
+	const failedResponses = useSelector((state: RootState) => state.test.failedResponses)
 
 	const dispatch = useDispatch<any>();
 
@@ -34,6 +36,8 @@ const TrueFalseType = ({ question, serialNumber, testId }: TrueFalseTypeInterfac
 
 	const onOptionClick = (value: boolean) => {
 		dispatch(setQuestionResponse({ questionId: question._id!, questionType: question.questionType!, response: value }))
+		dispatch(updateTestResponse({ testId: testId, response: [{ questionId: question._id!, questionType: question.questionType!, response: value }] }))
+		dispatch(updateTestResponse({ testId: testId, response: failedResponses }))
 	}
 
 	return (
