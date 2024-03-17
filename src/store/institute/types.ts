@@ -2,8 +2,9 @@ import { BaseInterface } from "..";
 import { Institute } from "../../utils/types";
 
 export interface InstituteState {
-    institutes: Institute[],
-    institute: Institute
+    institutes: Institute[];
+    institute: Institute;
+    vendors: Institute[];
 }
 
 export interface CreateInstituteRequest extends BaseInterface {

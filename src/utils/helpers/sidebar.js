@@ -126,6 +126,15 @@ export const getSideBarData = (role = 1) => {
                 matches: ["/roles", "/roles/add"],
             }
 		)
+		sideBarData[1].links.push(
+			{
+                name: "Vendors",
+                link: "/vendors",
+                icon: <BsBook />,
+                notifications: 0,
+                matches: ["/vendors"],
+            },
+		)
 	}
 
 	return sideBarData;

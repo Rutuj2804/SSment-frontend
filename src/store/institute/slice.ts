@@ -4,7 +4,8 @@ import { getAllInstitutes, getInstitute } from "./actions";
 
 const initialState: InstituteState = {
     institutes: [],
-    institute: {}
+    institute: {},
+    vendors: []
 }
 
 export const instituteSlice = createSlice({

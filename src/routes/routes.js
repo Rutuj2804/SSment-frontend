@@ -1,7 +1,7 @@
 import { Navigate } from "react-router-dom";
 import { Home } from "../pages/home";
 import { Dashboard } from "../pages/dashboard";
-import { AdminBatch, Batch, BatchDetail, CreateBatch, EditBatch, RenewBatch } from "../pages/batch";
+import { AdminBatch, Batch, BatchDetail, CreateBatch, CreateBatchInstitute, EditBatch, RenewBatch } from "../pages/batch";
 import { Result } from "../pages/result";
 import { AddQuestion, CreateTest, CreateTestInstitute, MyTests, Section, Test, TestDetail } from "../pages/test";
 import { ContactUs, ForgotPassword, Login } from "../pages/authentication";
@@ -9,8 +9,7 @@ import { Assignments, Roles, AddAssignment, AddAssignmentInstitute } from "../pa
 import { CreateTerm, CreateTermInstitute, Term } from "../pages/term";
 import { EditProfile, Logout, Profile, ResetPassword } from "../pages/profile";
 import { AttemptTest, EndTest, StartTest, TermsAndCondition } from "../pages/attempt";
-import { CreateInstitute, Institute } from "../pages/institute";
-import CreateBatchInstitute from "../pages/batch/CreateBatchInstitute";
+import { CreateInstitute, CreateVendor, Institute, Vendors } from "../pages/institute";
 
 export const regularRoutes = [
     { path: "/dashboard", element: <Dashboard /> },
@@ -18,6 +17,9 @@ export const regularRoutes = [
     { path: "/institutes", element: <Institute /> },
     { path: "/institutes/create", element: <CreateInstitute /> },
     { path: "/institute/edit/:id", element: <CreateInstitute /> },
+    
+    { path: "/vendors", element: <Vendors /> },
+    { path: "/vendor/create", element: <CreateVendor /> },
 
     { path: "/batches", element: <Batch /> },
     { path: "/a/batches", element: <AdminBatch /> },
