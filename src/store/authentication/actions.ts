@@ -75,6 +75,8 @@ export const login = createAsyncThunk( "login/Authentication", async (data: Logi
             if(data.navigate)
                 data.navigate("/")
 
+            window.location.reload()
+
             return res.data;
         } catch (err) {
             thunkAPI.dispatch(updateLoading(-1));
