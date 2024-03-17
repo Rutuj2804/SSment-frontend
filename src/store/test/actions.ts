@@ -252,6 +252,49 @@ export const getAllTests = createAsyncThunk( "getAllTests/Test", async (data: Ge
     }
 );
 
+export const getAllTestRegistrations = createAsyncThunk( "getAllTestRegistrations/Test", async (data: GetAllTestsRequest, thunkAPI) => {
+        thunkAPI.dispatch(updateLoading(1));
+        try {
+            const config = {
+                headers: {
+                    "Content-Type": "Application/json",
+                    "Authorization": `Bearer ${userToken()}`
+                },
+            };
+
+            const res = await axios.put(`/test/t/get-all`, data, config);
+
+            thunkAPI.dispatch(updateLoading(-1));
+            
+            return res.data.data;
+        } catch (err) {
+            thunkAPI.dispatch(updateLoading(-1));
+
+            if (err instanceof AxiosError) {
+                if(Array.isArray(err?.response?.data.message)) {
+                    thunkAPI.dispatch(
+                        setMessage({
+                            text: err?.response?.data.message[0],
+                            type: errorType.ERROR,
+                            _id: Date.now().toString(),
+                        })
+                    );
+                } else {
+                    thunkAPI.dispatch(
+                        setMessage({
+                            text: err?.response?.data.message,
+                            type: errorType.ERROR,
+                            _id: Date.now().toString(),
+                        })
+                    );
+                }
+            }
+
+            return thunkAPI.rejectWithValue(err);
+        }
+    }
+);
+
 export const deleteTest = createAsyncThunk( "deleteTest/Test", async (data: DeleteTestRequest, thunkAPI) => {
         thunkAPI.dispatch(updateLoading(1));
         try {

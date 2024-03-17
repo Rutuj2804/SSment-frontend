@@ -4,6 +4,7 @@ import {
 	QuestionInterface,
 	SectionInterface,
 	TestInterface,
+	TestResgistrationInterface,
 } from "../../utils/types";
 
 export interface TestState {
@@ -22,7 +23,8 @@ export interface TestState {
             [key: string]: number;
         }
     }
-	failedResponses: QuestionResponseInterface[]
+	failedResponses: QuestionResponseInterface[],
+	testRegistrations: TestResgistrationInterface[];
 }
 
 export interface QuestionResponseInterface {

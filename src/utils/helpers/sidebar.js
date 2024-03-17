@@ -27,11 +27,11 @@ export const getSideBarData = (role = 1) => {
 		}
 	];
 
-	if (isAdmin || isVendor || isVendorHelper || isInstitutionOwner || isInstitutionFaculty || isUser) {
+	if (isAdmin || isVendor || isVendorHelper || isInstitutionOwner || isInstitutionFaculty) {
 		sideBarData[0].links.push(
 			{
 				name: "Tests",
-				link: "/tests",
+				link: "/a/tests",
 				icon: <BsBarChartLine />,
 				notifications: 0,
 				matches: ["/demand-letters", "/demand-letters/add"],
@@ -40,6 +40,18 @@ export const getSideBarData = (role = 1) => {
 				name: "Results",
 				link: "/results",
 				icon: <BsAward />,
+				notifications: 0,
+				matches: ["/demand-letters", "/demand-letters/add"],
+			}
+		);
+	}
+
+	if(isUser) {
+		sideBarData[0].links.push(
+			{
+				name: "Tests",
+				link: "/tests",
+				icon: <BsBarChartLine />,
 				notifications: 0,
 				matches: ["/demand-letters", "/demand-letters/add"],
 			}

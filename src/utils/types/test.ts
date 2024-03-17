@@ -61,3 +61,12 @@ export interface TestInterface extends BaseInterface {
     gradeId?:GradeInterface[];
     releaseGradesOnceCompleted?: boolean;
 }
+
+export interface TestResgistrationInterface extends BaseInterface {
+    userId?: UserInterface;
+    testId?: TestInterface;
+    startDateTime: Date;
+    score: number;
+    isCompleted: boolean;
+    isActive: boolean;
+}

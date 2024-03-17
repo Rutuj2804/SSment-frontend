@@ -8,17 +8,6 @@ export interface RoleState {
     role: RoleDefinition;
 }
 
-export interface UpdateRoleDefinitionRequest extends BaseInterface {
-    alias: string;
-    name: string;
-    institute: number;
-    batch: number;
-    term: number;
-    test: number;
-    role: number;
-    roleId: string;
-}
-
 export interface UpdateRoleAssignmentRequest extends BaseInterface {
     roleId: number;
     institute: string;
@@ -27,8 +16,4 @@ export interface UpdateRoleAssignmentRequest extends BaseInterface {
 
 export interface GetAllRoleAssignmentsRequest extends BaseInterface {
     status: number;
-}
-
-export interface GetRoleRequest extends BaseInterface {
-    roleId: string;
 }
