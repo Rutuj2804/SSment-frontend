@@ -11,6 +11,7 @@ import term from "./term/slice"
 import batch from "./batch/slice"
 import role from "./role/slice"
 import test from "./test/slice"
+import core from "./core/slice"
 
 export const reducers = combineReducers({
     layout,
@@ -24,5 +25,6 @@ export const reducers = combineReducers({
     term,
     batch,
     role,
-    test
+    test,
+    core
 });

@@ -5,6 +5,7 @@ import { setNotifications } from "../../store/layout/slice";
 import { RootState } from "../../store";
 import { useOutsideClick } from "../../utils/hooks";
 import { NotificationsRounded } from "@mui/icons-material";
+import moment from "moment";
 
 const data = [
 	{
@@ -70,9 +71,8 @@ const data = [
 ];
 
 const Notification = () => {
-	const notification = useSelector(
-		(state: RootState) => state.layout.notifications
-	);
+	const notification = useSelector((state: RootState) => state.layout.notifications);
+	const notifications = useSelector((state: RootState) => state.core.notifications);
 
 	const dispatch = useDispatch();
 
@@ -100,15 +100,15 @@ const Notification = () => {
 					}`}
 				>
 					<div className="profileMenu__Options">
-						{data.map((d, i) => (
+						{notifications.map((d, i) => (
 							<div key={i} className="notificationMenu__NavLink">
-								{/* <Avatar /> */}
 								<div className="details">
 									<h6>{d.text}</h6>
-									<p>{d.time}</p>
+									<p>{moment(d.createdAt).fromNow()}</p>
 								</div>
 							</div>
 						))}
+						{!notifications.length ? <h6 className="p-2 pb-0">No notifications yet.</h6> : null}
 					</div>
 				</div>
 			</div>

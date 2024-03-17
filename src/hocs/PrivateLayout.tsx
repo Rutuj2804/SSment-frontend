@@ -12,6 +12,7 @@ import { Popups } from "../components/popup";
 import { Backdrop } from "../common/backdrop";
 import { getDisplayTerms } from "../store/actions";
 import { Loader } from "../common/loader";
+import { getNotifications } from "../store/core/actions";
 
 interface PrivateLayoutProps {
     children: React.ReactNode;
@@ -29,6 +30,10 @@ const PrivateLayout = ({ children }: PrivateLayoutProps) => {
     useEffect(() => {
         if(user.instituteId?._id) dispatch(getDisplayTerms({ instituteId: user.instituteId._id! }))
     }, [user.instituteId, dispatch])
+
+    useEffect(() => {
+        if(user._id) dispatch(getNotifications())
+    }, [user._id])
 
     return (
         <div>

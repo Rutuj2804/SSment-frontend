@@ -22,7 +22,7 @@ export const createTest = createAsyncThunk( "createTest/Test", async (data: Crea
 
         thunkAPI.dispatch(updateLoading(-1));
 
-        if(data.navigate) data.navigate("/tests")
+        if(data.navigate) data.navigate("/a/tests")
 
         thunkAPI.dispatch(
             setMessage({
@@ -77,7 +77,7 @@ export const updateTest = createAsyncThunk( "updateTest/Test", async (data: Upda
 
             thunkAPI.dispatch(updateLoading(-1));
 
-            if(data.navigate) data.navigate("/tests")
+            if(data.navigate) data.navigate("/a/tests")
 
             thunkAPI.dispatch(
                 setMessage({
@@ -467,7 +467,7 @@ export const changeStatus = createAsyncThunk( "changeStatus/Test", async (data: 
                 })
             );
 
-            if(data.navigate) data.navigate("/tests")
+            if(data.navigate) data.navigate("/a/tests")
             
             return res.data.data;
         } catch (err) {
