@@ -4,7 +4,7 @@ import { QuestionInterface } from "../../utils/types";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { setQuestionResponse } from "../../store/test/slice";
-import { updateTestResponse } from "../../store/actions";
+import { updateFailedTestResponse, updateTestResponse } from "../../store/actions";
 
 interface MultipleChoiceInterface {
 	question: QuestionInterface;
@@ -39,7 +39,7 @@ const MultipleChoice = ({ question, serialNumber, testId }: MultipleChoiceInterf
 	const onOptionClick = (id: string) => {
 		dispatch(setQuestionResponse({ questionId: question._id!, questionType: question.questionType!, response: id }))
 		dispatch(updateTestResponse({ testId: testId, response: [{ questionId: question._id!, questionType: question.questionType!, response: id }] }))
-		dispatch(updateTestResponse({ testId: testId, response: failedResponses }))
+		dispatch(updateFailedTestResponse({ testId: testId, response: failedResponses }))
 	}
 
 	return (

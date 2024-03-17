@@ -4,12 +4,9 @@ import { setBreadcrumps } from "../../store/breadcrumps/slice";
 import { Paper } from "../../components/paper";
 import { Button } from "../../library";
 import { DataGrid } from "@mui/x-data-grid";
-import { AddRounded, CloudDownloadRounded } from "@mui/icons-material";
-import { useNavigate } from "react-router-dom";
-import GetTestColumns from "../../utils/data-grid/test";
+import { CloudDownloadRounded } from "@mui/icons-material";
 import { RootState } from "../../store";
-import { getAllTestRegistrations, getAllTests } from "../../store/actions";
-import { getTestRoute } from "../../utils/helpers";
+import { getAllTestRegistrations } from "../../store/actions";
 import GetTestRegistrationColumns from "../../utils/data-grid/test-registration";
 
 enum Tabs {

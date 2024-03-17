@@ -403,8 +403,36 @@ export const updateTestResponse = createAsyncThunk( "updateTestResponse/Test", a
 
             thunkAPI.dispatch(updateLoading(-1));
             
-            if(data.response.length > 1) return true;
-            else return false;
+            return res.data.data;
+        } catch (err) {
+            thunkAPI.dispatch(updateLoading(-1));
+
+            thunkAPI.dispatch(setFailedResponse(data.response))
+
+            return thunkAPI.rejectWithValue(err);
+        }
+    }
+);
+
+export const updateFailedTestResponse = createAsyncThunk( "updateFailedTestResponse/Test", async (data: UpdateTestResponseRequest, thunkAPI) => {
+        thunkAPI.dispatch(updateLoading(1));
+        try {
+            const config = {
+                headers: {
+                    "Content-Type": "Application/json",
+                    "Authorization": `Bearer ${userToken()}`
+                },
+            };
+
+            if(data.response.length === 0) return null;
+
+            data.testId = decrypt(data.testId)!
+
+            const res = await axios.put(`/test/t/update-test-response`, data, config);
+
+            thunkAPI.dispatch(updateLoading(-1));
+            
+            return res.data.data;
         } catch (err) {
             thunkAPI.dispatch(updateLoading(-1));
 

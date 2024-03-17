@@ -3,7 +3,7 @@ import { QuestionInterface } from "../../utils/types";
 import { useDispatch, useSelector } from "react-redux";
 import { setQuestionResponse } from "../../store/test/slice";
 import { RootState } from "../../store";
-import { updateTestResponse } from "../../store/actions";
+import { updateFailedTestResponse, updateTestResponse } from "../../store/actions";
 
 interface YesNoTypeInterface {
 	question: QuestionInterface;
@@ -37,7 +37,7 @@ const YesNoType = ({ question, serialNumber, testId }: YesNoTypeInterface) => {
 	const onOptionClick = (value: boolean) => {
 		dispatch(setQuestionResponse({ questionId: question._id!, questionType: question.questionType!, response: value }))
 		dispatch(updateTestResponse({ testId: testId, response: [{ questionId: question._id!, questionType: question.questionType!, response: value }] }))
-		dispatch(updateTestResponse({ testId: testId, response: failedResponses }))
+		dispatch(updateFailedTestResponse({ testId: testId, response: failedResponses }))
 	}
 
 	return (

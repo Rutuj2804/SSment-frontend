@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { QuestionResponseInterface, TestState } from "./types";
-import { createQuestion, createSection, deleteQuestion, deleteSection, deleteTest, getAllTestRegistrations, getAllTests, getQuestionsOfSection, getQuestionsOfTest, getSectionsOfTest, getTestDetails, getTestRegistrationDetails, loadTest, updateQuestion, updateSection, updateTestResponse } from "./actions";
+import { createQuestion, createSection, deleteQuestion, deleteSection, deleteTest, getAllTestRegistrations, getAllTests, getQuestionsOfSection, getQuestionsOfTest, getSectionsOfTest, getTestDetails, getTestRegistrationDetails, loadTest, updateFailedTestResponse, updateQuestion, updateSection } from "./actions";
 
 const initialState: TestState = {
     tests: [],
@@ -50,9 +50,8 @@ export const testSlice = createSlice({
             s.loadTest = a.payload.response
             s.storedResponse = a.payload.storedResponse
         })
-        builder.addCase(updateTestResponse.fulfilled, (s, a) => {
-            if(a.payload)
-                s.failedResponses = []
+        builder.addCase(updateFailedTestResponse.fulfilled, (s, a) => {
+            s.failedResponses = []
         })
         builder.addCase(getAllTests.fulfilled, (s, a) => {
             s.tests = a.payload
