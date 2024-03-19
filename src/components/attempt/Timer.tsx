@@ -28,7 +28,6 @@ const Timer = ({ minutes: mins }: TimerInterface) => {
 				clearInterval(timer);
 			} else {
 				if (seconds === 0) {
-                    console.log("seconds 1", seconds)
 					if (minutes === 0) {
 						if (hours === 0) {
 							clearInterval(timer);

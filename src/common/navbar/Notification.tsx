@@ -1,4 +1,4 @@
-import { Avatar, Badge, IconButton, Tooltip } from "@mui/material";
+import { Badge, IconButton, Tooltip } from "@mui/material";
 import { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setNotifications } from "../../store/layout/slice";
@@ -6,69 +6,6 @@ import { RootState } from "../../store";
 import { useOutsideClick } from "../../utils/hooks";
 import { NotificationsRounded } from "@mui/icons-material";
 import moment from "moment";
-
-const data = [
-	{
-		avatar: <Avatar />,
-		text: "A lecture scheduled at 4:30pm on 12 Jun, 2023",
-		time: "a while ago",
-	},
-	{
-		avatar: <Avatar />,
-		text: "A lecture scheduled at 4:30pm on 12 Jun, 2023",
-		time: "a while ago",
-	},
-	{
-		avatar: <Avatar />,
-		text: "A lecture scheduled at 4:30pm on 12 Jun, 2023",
-		time: "a while ago",
-	},
-	{
-		avatar: <Avatar />,
-		text: "A lecture scheduled at 4:30pm on 12 Jun, 2023",
-		time: "a while ago",
-	},
-	{
-		avatar: <Avatar />,
-		text: "A lecture scheduled at 4:30pm on 12 Jun, 2023",
-		time: "a while ago",
-	},
-	{
-		avatar: <Avatar />,
-		text: "A lecture scheduled at 4:30pm on 12 Jun, 2023",
-		time: "a while ago",
-	},
-	{
-		avatar: <Avatar />,
-		text: "A lecture scheduled at 4:30pm on 12 Jun, 2023",
-		time: "a while ago",
-	},
-	{
-		avatar: <Avatar />,
-		text: "A lecture scheduled at 4:30pm on 12 Jun, 2023",
-		time: "a while ago",
-	},
-	{
-		avatar: <Avatar />,
-		text: "A lecture scheduled at 4:30pm on 12 Jun, 2023",
-		time: "a while ago",
-	},
-	{
-		avatar: <Avatar />,
-		text: "A lecture scheduled at 4:30pm on 12 Jun, 2023",
-		time: "a while ago",
-	},
-	{
-		avatar: <Avatar />,
-		text: "A lecture scheduled at 4:30pm on 12 Jun, 2023",
-		time: "a while ago",
-	},
-	{
-		avatar: <Avatar />,
-		text: "A lecture scheduled at 4:30pm on 12 Jun, 2023",
-		time: "a while ago",
-	},
-];
 
 const Notification = () => {
 	const notification = useSelector((state: RootState) => state.layout.notifications);
@@ -88,7 +25,7 @@ const Notification = () => {
 		<div ref={notificationRef}>
 			<Tooltip title="Notifications">
 				<IconButton onClick={() => dispatch(setNotifications(!notification))}>
-					<Badge variant="dot" color="primary">
+					<Badge color="primary">
 						<NotificationsRounded />
 					</Badge>
 				</IconButton>

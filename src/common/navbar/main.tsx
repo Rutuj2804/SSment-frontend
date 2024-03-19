@@ -1,7 +1,4 @@
-import {
-	MenuRounded,
-	SearchRounded,
-} from "@mui/icons-material";
+import { MenuRounded, SearchRounded } from "@mui/icons-material";
 import { IconButton, Tooltip } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { setSearch, setSidebar } from "../../store/layout/slice";
@@ -18,9 +15,11 @@ const Navbar = () => {
 
 	const dispatch = useDispatch();
 
-	const terms = useSelector((state: RootState) => state.term.display)
+	const role = useSelector((state: RootState) => state.profile.user.role);
 
-	const current = useSelector((state: RootState) => state.term.current)
+	const terms = useSelector((state: RootState) => state.term.display);
+
+	const current = useSelector((state: RootState) => state.term.current);
 
 	return (
 		<div className="navbar__Wrapper">
@@ -28,22 +27,28 @@ const Navbar = () => {
 				{!layout.sidebar && (
 					<div className="logo">
 						<Logo />
-						<div className="vr"></div>
-						<div className="navbar__ChangeUniversity">
-							<Select
-								options={terms}
-								name="name"
-								value="_id"
-								selected={current}
-								startIcon={<BsBox />}
-								className="p-0 m-0"
-								onChange={c=>dispatch(setCurrentTerm(c))}
-							/>
-						</div>
+						{role === 201 || role === 101 ? (
+							<>
+								<div className="vr"></div>
+								<div className="navbar__ChangeUniversity">
+									<Select
+										options={terms}
+										name="name"
+										value="_id"
+										selected={current}
+										startIcon={<BsBox />}
+										className="p-0 m-0"
+										onChange={(c) =>
+											dispatch(setCurrentTerm(c))
+										}
+									/>
+								</div>
+							</>
+						) : null}
 					</div>
 				)}
 				<div className="navbar__ChangeUniversity">
-					{layout.sidebar && (
+					{layout.sidebar && (role === 201 || role === 101) ? (
 						<Select
 							options={terms}
 							name="name"
@@ -51,15 +56,17 @@ const Navbar = () => {
 							selected={current}
 							startIcon={<BsBox />}
 							className="p-0 m-0"
-							onChange={c=>dispatch(setCurrentTerm(c))}
+							onChange={(c) => dispatch(setCurrentTerm(c))}
 						/>
-					)}
+					) : null}
 				</div>
 			</div>
 			<div className="right">
 				<div className="search">
 					<Tooltip title="Search">
-						<IconButton onClick={() => dispatch(setSearch(!layout.search))}>
+						<IconButton
+							onClick={() => dispatch(setSearch(!layout.search))}
+						>
 							<SearchRounded />
 						</IconButton>
 					</Tooltip>
