@@ -6,6 +6,7 @@ import {
 	BsBook,
 	BsXDiamond,
 	BsBox,
+	BsEasel2,
 } from "react-icons/bs";
 
 export const getSideBarData = (role = 1) => {
@@ -136,6 +137,19 @@ export const getSideBarData = (role = 1) => {
             },
 		)
 	}
+
+	sideBarData.push({
+		title: "Tools",
+		links: [
+			{
+				name: "Practice",
+				link: "/tools/practice",
+				icon: <BsEasel2 />,
+				notifications: 0,
+				matches: ["/tools/practice"],
+			}
+		],
+	})
 
 	return sideBarData;
 };

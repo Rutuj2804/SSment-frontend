@@ -10,6 +10,7 @@ import { CreateTerm, CreateTermInstitute, Term } from "../pages/term";
 import { EditProfile, Logout, Profile, ResetPassword } from "../pages/profile";
 import { AttemptTest, EndTest, StartTest, TermsAndCondition } from "../pages/attempt";
 import { CreateInstitute, CreateVendor, Institute, Vendors } from "../pages/institute";
+import { Practice } from "../pages/tools";
 
 export const regularRoutes = [
     { path: "/dashboard", element: <Dashboard /> },
@@ -52,6 +53,8 @@ export const regularRoutes = [
     { path: "/test/:id", element: <TestDetail /> },
     { path: "/test/sections/:id", element: <Section /> },
     { path: "/test/questions/:id", element: <AddQuestion /> },
+
+    { path: "/tools/practice", element: <Practice /> },
 
     { path: "/c/:email", element: <Profile /> },
     { path: "/edit/:email", element: <EditProfile /> },
