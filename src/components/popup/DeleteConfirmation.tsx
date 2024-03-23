@@ -45,8 +45,8 @@ const DeleteConfirmation = () => {
 				<p>{deleteData.text}</p>
 			</div>
 			<div className="deleteConfirmation__Footer">
-				<OutlineButton className="deleteConfirmation__Outline" onClick={close}>Cancel</OutlineButton>
-				<Button className="deleteConfirmation__Fill" onClick={startCallback}>Delete</Button>
+				<OutlineButton className="deleteConfirmation__Outline" onClick={close}>Go Back</OutlineButton>
+				<Button className="deleteConfirmation__Fill" onClick={startCallback}>Yes</Button>
 			</div>
 		</div>
 	);

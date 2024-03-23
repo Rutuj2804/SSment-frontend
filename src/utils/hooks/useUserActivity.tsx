@@ -1,27 +1,27 @@
 import { useState, useEffect } from "react";
 
 const useUserActivity = () => {
-	const [isActive, setIsActive] = useState<boolean>(true);
+	const [isActive, setIsActive] = useState<boolean>(false);
 
 	useEffect(() => {
 		const handleVisibilityChange = () => {
 			if (document.hidden) {
-				setIsActive(false);
-			} else {
 				setIsActive(true);
+			} else {
+				setIsActive(false);
 			}
 		};
 
 		const handleBlur = () => {
-			setIsActive(false);
-		};
-
-		const handleFocus = () => {
 			setIsActive(true);
 		};
 
+		const handleFocus = () => {
+			setIsActive(false);
+		};
+
 		const handleNotification = () => {
-			setIsActive(false); // Adjust this based on your requirements
+			setIsActive(true); // Adjust this based on your requirements
 		};
 
 		document.addEventListener("visibilitychange", handleVisibilityChange);

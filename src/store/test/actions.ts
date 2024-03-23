@@ -3,7 +3,7 @@ import { AxiosError } from "axios";
 import { updateLoading } from "../loading/slice";
 import { setMessage } from "../messages/slice";
 import { errorType } from "../messages/types";
-import { ChangeStatusRequest, CreateQuestionRequest, CreateSectionRequest, CreateTestRequest, DeleteQuestionRequest, DeleteSectionRequest, DeleteTestRequest, GetAllTestsRequest, GetQuestionsOfSectionRequest, GetQuestionsOfTestRequest, GetSectionsOfTestSectionRequest, GetTestDetailsRequest, LoadTestRequest, SubmitTestRequest, UpdateQuestionRequest, UpdateSectionRequest, UpdateTestRequest, UpdateTestResponseRequest } from "./types";
+import { ChangeStatusRequest, CreateQuestionRequest, CreateSectionRequest, CreateTestRequest, DeleteQuestionRequest, DeleteSectionRequest, DeleteTestRequest, GetAllTestsRequest, GetQuestionsOfSectionRequest, GetQuestionsOfTestRequest, GetSectionsOfTestSectionRequest, GetTestDetailsRequest, LoadTestRequest, ReportMalpracticeRequest, SubmitTestRequest, UpdateQuestionRequest, UpdateSectionRequest, UpdateTestRequest, UpdateTestResponseRequest } from "./types";
 import axios from "../axios"
 import { decrypt, encrypt, userToken } from "../../utils/helpers";
 import { setFailedResponse } from "./slice";
@@ -484,6 +484,31 @@ export const updateFailedTestResponse = createAsyncThunk( "updateFailedTestRespo
             thunkAPI.dispatch(updateLoading(-1));
 
             thunkAPI.dispatch(setFailedResponse(data.response))
+
+            return thunkAPI.rejectWithValue(err);
+        }
+    }
+);
+
+export const reportMalpractice = createAsyncThunk( "reportMalpractice/Test", async (data: ReportMalpracticeRequest, thunkAPI) => {
+        thunkAPI.dispatch(updateLoading(1));
+        try {
+            const config = {
+                headers: {
+                    "Content-Type": "Application/json",
+                    "Authorization": `Bearer ${userToken()}`
+                },
+            };
+
+            data.testId = decrypt(data.testId)!
+
+            const res = await axios.put(`/test/t/report-malpractice`, data, config);
+
+            thunkAPI.dispatch(updateLoading(-1));
+            
+            return res.data.data;
+        } catch (err) {
+            thunkAPI.dispatch(updateLoading(-1));
 
             return thunkAPI.rejectWithValue(err);
         }

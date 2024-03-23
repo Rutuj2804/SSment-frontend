@@ -17,15 +17,16 @@ import {
 	ChevronRightRounded,
 } from "@mui/icons-material";
 import { Button } from "../../library";
-import { useFullScreenChange, useUserActivity } from "../../utils/hooks";
+import { useFullScreenChange, useKeyPress, useUserActivity } from "../../utils/hooks";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { QuestionInterface } from "../../utils/types";
 import { username } from "../../utils/helpers";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { setSubmitConfirmation } from "../../store/layout/slice";
 import { setMarked } from "../../store/test/slice";
+import { reportMalpractice, submitTest } from "../../store/actions";
 
 enum QuestionTypeEnum {
 	"MULTIPLECHOICE" = 1,
@@ -45,6 +46,12 @@ enum QuestionResponseType {
 	"ATTEMPTED_AND_MARKED_FOR_REVIEW" = 3,
 }
 
+export enum MalPracticeType {
+    "LOW_SEVERETY"=1,
+    "MEDIUM_SEVERETY"=1,
+    "HIGH_SEVERETY"=1,
+}
+
 const AttemptTest = () => {
 	const [activeSection, setActiveSection] = useState(0);
 
@@ -53,19 +60,33 @@ const AttemptTest = () => {
 	const [activeQuestion, setActiveQuestion] =
 		useState<QuestionInterface | null>(null);
 
-	const isFullScreen = useFullScreenChange();
-	const isActive = useUserActivity();
+	const isFullScreenExited = useFullScreenChange();
+	const isNotActive = useUserActivity();
+	const isKeyPresses = useKeyPress();
 
-	const dispatch = useDispatch();
+	const dispatch = useDispatch<any>();
 
-	const { id } = useParams()
+	const navigate = useNavigate();
+
+	const { id } = useParams();
 
 	const loadTest = useSelector((state: RootState) => state.test.loadTest);
 	const storedResponse = useSelector((state: RootState) => state.test.storedResponse);
 
 	useEffect(() => {
-		console.log(isFullScreen, isActive);
-	}, [isFullScreen, isActive]);
+		if(isNotActive) dispatch(reportMalpractice({ testId: id!, type: MalPracticeType.MEDIUM_SEVERETY }))
+	}, [isNotActive]);
+
+	useEffect(() => {
+		if(isKeyPresses) dispatch(reportMalpractice({ testId: id!, type: MalPracticeType.LOW_SEVERETY }))
+	}, [isKeyPresses])
+
+	useEffect(() => {
+		if(isFullScreenExited) {
+			dispatch(submitTest({ testId: id!, navigate }))
+			dispatch(reportMalpractice({ testId: id!, type: MalPracticeType.HIGH_SEVERETY }))
+		}
+	}, [isFullScreenExited])
 
 	useEffect(() => {
 		if(loadTest.sections.length) {

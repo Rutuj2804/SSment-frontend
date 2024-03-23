@@ -79,6 +79,11 @@ export interface SubmitTestRequest extends BaseInterface {
 	testId: string;
 }
 
+export interface ReportMalpracticeRequest extends BaseInterface {
+	testId: string;
+	type: number;
+}
+
 export interface UpdateTestResponseRequest extends BaseInterface {
 	testId: string;
 	response: QuestionResponseInterface[]

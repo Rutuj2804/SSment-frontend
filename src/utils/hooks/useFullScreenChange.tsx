@@ -5,7 +5,7 @@ const useFullScreenChange = () => {
 
 	useEffect(() => {
 		const handleFullScreenChange = () => {
-			setIsFullScreen(!!document.fullscreenElement);
+			setIsFullScreen(!document.fullscreenElement);
 		};
 
 		document.addEventListener("fullscreenchange", handleFullScreenChange);
