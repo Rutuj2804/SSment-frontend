@@ -19,11 +19,13 @@ import {
 import { Button } from "../../library";
 import { useFullScreenChange, useUserActivity } from "../../utils/hooks";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { QuestionInterface } from "../../utils/types";
 import { username } from "../../utils/helpers";
 import { useParams } from "react-router-dom";
+import { setSubmitConfirmation } from "../../store/layout/slice";
+import { setMarked } from "../../store/test/slice";
 
 enum QuestionTypeEnum {
 	"MULTIPLECHOICE" = 1,
@@ -53,6 +55,8 @@ const AttemptTest = () => {
 
 	const isFullScreen = useFullScreenChange();
 	const isActive = useUserActivity();
+
+	const dispatch = useDispatch();
 
 	const { id } = useParams()
 
@@ -176,14 +180,14 @@ const AttemptTest = () => {
 				</div>
 				<div className="attemptTest__Buttons">
 					<div className="left">
-						<Button startIcon={<BookmarkAddRounded />}>
+						<Button onClick={() => dispatch(setMarked(activeQuestion?._id!))} startIcon={<BookmarkAddRounded />}>
 							Mark For Review
 						</Button>
 						<Button onClick={() => onButtonNavigation(-1)} startIcon={<ChevronLeftRounded />}>Prev</Button>
 						<Button onClick={() => onButtonNavigation(1)} endIcon={<ChevronRightRounded />}>Next</Button>
 					</div>
 					<div className="right">
-						<Button>Submit</Button>
+						<Button onClick={() => dispatch(setSubmitConfirmation(true))}>Submit</Button>
 					</div>
 				</div>
 				<div className="attemptTest__Footer">

@@ -34,7 +34,8 @@ const initialState: LayoutState = {
         isActive: false,
         testId: "",
         sectionId: ""
-    }
+    },
+    submitConfirmation: false
 };
 
 export const layoutSlice = createSlice({
@@ -74,6 +75,11 @@ export const layoutSlice = createSlice({
             state.backdrop = action.payload.isActive;
             state.popup = action.payload.isActive;
             state.section = action.payload;
+        },
+        setSubmitConfirmation: (state, action: PayloadAction<boolean>) => {
+            state.backdrop = action.payload;
+            state.popup = action.payload;
+            state.submitConfirmation = action.payload;
         }
     },
 });
@@ -86,7 +92,8 @@ export const {
     setQuestion,
     setDeleteConfirmation,
     setAddSection,
-    setConfirmation
+    setConfirmation,
+    setSubmitConfirmation
 } = layoutSlice.actions;
 
 export default layoutSlice.reducer;

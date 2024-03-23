@@ -30,7 +30,7 @@ export interface TestState {
 export interface QuestionResponseInterface {
 	questionId: string;
 	questionType: number;
-	response: string | boolean | null;
+	response: string | string[] | boolean | null;
 }
 
 export interface CreateTestRequest extends BaseInterface {
@@ -72,6 +72,10 @@ export interface DeleteTestRequest extends BaseInterface {
 }
 
 export interface LoadTestRequest extends BaseInterface {
+	testId: string;
+}
+
+export interface SubmitTestRequest extends BaseInterface {
 	testId: string;
 }
 

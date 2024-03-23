@@ -3,7 +3,7 @@ import { AxiosError } from "axios";
 import { updateLoading } from "../loading/slice";
 import { setMessage } from "../messages/slice";
 import { errorType } from "../messages/types";
-import { ChangeStatusRequest, CreateQuestionRequest, CreateSectionRequest, CreateTestRequest, DeleteQuestionRequest, DeleteSectionRequest, DeleteTestRequest, GetAllTestsRequest, GetQuestionsOfSectionRequest, GetQuestionsOfTestRequest, GetSectionsOfTestSectionRequest, GetTestDetailsRequest, LoadTestRequest, UpdateQuestionRequest, UpdateSectionRequest, UpdateTestRequest, UpdateTestResponseRequest } from "./types";
+import { ChangeStatusRequest, CreateQuestionRequest, CreateSectionRequest, CreateTestRequest, DeleteQuestionRequest, DeleteSectionRequest, DeleteTestRequest, GetAllTestsRequest, GetQuestionsOfSectionRequest, GetQuestionsOfTestRequest, GetSectionsOfTestSectionRequest, GetTestDetailsRequest, LoadTestRequest, SubmitTestRequest, UpdateQuestionRequest, UpdateSectionRequest, UpdateTestRequest, UpdateTestResponseRequest } from "./types";
 import axios from "../axios"
 import { decrypt, encrypt, userToken } from "../../utils/helpers";
 import { setFailedResponse } from "./slice";
@@ -355,6 +355,53 @@ export const loadTest = createAsyncThunk( "loadTest/Test", async (data: LoadTest
             thunkAPI.dispatch(updateLoading(-1));
 
             if(data.navigate) data.navigate(`/attempt-test/${encrypt(data.testId)}`)
+            
+            return res.data.data;
+        } catch (err) {
+            thunkAPI.dispatch(updateLoading(-1));
+
+            if (err instanceof AxiosError) {
+                if(Array.isArray(err?.response?.data.message)) {
+                    thunkAPI.dispatch(
+                        setMessage({
+                            text: err?.response?.data.message[0],
+                            type: errorType.ERROR,
+                            _id: Date.now().toString(),
+                        })
+                    );
+                } else {
+                    thunkAPI.dispatch(
+                        setMessage({
+                            text: err?.response?.data.message,
+                            type: errorType.ERROR,
+                            _id: Date.now().toString(),
+                        })
+                    );
+                }
+            }
+
+            return thunkAPI.rejectWithValue(err);
+        }
+    }
+);
+
+export const submitTest = createAsyncThunk( "submitTest/Test", async (data: SubmitTestRequest, thunkAPI) => {
+        thunkAPI.dispatch(updateLoading(1));
+        try {
+            const config = {
+                headers: {
+                    "Content-Type": "Application/json",
+                    "Authorization": `Bearer ${userToken()}`
+                },
+            };
+
+            data.testId = decrypt(data.testId)!
+
+            const res = await axios.put(`/test/t/submit/${data.testId}`, data, config);
+
+            thunkAPI.dispatch(updateLoading(-1));
+
+            if(data.navigate) data.navigate(`/end-test/${encrypt(data.testId)}`)
             
             return res.data.data;
         } catch (err) {

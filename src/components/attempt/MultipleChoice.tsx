@@ -21,7 +21,7 @@ enum QuestionResponseType {
 
 const MultipleChoice = ({ question, serialNumber, testId }: MultipleChoiceInterface) => {
 
-	const [optionSelected, setOptionSelected] = useState("")
+	const [optionSelected, setOptionSelected] = useState<string[]>([])
 
 	const storedResponse = useSelector((state: RootState) => state.test.storedResponse)
 	const failedResponses = useSelector((state: RootState) => state.test.failedResponses)
@@ -32,13 +32,13 @@ const MultipleChoice = ({ question, serialNumber, testId }: MultipleChoiceInterf
 		if(storedResponse.attempts[question._id!] !== QuestionResponseType.NOT_ATTEMPTED) {
 			const queResponse = storedResponse.response.filter(q=> q.questionId === question._id)
 
-			if(queResponse.length && queResponse[0].response) setOptionSelected(queResponse[0].response as string) 
-		}
+			if(queResponse.length && queResponse[0].response) setOptionSelected(queResponse[0].response as string[]) 
+		} else setOptionSelected([])
 	}, [storedResponse, question._id])
 
 	const onOptionClick = (id: string) => {
-		dispatch(setQuestionResponse({ questionId: question._id!, questionType: question.questionType!, response: id }))
-		dispatch(updateTestResponse({ testId: testId, response: [{ questionId: question._id!, questionType: question.questionType!, response: id }] }))
+		dispatch(setQuestionResponse({ questionId: question._id!, questionType: question.questionType!, response: [...optionSelected, id] }))
+		dispatch(updateTestResponse({ testId: testId, response: [{ questionId: question._id!, questionType: question.questionType!, response: [...optionSelected, id] }] }))
 		dispatch(updateFailedTestResponse({ testId: testId, response: failedResponses }))
 	}
 
@@ -58,7 +58,7 @@ const MultipleChoice = ({ question, serialNumber, testId }: MultipleChoiceInterf
 			<div className="multipleChoiceQuestion__Right">
 				{question.optionId?.map((o) => (
 					<div key={o._id} onClick={() => onOptionClick(o._id!)} className="multipleChoiceQuestion__Option">
-						<Checkbox checked={o._id === optionSelected} />
+						<Checkbox checked={optionSelected.indexOf(o._id!) > -1} />
 						<span>{o.bullet}.</span> {o.title}
 					</div>
 				))}

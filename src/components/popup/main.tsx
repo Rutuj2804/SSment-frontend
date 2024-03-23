@@ -6,6 +6,7 @@ import DeleteConfirmation from "./DeleteConfirmation";
 import AddQuestion from "./AddQuestion";
 import AddSection from "./AddSection";
 import Confirmation from "./Confirmation";
+import SubmitTestConfirmation from "./SubmitTestConfirmation";
 
 const Popups = () => {
 	const layout = useSelector((state: RootState) => state.layout);
@@ -17,6 +18,7 @@ const Popups = () => {
 			{layout.confirmation.isActive ? <Confirmation /> : null}
 			{layout.question.isActive ? <AddQuestion /> : null}
 			{layout.section.isActive ? <AddSection /> : null}
+			{layout.submitConfirmation ? <SubmitTestConfirmation /> : null}
 		</div>
 	) : (
 		<></>

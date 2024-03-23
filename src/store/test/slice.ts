@@ -28,10 +28,17 @@ export const testSlice = createSlice({
     reducers: {
         setQuestionResponse: (s, a: PayloadAction<QuestionResponseInterface>) => {
             s.storedResponse.response = s.storedResponse.response.map(s => s.questionId === a.payload.questionId ? a.payload : s)
-            s.storedResponse.attempts[a.payload.questionId] = 1
+            if(s.storedResponse.attempts[a.payload.questionId] === 2)
+                s.storedResponse.attempts[a.payload.questionId] = 3
+            else s.storedResponse.attempts[a.payload.questionId] = 1
         },
         setFailedResponse: (s, a: PayloadAction<QuestionResponseInterface[]>) => {
             s.failedResponses = a.payload
+        },
+        setMarked: (s, a: PayloadAction<string>) => {
+            if(s.storedResponse.attempts[a.payload] === 1)
+                s.storedResponse.attempts[a.payload] = 3
+            else s.storedResponse.attempts[a.payload] = 2
         }
     },
     extraReducers(builder) {
@@ -94,6 +101,6 @@ export const testSlice = createSlice({
     },
 })
 
-export const { setQuestionResponse, setFailedResponse } = testSlice.actions
+export const { setQuestionResponse, setFailedResponse, setMarked } = testSlice.actions
 
 export default testSlice.reducer;

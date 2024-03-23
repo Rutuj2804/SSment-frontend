@@ -11,6 +11,7 @@ export interface LayoutState {
 	delete: DeleteInterface;
 	confirmation: DeleteInterface;
 	section: AddSectionInterface;
+	submitConfirmation: boolean;
 }
 
 export interface DeleteInterface {

@@ -31,7 +31,7 @@ const TrueFalseType = ({ question, serialNumber, testId }: TrueFalseTypeInterfac
 			const queResponse = storedResponse.response.filter(q=> q.questionId === question._id)
 
 			if(queResponse.length && typeof queResponse[0].response === "boolean") setOptionSelected(queResponse[0].response as boolean) 
-		}
+		} else setOptionSelected(null)
 	}, [storedResponse, question._id])
 
 	const onOptionClick = (value: boolean) => {
