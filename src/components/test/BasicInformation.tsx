@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { Input, Select, Textarea } from "../../library";
+import { FileUpload, Input, Select, Textarea } from "../../library";
 import { CreateTestFormDataInterface } from "../../pages/test";
 import { RootState } from "../../store";
 import { useEffect, useState } from "react";
@@ -10,9 +10,11 @@ interface BasicInformationProps {
     onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
 	termId: string;
 	setTermId: Function;
+	testImage: File | null;
+	setTestImage: Function;
 }
 
-const BasicInformation = ({ formData, onChange, setTermId, termId }: BasicInformationProps) => {
+const BasicInformation = ({ formData, onChange, setTermId, termId, testImage, setTestImage }: BasicInformationProps) => {
 
 	const [selectedInstitute, setSelectedInstitute] = useState("")
 
@@ -31,6 +33,12 @@ const BasicInformation = ({ formData, onChange, setTermId, termId }: BasicInform
 		}
 	}, [selectedInstitute])
 
+	const fileUploaded = (acceptedFiles: File[]) => {
+		console.log(acceptedFiles)
+		if(acceptedFiles.length) setTestImage(acceptedFiles[0])
+		else setTestImage(null)
+	}
+
 	return (
 		<div className="row">
 			<div className="col-12">
@@ -44,13 +52,8 @@ const BasicInformation = ({ formData, onChange, setTermId, termId }: BasicInform
 					onChange={onChange}
 				/>
 			</div>
-			<div className="col-12">
-				<Input
-					name="image"
-					type="file"
-					accept="image/*"
-					label="Test Image"
-				/>
+			<div className="col-12 mb-2">
+				<FileUpload title="Test Image" type="image/*" showPreview onChange={fileUploaded} file={testImage} />
 			</div>
 			<div className="col-lg-6 col-md-6 col-12 mb-2">
 				<Select 

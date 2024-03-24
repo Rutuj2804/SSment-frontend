@@ -12,7 +12,7 @@ export const formatNumber = (num: number) => {
 };
 
 export const goFullScreen = () => {
-    const element: any = document.documentElement;
+	const element: any = document.documentElement;
 
 	if (element.requestFullscreen) {
 		element.requestFullscreen();
@@ -25,5 +25,15 @@ export const goFullScreen = () => {
 	} else if (element.msRequestFullscreen) {
 		/* IE/Edge */
 		element.msRequestFullscreen();
+	}
+};
+
+export const fileSize = (bytes: number) => {
+	var sizes = ["Bytes", "KB", "MB", "GB", "TB"];
+	var i = Math.floor(Math.log(bytes) / Math.log(1024));
+	var size = bytes / Math.pow(1024, i);
+	return {
+		size: size.toFixed(2) + " " + sizes[i],
+		isValid: bytes < 10485760
 	}
 };

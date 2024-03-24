@@ -216,6 +216,8 @@ const CreateTest = () => {
 							onChange={onChange}
 							termId={termId}
 							setTermId={setTermId}
+							testImage={testImage}
+							setTestImage={setTestImage}
 						/>,
 						<Batches
 							key={2}

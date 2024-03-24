@@ -8,3 +8,97 @@
     padding: 40px;
     border-radius: 4px;
 }
+
+.fileupload__Wrapper {
+    label {
+        font-size: 12px;
+        text-transform: capitalize;
+        font-weight: 500;
+    }
+    .fileupload__Preview {
+        height: 150px;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        img {
+            flex: 1;
+            width: 30%;
+            height: 150px;
+            object-fit: contain;
+            overflow: hidden;
+        }
+        .vr {
+            color: $black;
+        }
+        .fileupload__FileDetails {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: $primary-color;
+            span {
+                font-size: 40px;
+            }
+            p {
+                font-size: 14px;
+                color: $black;
+            }
+            h6 {
+                margin-bottom: 10px;
+                color: $black;
+            }
+            .flexbox {
+                display: flex;
+                align-items: center;
+                gap: 20px;
+            }
+            .removefile {
+                color: $red;
+                font-size: 14px;
+                cursor: pointer;
+            }
+        }
+    }
+    .fileupload__Dropzone {
+        display: flex;
+        gap: 10px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border: 1px dashed $gray;
+        padding: 20px;
+        border-radius: 4px;
+        color: $primary-color;
+        span {
+            font-size: 40px;
+        }
+        p {
+            font-size: 14px;
+            color: $black;
+        }
+        h6 {
+            margin-bottom: 0%;
+            color: $black;
+        }
+        .flexbox {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .removefile {
+            color: $red;
+            font-size: 14px;
+            cursor: pointer;
+        }
+    }
+    &.fileupload__Error {
+        .fileupload__Dropzone {
+            border: 1px dashed $red;
+            h6 {
+                color: $red;
+            }
+        }
+    }
+}

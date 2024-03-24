@@ -37,12 +37,12 @@ export const getTestRoute = (role: number) => {
 	if (role === 901 || role === 401) 
         return {
             hasVisibility: true,
-            link: "/a/batches"
+            link: "/a/tests"
         } 
     else if(role === 201) 
         return {
             hasVisibility: true,
-            link: "/batches"
+            link: "/tests"
         }
     else
         return {

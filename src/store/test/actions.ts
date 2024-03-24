@@ -11,14 +11,25 @@ import { setFailedResponse } from "./slice";
 export const createTest = createAsyncThunk( "createTest/Test", async (data: CreateTestRequest, thunkAPI) => {
     thunkAPI.dispatch(updateLoading(1));
     try {
+        console.log(data)
         const config = {
             headers: {
-                "Content-Type": "Application/json",
+                "Content-Type": "multipart/form-data",
                 "Authorization": `Bearer ${userToken()}`
             },
         };
 
-        const res = await axios.post(`/test/t/create`, data, config);
+        const keys = Object.keys(data)
+        const values = Object.values(data)
+
+        const formData = new FormData()
+
+        for (let i = 0; i < keys.length; i++) {
+            formData.append(keys[i], values[i])
+            console.log(formData.get(keys[i]));
+        }
+
+        const res = await axios.post(`/test/t/create`, formData, config);
 
         thunkAPI.dispatch(updateLoading(-1));
 
