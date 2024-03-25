@@ -120,7 +120,7 @@ const AttemptTest = () => {
 			case QuestionTypeEnum.TRUEFALSETYPE:
 				return <TrueFalseType testId={id!} question={activeQuestion} serialNumber={activeQuestionIndex + 1} />;
 			case QuestionTypeEnum.CODINGTYPE:
-				return <CodingType />;
+				return <CodingType testId={id!} question={activeQuestion} serialNumber={activeQuestionIndex + 1} />;
 			default:
 				return null;
 		}
