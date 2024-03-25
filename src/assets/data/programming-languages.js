@@ -13,5 +13,15 @@ export const LANGUAGES_AND_VERSIONS = [
         "language": "python",
         "version": "3.10.0",
         "alias": "Python"
+    },
+    { 
+        "language": "cpp",
+        "version": "3.10.0",
+        "alias": "C++"
+    },
+    { 
+        "language": "java",
+        "version": "3.10.0",
+        "alias": "Java"
     }
 ]

@@ -3,9 +3,13 @@ import React, { useRef, useState } from "react";
 import { Button, OutlineButton, Select } from "../../library";
 import { LANGUAGES_AND_VERSIONS } from "../../assets/data/programming-languages";
 import { Paper } from "../paper";
-import { PlayArrowRounded, PublishRounded } from "@mui/icons-material";
 
-const CodeEditor = () => {
+interface CodeEditorCProps {
+	onSubmit?: Function;
+	onRun?: Function;
+}
+
+const CodeEditor = ({ onRun, onSubmit }: CodeEditorCProps) => {
 	const [language, setLanguage] = useState(
 		LANGUAGES_AND_VERSIONS[0].language
 	);
@@ -33,8 +37,8 @@ const CodeEditor = () => {
                     </div>
                     <div className="right">
                         <OutlineButton>Go Fullscreen</OutlineButton>
-                        <OutlineButton>Run</OutlineButton>
-                        <Button>Submit</Button>
+                        <OutlineButton onClick={() => onRun ? onRun({ code, language }) : null}>Run</OutlineButton>
+                        <Button onClick={() => onSubmit ? onSubmit({ code, language }) : null}>Submit</Button>
                     </div>
                 </div>
 				<Editor

@@ -2,10 +2,11 @@ import React, { useEffect } from "react";
 import { Editor } from "../../components/editor";
 import { useDispatch } from "react-redux";
 import { setBreadcrumps } from "../../store/breadcrumps/slice";
+import { runCodeSnippets } from "../../store/actions";
 
 const Practice = () => {
 
-	const dispatch = useDispatch()
+	const dispatch = useDispatch<any>()
 
 	useEffect(() => {
 		dispatch(
@@ -16,9 +17,13 @@ const Practice = () => {
 		);
 	}, [dispatch]);
 
+	const onRun = ({ code, language }: { code: string, language: string }) => {
+		dispatch(runCodeSnippets({ code, language }))
+	}
+
 	return (
 		<div>
-			<Editor />
+			<Editor onRun={onRun} />
 		</div>
 	);
 };
