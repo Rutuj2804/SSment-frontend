@@ -1,6 +1,16 @@
 import React, { useState } from "react";
-import { Button, Checkbox, Input, OutlineButton } from "../../library";
-import { AddRounded, ChevronLeftRounded, DoneRounded } from "@mui/icons-material";
+import {
+	Button,
+	Checkbox,
+	FileUpload,
+	Input,
+	OutlineButton,
+} from "../../library";
+import {
+	AddRounded,
+	ChevronLeftRounded,
+	DoneRounded,
+} from "@mui/icons-material";
 import { QuestionType } from "../popup";
 
 type Option = {
@@ -10,15 +20,18 @@ type Option = {
 };
 
 interface ImageChoiceCProps {
-    onChange: (i: number) => void;
+	onChange: (i: number) => void;
 }
 
 const ImageChoice = ({ onChange }: ImageChoiceCProps) => {
 	const [options, setOptions] = useState<Option[]>([]);
+	const [referenceImageFile, setReferenceImageFile] = useState<null | File>(
+		null
+	);
 
 	const questionType = 2;
-	
-	const [referenceImage, setReferenceImage] = useState(false)
+
+	const [referenceImage, setReferenceImage] = useState(false);
 
 	const onAddOption = () => {
 		setOptions((v) => [...v, { name: "A", title: "", isCorrect: false }]);
@@ -29,7 +42,10 @@ const ImageChoice = ({ onChange }: ImageChoiceCProps) => {
 			<div className="header">
 				<h5>Image Choice Question</h5>
 				<div className="right">
-					<OutlineButton onClick={() => onChange(QuestionType.SELECTQUESTION)} startIcon={<ChevronLeftRounded />}>
+					<OutlineButton
+						onClick={() => onChange(QuestionType.SELECTQUESTION)}
+						startIcon={<ChevronLeftRounded />}
+					>
 						Cancel
 					</OutlineButton>
 					<Button startIcon={<DoneRounded />}>Save</Button>
@@ -55,16 +71,20 @@ const ImageChoice = ({ onChange }: ImageChoiceCProps) => {
 					id="add-reference-image"
 					label="Add Reference Image"
 					description="Displays a reference image for the question while attempting the test."
-					onChange={e=>setReferenceImage(e.target.checked)}
+					onChange={(e) => setReferenceImage(e.target.checked)}
 					checked={referenceImage}
 				/>
-				{referenceImage && <Input
-					type="file"
-					name="points"
-					placeholder="Reference Image"
-					label="Reference Image"
-					required
-				/>}
+				{referenceImage && (
+					<FileUpload
+						file={referenceImageFile}
+						onChange={(a: File[]) =>
+							a.length
+								? setReferenceImageFile(a[0])
+								: setReferenceImageFile(null)
+						}
+						showPreview
+					/>
+				)}
 				<div
 					className="multipleChoice__AddOption"
 					onClick={onAddOption}

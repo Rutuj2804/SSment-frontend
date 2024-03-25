@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import {
 	Button,
 	Checkbox,
+	FileUpload,
 	Input,
 	OutlineButton,
 	RichTextEditor,
@@ -18,7 +19,11 @@ import { IconButton } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { setDeleteConfirmation, setQuestion } from "../../store/layout/slice";
-import { createQuestion, deleteQuestion, updateQuestion } from "../../store/actions";
+import {
+	createQuestion,
+	deleteQuestion,
+	updateQuestion,
+} from "../../store/actions";
 
 type Option = {
 	title: string;
@@ -48,6 +53,9 @@ const CodingType = ({ onChange }: CodingTypeCProps) => {
 	const questionType = 8;
 
 	const [referenceImage, setReferenceImage] = useState(false);
+	const [referenceImageFile, setReferenceImageFile] = useState<null | File>(
+		null
+	);
 
 	const question = useSelector((state: RootState) => state.layout.question);
 
@@ -209,12 +217,14 @@ const CodingType = ({ onChange }: CodingTypeCProps) => {
 					checked={referenceImage}
 				/>
 				{referenceImage && (
-					<Input
-						type="file"
-						name="points"
-						placeholder="Reference Image"
-						label="Reference Image"
-						required
+					<FileUpload
+						file={referenceImageFile}
+						onChange={(a: File[]) =>
+							a.length
+								? setReferenceImageFile(a[0])
+								: setReferenceImageFile(null)
+						}
+						showPreview
 					/>
 				)}
 			</div>

@@ -19,17 +19,7 @@ export const createTest = createAsyncThunk( "createTest/Test", async (data: Crea
             },
         };
 
-        const keys = Object.keys(data)
-        const values = Object.values(data)
-
-        const formData = new FormData()
-
-        for (let i = 0; i < keys.length; i++) {
-            formData.append(keys[i], values[i])
-            console.log(formData.get(keys[i]));
-        }
-
-        const res = await axios.post(`/test/t/create`, formData, config);
+        const res = await axios.post(`/test/t/create`, data, config);
 
         thunkAPI.dispatch(updateLoading(-1));
 

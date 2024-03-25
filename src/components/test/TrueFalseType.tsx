@@ -1,11 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { Button, Checkbox, Input, OutlineButton, Select } from "../../library";
-import { ChevronLeftRounded, DeleteRounded, DoneRounded } from "@mui/icons-material";
+import { Button, Checkbox, FileUpload, Input, OutlineButton, Select } from "../../library";
+import {
+	ChevronLeftRounded,
+	DeleteRounded,
+	DoneRounded,
+} from "@mui/icons-material";
 import { QuestionType } from "../popup";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { setDeleteConfirmation, setQuestion } from "../../store/layout/slice";
-import { createQuestion, deleteQuestion, updateQuestion } from "../../store/actions";
+import {
+	createQuestion,
+	deleteQuestion,
+	updateQuestion,
+} from "../../store/actions";
 
 const options = [
 	{ name: "True", value: "true" },
@@ -24,6 +32,9 @@ const TrueFalseType = ({ onChange }: TrueFalseTypeCProps) => {
 	});
 
 	const [referenceImage, setReferenceImage] = useState(false);
+	const [referenceImageFile, setReferenceImageFile] = useState<null | File>(
+		null
+	);
 
 	const [isEditMode, setIsEditMode] = useState(false);
 
@@ -43,8 +54,9 @@ const TrueFalseType = ({ onChange }: TrueFalseTypeCProps) => {
 			setFormData({
 				title: question.questionId?.title!,
 				points: question.questionId?.points?.toString()!,
-				yesNoTrueFalseAnswer:
-					question.questionId?.yesNoTrueFalseAnswer! ? "true" : "false",
+				yesNoTrueFalseAnswer: question.questionId?.yesNoTrueFalseAnswer!
+					? "true"
+					: "false",
 			});
 		}
 	}, [isEditMode, question]);
@@ -64,7 +76,7 @@ const TrueFalseType = ({ onChange }: TrueFalseTypeCProps) => {
 	};
 
 	const onSubmit = () => {
-		if(isEditMode) {
+		if (isEditMode) {
 			dispatch(
 				updateQuestion({
 					...formData,
@@ -73,8 +85,9 @@ const TrueFalseType = ({ onChange }: TrueFalseTypeCProps) => {
 					addReferenceImage: referenceImage,
 					testId: question.testId!,
 					questionId: question.questionId?._id!,
-					yesNoTrueFalseAnswer: formData.yesNoTrueFalseAnswer === "true" ? true : false,
-					sectionId: question.sectionId!
+					yesNoTrueFalseAnswer:
+						formData.yesNoTrueFalseAnswer === "true" ? true : false,
+					sectionId: question.sectionId!,
 				})
 			);
 		} else {
@@ -85,8 +98,9 @@ const TrueFalseType = ({ onChange }: TrueFalseTypeCProps) => {
 					questionType,
 					addReferenceImage: referenceImage,
 					testId: question.testId!,
-					yesNoTrueFalseAnswer: formData.yesNoTrueFalseAnswer === "true" ? true : false,
-					sectionId: question.sectionId!
+					yesNoTrueFalseAnswer:
+						formData.yesNoTrueFalseAnswer === "true" ? true : false,
+					sectionId: question.sectionId!,
 				})
 			);
 		}
@@ -183,12 +197,14 @@ const TrueFalseType = ({ onChange }: TrueFalseTypeCProps) => {
 					checked={referenceImage}
 				/>
 				{referenceImage && (
-					<Input
-						type="file"
-						name="points"
-						placeholder="Reference Image"
-						label="Reference Image"
-						required
+					<FileUpload
+						file={referenceImageFile}
+						onChange={(a: File[]) =>
+							a.length
+								? setReferenceImageFile(a[0])
+								: setReferenceImageFile(null)
+						}
+						showPreview
 					/>
 				)}
 			</div>

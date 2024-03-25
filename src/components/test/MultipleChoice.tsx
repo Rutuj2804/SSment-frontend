@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Button, Checkbox, Input, OutlineButton } from "../../library";
+import {
+	Button,
+	Checkbox,
+	FileUpload,
+	Input,
+	OutlineButton,
+} from "../../library";
 import {
 	AddRounded,
 	ChevronLeftRounded,
@@ -41,6 +47,9 @@ const MultipleChoice = ({ onChange }: MultipleChoiceCProps) => {
 	});
 
 	const [isEditMode, setIsEditMode] = useState(false);
+	const [referenceImageFile, setReferenceImageFile] = useState<null | File>(
+		null
+	);
 
 	const [options, setOptions] = useState<Option[]>([]);
 
@@ -80,8 +89,8 @@ const MultipleChoice = ({ onChange }: MultipleChoiceCProps) => {
 		setOptionData({
 			bullet: "",
 			isCorrectAnswer: false,
-			title: ""
-		})
+			title: "",
+		});
 	};
 
 	const onOptionDelete = (i: number) =>
@@ -167,7 +176,9 @@ const MultipleChoice = ({ onChange }: MultipleChoiceCProps) => {
 							Cancel
 						</OutlineButton>
 					)}
-					<Button onClick={onSubmit} startIcon={<DoneRounded />}>Save</Button>
+					<Button onClick={onSubmit} startIcon={<DoneRounded />}>
+						Save
+					</Button>
 				</div>
 			</div>
 			<div className="body">
@@ -198,12 +209,14 @@ const MultipleChoice = ({ onChange }: MultipleChoiceCProps) => {
 					checked={referenceImage}
 				/>
 				{referenceImage && (
-					<Input
-						type="file"
-						name="points"
-						placeholder="Reference Image"
-						label="Reference Image"
-						required
+					<FileUpload
+						file={referenceImageFile}
+						onChange={(a: File[]) =>
+							a.length
+								? setReferenceImageFile(a[0])
+								: setReferenceImageFile(null)
+						}
+						showPreview
 					/>
 				)}
 			</div>

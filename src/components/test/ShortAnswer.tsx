@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Button, Checkbox, Input, OutlineButton } from "../../library";
+import {
+	Button,
+	Checkbox,
+	FileUpload,
+	Input,
+	OutlineButton,
+} from "../../library";
 import {
 	ChevronLeftRounded,
 	DeleteRounded,
@@ -7,7 +13,11 @@ import {
 } from "@mui/icons-material";
 import { QuestionType } from "../popup";
 import { useDispatch, useSelector } from "react-redux";
-import { createQuestion, deleteQuestion, updateQuestion } from "../../store/actions";
+import {
+	createQuestion,
+	deleteQuestion,
+	updateQuestion,
+} from "../../store/actions";
 import { RootState } from "../../store";
 import { setDeleteConfirmation, setQuestion } from "../../store/layout/slice";
 
@@ -26,6 +36,9 @@ const ShortAnswer = ({ onChange }: ShortAnswerCProps) => {
 	const questionType = 3;
 
 	const [referenceImage, setReferenceImage] = useState(false);
+	const [referenceImageFile, setReferenceImageFile] = useState<null | File>(
+		null
+	);
 
 	const dispatch = useDispatch<any>();
 
@@ -60,7 +73,7 @@ const ShortAnswer = ({ onChange }: ShortAnswerCProps) => {
 
 	const onSubmit = () => {
 		if (formData.title && formData.points) {
-			if(isEditMode) {
+			if (isEditMode) {
 				dispatch(
 					updateQuestion({
 						addReferenceImage: false,
@@ -159,12 +172,14 @@ const ShortAnswer = ({ onChange }: ShortAnswerCProps) => {
 					checked={referenceImage}
 				/>
 				{referenceImage && (
-					<Input
-						type="file"
-						name="points"
-						placeholder="Reference Image"
-						label="Reference Image"
-						required
+					<FileUpload
+						file={referenceImageFile}
+						onChange={(a: File[]) =>
+							a.length
+								? setReferenceImageFile(a[0])
+								: setReferenceImageFile(null)
+						}
+						showPreview
 					/>
 				)}
 			</div>

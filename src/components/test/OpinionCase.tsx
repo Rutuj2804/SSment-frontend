@@ -1,15 +1,23 @@
 import React, { useState } from "react";
-import { Button, Checkbox, Input, OutlineButton } from "../../library";
+import {
+	Button,
+	Checkbox,
+	FileUpload,
+	Input,
+	OutlineButton,
+} from "../../library";
 import { ChevronLeftRounded, DoneRounded } from "@mui/icons-material";
 import { QuestionType } from "../popup";
 
 interface OpinionCaseCProps {
-    onChange: (i: number) => void;
+	onChange: (i: number) => void;
 }
 
 const OpinionCase = ({ onChange }: OpinionCaseCProps) => {
-	
-	const [referenceImage, setReferenceImage] = useState(false)
+	const [referenceImage, setReferenceImage] = useState(false);
+	const [referenceImageFile, setReferenceImageFile] = useState<null | File>(
+		null
+	);
 
 	const questionType = 7;
 
@@ -18,8 +26,11 @@ const OpinionCase = ({ onChange }: OpinionCaseCProps) => {
 			<div className="header">
 				<h5>Opinion Case Question</h5>
 				<div className="right">
-					<OutlineButton onClick={() => onChange(QuestionType.SELECTQUESTION)} startIcon={<ChevronLeftRounded />}>
-					Cancel
+					<OutlineButton
+						onClick={() => onChange(QuestionType.SELECTQUESTION)}
+						startIcon={<ChevronLeftRounded />}
+					>
+						Cancel
 					</OutlineButton>
 					<Button startIcon={<DoneRounded />}>Save</Button>
 				</div>
@@ -36,16 +47,20 @@ const OpinionCase = ({ onChange }: OpinionCaseCProps) => {
 					id="add-reference-image"
 					label="Add Reference Image"
 					description="Displays a reference image for the question while attempting the test."
-					onChange={e=>setReferenceImage(e.target.checked)}
+					onChange={(e) => setReferenceImage(e.target.checked)}
 					checked={referenceImage}
 				/>
-				{referenceImage && <Input
-					type="file"
-					name="points"
-					placeholder="Reference Image"
-					label="Reference Image"
-					required
-				/>}
+				{referenceImage && (
+					<FileUpload
+						file={referenceImageFile}
+						onChange={(a: File[]) =>
+							a.length
+								? setReferenceImageFile(a[0])
+								: setReferenceImageFile(null)
+						}
+						showPreview
+					/>
+				)}
 			</div>
 		</div>
 	);

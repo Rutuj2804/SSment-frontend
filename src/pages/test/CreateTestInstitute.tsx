@@ -271,6 +271,8 @@ const CreateTest = () => {
 							key={1}
 							formData={formData}
 							onChange={onChange}
+							setTestImage={setTestImage}
+							testImage={testImage}
 						/>,
 						<Batches
 							key={2}

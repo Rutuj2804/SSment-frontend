@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Checkbox, Input, OutlineButton } from "../../library";
+import { Button, Checkbox, FileUpload, Input, OutlineButton } from "../../library";
 import {
 	ChevronLeftRounded,
 	DeleteRounded,
@@ -27,6 +27,9 @@ const LongAnswer = ({ onChange }: LongAnswerCProps) => {
 	});
 
 	const [isEditMode, setIsEditMode] = useState(false);
+	const [referenceImageFile, setReferenceImageFile] = useState<null | File>(
+		null
+	);
 
 	const questionType = 4;
 
@@ -165,12 +168,14 @@ const LongAnswer = ({ onChange }: LongAnswerCProps) => {
 					checked={referenceImage}
 				/>
 				{referenceImage && (
-					<Input
-						type="file"
-						name="points"
-						placeholder="Reference Image"
-						label="Reference Image"
-						required
+					<FileUpload
+						file={referenceImageFile}
+						onChange={(a: File[]) =>
+							a.length
+								? setReferenceImageFile(a[0])
+								: setReferenceImageFile(null)
+						}
+						showPreview
 					/>
 				)}
 			</div>
